@@ -1,20 +1,61 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
+
   <meta charset="UTF-8">
+
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
   >
 
   <title>Student Meeting Booking</title>
+
 </head>
+
 
 <body>
 
-  <h1>Student Meeting Booking</h1>
+  <main>
 
-  <p>Web booking đang được xây dựng.</p>
+    <h1>Student Meeting Booking</h1>
+
+    <p id="status">
+      Đang tải lịch...
+    </p>
+
+  </main>
+
+
+  <script src="js/api.js"></script>
+
+  <script>
+
+    loadSlots()
+
+      .then(slots => {
+
+        document.getElementById('status')
+          .textContent =
+            `Đã tải ${slots.length} slot.`;
+
+        console.log(slots);
+
+      })
+
+      .catch(error => {
+
+        document.getElementById('status')
+          .textContent =
+            error.message;
+
+        console.error(error);
+
+      });
+
+  </script>
 
 </body>
+
 </html>
