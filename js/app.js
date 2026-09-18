@@ -1,3 +1,8 @@
+/* =========================================================
+   STUDENT MEETING BOOKING
+   FRONTEND APPLICATION
+   ========================================================= */
+
 let allSlots = [];
 
 let selectedMonth = null;
@@ -6,9 +11,9 @@ let selectedDate = null;
 let selectedTime = null;
 
 
-/* =====================================================
-   LANGUAGE
-   ===================================================== */
+/* =========================================================
+   LABELS
+   ========================================================= */
 
 const WEEKDAYS = {
   0: 'Chủ nhật',
@@ -19,6 +24,7 @@ const WEEKDAYS = {
   5: 'Thứ 6',
   6: 'Thứ 7'
 };
+
 
 const MONTHS = {
   0: 'Tháng 1',
@@ -36,9 +42,9 @@ const MONTHS = {
 };
 
 
-/* =====================================================
+/* =========================================================
    DOM
-   ===================================================== */
+   ========================================================= */
 
 const monthOptions =
   document.getElementById('monthOptions');
@@ -72,6 +78,7 @@ const summarySection =
 
 const summaryValue =
   document.getElementById('summaryValue');
+
 const studentSection =
   document.getElementById('studentSection');
 
@@ -109,31 +116,44 @@ const topicError =
   document.getElementById('topicError');
 
 
-/* =====================================================
-   HELPERS
-   ===================================================== */
+/* =========================================================
+   DATE HELPERS
+   ========================================================= */
 
 function parseDate(dateString) {
 
-  const [year, month, day] =
+  const parts =
     dateString.split('-').map(Number);
 
   return new Date(
-    year,
-    month - 1,
-    day
+    parts[0],
+    parts[1] - 1,
+    parts[2]
   );
+
 }
 
 
-function getMonthKey(date) {
+function formatDateForDisplay(dateString) {
+
+  const date =
+    parseDate(dateString);
 
   return (
-    date.getFullYear() +
-    '-' +
-    String(
-      date.getMonth() + 1
-    ).padStart(2, '0')
+    String(date.getDate()).padStart(2, '0') +
+    '/' +
+    String(date.getMonth() + 1).padStart(2, '0') +
+    '/' +
+    date.getFullYear()
+  );
+
+}
+
+
+function formatSelectedDate_() {
+
+  return formatDateForDisplay(
+    selectedDate
   );
 
 }
@@ -142,21 +162,114 @@ function getMonthKey(date) {
 function sortDates(a, b) {
 
   return (
-    parseDate(a.date) -
-    parseDate(b.date)
+    parseDate(a.date).getTime() -
+    parseDate(b.date).getTime()
   );
 
 }
 
 
-/* =====================================================
-   LOAD
-   ===================================================== */
+/* =========================================================
+   UI HELPERS
+   ========================================================= */
+
+function showError(message) {
+
+  if (statusText) {
+    statusText.classList.add('hidden');
+  }
+
+  if (errorText) {
+    errorText.textContent = message;
+    errorText.classList.remove('hidden');
+  }
+
+}
+
+
+function hideError() {
+
+  if (errorText) {
+    errorText.textContent = '';
+    errorText.classList.add('hidden');
+  }
+
+}
+
+
+function updateActiveButtons(
+  container,
+  activeButton
+) {
+
+  if (!container) {
+    return;
+  }
+
+  [...container.children].forEach(
+    child => {
+
+      child.classList.remove(
+        'active'
+      );
+
+    }
+  );
+
+
+  activeButton.classList.add(
+    'active'
+  );
+
+}
+
+
+function addHiddenField_(
+  form,
+  name,
+  value
+) {
+
+  const input =
+    document.createElement('input');
+
+  input.type = 'hidden';
+  input.name = name;
+  input.value = value;
+
+  form.appendChild(input);
+
+}
+
+
+/* =========================================================
+   LOAD DATA
+   ========================================================= */
 
 function initialize() {
 
-  statusText.textContent =
-    'Đang tải lịch...';
+  hideError();
+
+
+  if (
+    typeof loadSlots !==
+    'function'
+  ) {
+
+    showError(
+      'Không thể tải hệ thống booking. ' +
+      'Vui lòng kiểm tra api.js.'
+    );
+
+    return;
+
+  }
+
+
+  if (statusText) {
+    statusText.textContent =
+      'Đang tải lịch...';
+  }
 
 
   loadSlots()
@@ -164,11 +277,30 @@ function initialize() {
     .then(slots => {
 
       allSlots =
-        slots.sort(sortDates);
+        Array.isArray(slots)
+          ? slots.sort(sortDates)
+          : [];
 
 
-      statusText.textContent =
-        `Đã tải ${allSlots.length} slot.`;
+      if (statusText) {
+
+        statusText.textContent =
+          `Đã tải ${allSlots.length} slot.`;
+
+      }
+
+
+      if (
+        allSlots.length === 0
+      ) {
+
+        showError(
+          'Hiện chưa có slot meeting.'
+        );
+
+        return;
+
+      }
 
 
       renderMonths();
@@ -177,15 +309,14 @@ function initialize() {
 
     .catch(error => {
 
-      statusText.classList.add(
-        'hidden'
+      console.error(
+        'Load slots error:',
+        error
       );
 
-      errorText.textContent =
-        error.message;
-
-      errorText.classList.remove(
-        'hidden'
+      showError(
+        error.message ||
+        'Không thể tải lịch booking.'
       );
 
     });
@@ -193,9 +324,9 @@ function initialize() {
 }
 
 
-/* =====================================================
+/* =========================================================
    MONTH
-   ===================================================== */
+   ========================================================= */
 
 function renderMonths() {
 
@@ -205,10 +336,14 @@ function renderMonths() {
   const months = [
     ...new Set(
       allSlots.map(
-        slot => slot.date.slice(0, 7)
+        slot =>
+          slot.date.slice(0, 7)
       )
     )
   ];
+
+
+  months.sort();
 
 
   months.forEach(
@@ -218,20 +353,24 @@ function renderMonths() {
         document.createElement('button');
 
 
+      button.type =
+        'button';
+
       button.className =
         'option';
 
 
-      const [year, month] =
+      const [
+        year,
+        month
+      ] =
         monthKey
           .split('-')
           .map(Number);
 
 
       button.textContent =
-        MONTHS[month - 1] +
-        ' ' +
-        year;
+        `${MONTHS[month - 1]} ${year}`;
 
 
       button.addEventListener(
@@ -257,7 +396,9 @@ function renderMonths() {
           );
 
 
-          renderWeekdays();
+          weekdaySection.classList.remove(
+            'hidden'
+          );
 
           dateSection.classList.add(
             'hidden'
@@ -270,6 +411,13 @@ function renderMonths() {
           summarySection.classList.add(
             'hidden'
           );
+
+          studentSection.classList.add(
+            'hidden'
+          );
+
+
+          renderWeekdays();
 
         }
       );
@@ -285,17 +433,13 @@ function renderMonths() {
 }
 
 
-/* =====================================================
+/* =========================================================
    WEEKDAY
-   ===================================================== */
+   ========================================================= */
 
 function renderWeekdays() {
 
   weekdayOptions.innerHTML = '';
-
-  weekdaySection.classList.remove(
-    'hidden'
-  );
 
 
   const slots =
@@ -311,8 +455,9 @@ function renderWeekdays() {
     ...new Set(
       slots.map(
         slot =>
-          parseDate(slot.date)
-            .getDay()
+          parseDate(
+            slot.date
+          ).getDay()
       )
     )
   ];
@@ -321,15 +466,13 @@ function renderWeekdays() {
   weekdays.sort(
     (a, b) => {
 
-      if (a === 0) {
-        return 7;
-      }
+      const dayA =
+        a === 0 ? 7 : a;
 
-      if (b === 0) {
-        return -7;
-      }
+      const dayB =
+        b === 0 ? 7 : b;
 
-      return a - b;
+      return dayA - dayB;
 
     }
   );
@@ -341,6 +484,9 @@ function renderWeekdays() {
       const button =
         document.createElement('button');
 
+
+      button.type =
+        'button';
 
       button.className =
         'option';
@@ -370,7 +516,9 @@ function renderWeekdays() {
           );
 
 
-          renderDates();
+          dateSection.classList.remove(
+            'hidden'
+          );
 
           timeSection.classList.add(
             'hidden'
@@ -379,6 +527,13 @@ function renderWeekdays() {
           summarySection.classList.add(
             'hidden'
           );
+
+          studentSection.classList.add(
+            'hidden'
+          );
+
+
+          renderDates();
 
         }
       );
@@ -394,17 +549,13 @@ function renderWeekdays() {
 }
 
 
-/* =====================================================
+/* =========================================================
    DATE
-   ===================================================== */
+   ========================================================= */
 
 function renderDates() {
 
   dateOptions.innerHTML = '';
-
-  dateSection.classList.remove(
-    'hidden'
-  );
 
 
   const slots =
@@ -426,7 +577,8 @@ function renderDates() {
   const uniqueDates = [
     ...new Set(
       slots.map(
-        slot => slot.date
+        slot =>
+          slot.date
       )
     )
   ];
@@ -439,12 +591,17 @@ function renderDates() {
     dateString => {
 
       const date =
-        parseDate(dateString);
+        parseDate(
+          dateString
+        );
 
 
       const card =
         document.createElement('button');
 
+
+      card.type =
+        'button';
 
       card.className =
         'date-card';
@@ -454,6 +611,7 @@ function renderDates() {
         <div class="date-number">
           ${date.getDate()}
         </div>
+
         <div class="date-month">
           ${MONTHS[date.getMonth()]}
         </div>
@@ -477,11 +635,20 @@ function renderDates() {
           );
 
 
-          renderTimes();
+          timeSection.classList.remove(
+            'hidden'
+          );
 
           summarySection.classList.add(
             'hidden'
           );
+
+          studentSection.classList.add(
+            'hidden'
+          );
+
+
+          renderTimes();
 
         }
       );
@@ -497,17 +664,13 @@ function renderDates() {
 }
 
 
-/* =====================================================
+/* =========================================================
    TIME
-   ===================================================== */
+   ========================================================= */
 
 function renderTimes() {
 
   timeOptions.innerHTML = '';
-
-  timeSection.classList.remove(
-    'hidden'
-  );
 
 
   const slots =
@@ -525,6 +688,9 @@ function renderTimes() {
       const card =
         document.createElement('button');
 
+
+      card.type =
+        'button';
 
       card.className =
         'time-card';
@@ -571,32 +737,24 @@ function renderTimes() {
 }
 
 
-/* =====================================================
+/* =========================================================
    SUMMARY
-   ===================================================== */
+   ========================================================= */
 
 function showSummary() {
 
-  const date =
-    parseDate(
-      selectedDate
-    );
+  if (
+    !selectedDate ||
+    !selectedTime
+  ) {
 
+    return;
 
-  const formattedDate =
-    `${String(
-      date.getDate()
-    ).padStart(2, '0')}/${
-      String(
-        date.getMonth() + 1
-      ).padStart(2, '0')
-    }/${
-      date.getFullYear()
-    }`;
+  }
 
 
   summaryValue.textContent =
-    `${formattedDate} — ${selectedTime}`;
+    `${formatSelectedDate_()} — ${selectedTime}`;
 
 
   summarySection.classList.remove(
@@ -614,39 +772,10 @@ function showSummary() {
 }
 
 
-/* =====================================================
-   ACTIVE STATE
-   ===================================================== */
+/* =========================================================
+   FORM VALIDATION
+   ========================================================= */
 
-function updateActiveButtons(
-  container,
-  activeButton
-) {
-
-  [...container.children]
-    .forEach(
-      child => {
-
-        child.classList.remove(
-          'active'
-        );
-
-      }
-    );
-
-
-  activeButton.classList.add(
-    'active'
-  );
-
-}
-
-
-/* =====================================================
-   START
-   ===================================================== */
-
-initialize();
 function validateBookingForm() {
 
   const name =
@@ -665,9 +794,9 @@ function validateBookingForm() {
   let isValid = true;
 
 
-  /* -----------------------------------------------------
+  /* -------------------------------------------------------
      NAME
-     ----------------------------------------------------- */
+     ------------------------------------------------------- */
 
   nameError.textContent = '';
 
@@ -679,7 +808,9 @@ function validateBookingForm() {
 
     isValid = false;
 
-  } else if (name.length < 2) {
+  } else if (
+    name.length < 2
+  ) {
 
     nameError.textContent =
       'Họ và tên chưa hợp lệ.';
@@ -689,9 +820,9 @@ function validateBookingForm() {
   }
 
 
-  /* -----------------------------------------------------
+  /* -------------------------------------------------------
      MSSV
-     ----------------------------------------------------- */
+     ------------------------------------------------------- */
 
   mssvError.textContent = '';
 
@@ -706,9 +837,9 @@ function validateBookingForm() {
   }
 
 
-  /* -----------------------------------------------------
+  /* -------------------------------------------------------
      EMAIL
-     ----------------------------------------------------- */
+     ------------------------------------------------------- */
 
   emailError.textContent = '';
 
@@ -736,9 +867,9 @@ function validateBookingForm() {
   }
 
 
-  /* -----------------------------------------------------
+  /* -------------------------------------------------------
      TOPIC
-     ----------------------------------------------------- */
+     ------------------------------------------------------- */
 
   topicError.textContent = '';
 
@@ -765,9 +896,16 @@ function validateBookingForm() {
   confirmButton.disabled =
     !isValid;
 
+
   return isValid;
 
 }
+
+
+/* =========================================================
+   FORM INPUT EVENTS
+   ========================================================= */
+
 [
   studentName,
   studentMssv,
@@ -783,140 +921,18 @@ function validateBookingForm() {
 
   }
 );
+
+
+/* =========================================================
+   BOOKING SUBMIT
+   ========================================================= */
+
 bookingForm.addEventListener(
   'submit',
   function (event) {
 
     event.preventDefault();
 
-
-    /* ===================================================
-       VALIDATE
-       =================================================== */
-
-    if (!validateBookingForm()) {
-      return;
-    }
-
-
-    /* ===================================================
-       CHECK SLOT
-       =================================================== */
-
-    if (!selectedDate || !selectedTime) {
-
-      formMessage.textContent =
-        'Vui lòng chọn khung giờ meeting.';
-
-      return;
-
-    }
-
-
-    /* ===================================================
-       UI: PROCESSING
-       =================================================== */
-
-    confirmButton.disabled = true;
-
-    confirmButton.textContent =
-      'Đang xác nhận...';
-
-    formMessage.textContent =
-      'Đang kiểm tra và xác nhận lịch meeting...';
-
-
-    /* ===================================================
-       BUILD SLOT
-       =================================================== */
-
-    const slot =
-      `${formatSelectedDate_()} | ${selectedTime}`;
-
-
-    /* ===================================================
-       CREATE NATIVE POST FORM
-       =================================================== */
-
-    const postForm =
-      document.createElement('form');
-
-
-    postForm.method = 'POST';
-
-    postForm.action = API_URL;
-
-    postForm.target = '_self';
-
-    postForm.style.display = 'none';
-
-
-    /* ===================================================
-       HIDDEN FIELDS
-       =================================================== */
-
-    addHiddenField_(
-      postForm,
-      'action',
-      'book'
-    );
-
-
-    addHiddenField_(
-      postForm,
-      'bookingId',
-      'BK-' + Date.now()
-    );
-
-
-    addHiddenField_(
-      postForm,
-      'slot',
-      slot
-    );
-
-
-    addHiddenField_(
-      postForm,
-      'student',
-      studentName.value.trim()
-    );
-
-
-    addHiddenField_(
-      postForm,
-      'mssv',
-      studentMssv.value.trim()
-    );
-
-
-    addHiddenField_(
-      postForm,
-      'email',
-      studentEmail.value.trim()
-    );
-
-
-    addHiddenField_(
-      postForm,
-      'topic',
-      studentTopic.value.trim()
-    );
-
-
-    /* ===================================================
-       SUBMIT
-       =================================================== */
-
-    document.body.appendChild(
-      postForm
-    );
-
-
-    postForm.submit();
-
-  }
-);
 
     /* -----------------------------------------------------
        Validate
@@ -932,7 +948,7 @@ bookingForm.addEventListener(
 
 
     /* -----------------------------------------------------
-       Check selected slot
+       Validate selected slot
        ----------------------------------------------------- */
 
     if (
@@ -949,21 +965,27 @@ bookingForm.addEventListener(
 
 
     /* -----------------------------------------------------
-       Prevent double click
+       Loading state
        ----------------------------------------------------- */
 
-    confirmButton.disabled = true;
+    confirmButton.disabled =
+      true;
 
     confirmButton.textContent =
       'Đang xác nhận...';
+
 
     formMessage.textContent =
       'Đang kiểm tra và xác nhận lịch meeting...';
 
 
     /* -----------------------------------------------------
-       Build booking data
+       Create booking data
        ----------------------------------------------------- */
+
+    const slot =
+      `${formatSelectedDate_()} | ${selectedTime}`;
+
 
     const bookingId =
       'BK-' +
@@ -974,78 +996,75 @@ bookingForm.addEventListener(
         .slice(2, 8);
 
 
-    const slot =
-      `${formatSelectedDate_()} | ${selectedTime}`;
-
-
     /* -----------------------------------------------------
        Create POST form
        ----------------------------------------------------- */
 
-    const form =
+    const postForm =
       document.createElement('form');
 
 
-    form.method =
+    postForm.method =
       'POST';
 
-
-    form.action =
+    postForm.action =
       API_URL;
 
-
-    form.target =
+    postForm.target =
       '_self';
+
+    postForm.style.display =
+      'none';
 
 
     /* -----------------------------------------------------
-       Add hidden fields
+       Hidden data
        ----------------------------------------------------- */
 
     addHiddenField_(
-      form,
+      postForm,
       'action',
       'book'
     );
 
 
     addHiddenField_(
-      form,
+      postForm,
       'bookingId',
       bookingId
     );
 
 
     addHiddenField_(
-      form,
+      postForm,
       'slot',
       slot
     );
 
 
     addHiddenField_(
-      form,
+      postForm,
       'student',
       studentName.value.trim()
     );
 
 
     addHiddenField_(
-      form,
+      postForm,
       'mssv',
       studentMssv.value.trim()
     );
 
 
     addHiddenField_(
-      form,
+      postForm,
       'email',
       studentEmail.value.trim()
     );
 
 
     addHiddenField_(
-      form,
+      postForm,
       'topic',
       studentTopic.value.trim()
     );
@@ -1056,59 +1075,18 @@ bookingForm.addEventListener(
        ----------------------------------------------------- */
 
     document.body.appendChild(
-      form
+      postForm
     );
 
 
-    form.submit();
+    postForm.submit();
 
   }
 );
-function addHiddenField_(
-  form,
-  name,
-  value
-) {
-
-  const input =
-    document.createElement('input');
 
 
-  input.type =
-    'hidden';
+/* =========================================================
+   START APPLICATION
+   ========================================================= */
 
-
-  input.name =
-    name;
-
-
-  input.value =
-    value;
-
-
-  form.appendChild(
-    input
-  );
-
-}
-function formatSelectedDate_() {
-
-  const date =
-    parseDate(
-      selectedDate
-    );
-
-
-  return (
-    String(
-      date.getDate()
-    ).padStart(2, '0') +
-    '/' +
-    String(
-      date.getMonth() + 1
-    ).padStart(2, '0') +
-    '/' +
-    date.getFullYear()
-  );
-
-}
+initialize();
