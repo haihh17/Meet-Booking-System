@@ -790,6 +790,10 @@ bookingForm.addEventListener(
     event.preventDefault();
 
 
+    /* -----------------------------------------------------
+       Validate
+       ----------------------------------------------------- */
+
     if (
       !validateBookingForm()
     ) {
@@ -799,23 +803,136 @@ bookingForm.addEventListener(
     }
 
 
-    formMessage.textContent =
-      'Thông tin hợp lệ. Sẵn sàng gửi booking.';
+    /* -----------------------------------------------------
+       Check selected slot
+       ----------------------------------------------------- */
 
-  }
-);
-bookingForm.addEventListener(
-  'submit',
-  function (event) {
+    if (
+      !selectedDate ||
+      !selectedTime
+    ) {
 
-    event.preventDefault();
+      formMessage.textContent =
+        'Vui lòng chọn khung giờ meeting.';
 
-    if (!validateBookingForm()) {
       return;
+
     }
 
+
+    /* -----------------------------------------------------
+       Prevent double click
+       ----------------------------------------------------- */
+
+    confirmButton.disabled = true;
+
+    confirmButton.textContent =
+      'Đang xác nhận...';
+
     formMessage.textContent =
-      'Thông tin hợp lệ. Sẵn sàng gửi booking.';
+      'Đang kiểm tra và xác nhận lịch meeting...';
+
+
+    /* -----------------------------------------------------
+       Build booking data
+       ----------------------------------------------------- */
+
+    const bookingId =
+      'BK-' +
+      Date.now() +
+      '-' +
+      Math.random()
+        .toString(36)
+        .slice(2, 8);
+
+
+    const slot =
+      `${formatSelectedDate_()} | ${selectedTime}`;
+
+
+    /* -----------------------------------------------------
+       Create POST form
+       ----------------------------------------------------- */
+
+    const form =
+      document.createElement('form');
+
+
+    form.method =
+      'POST';
+
+
+    form.action =
+      API_URL;
+
+
+    form.target =
+      '_self';
+
+
+    /* -----------------------------------------------------
+       Add hidden fields
+       ----------------------------------------------------- */
+
+    addHiddenField_(
+      form,
+      'action',
+      'book'
+    );
+
+
+    addHiddenField_(
+      form,
+      'bookingId',
+      bookingId
+    );
+
+
+    addHiddenField_(
+      form,
+      'slot',
+      slot
+    );
+
+
+    addHiddenField_(
+      form,
+      'student',
+      studentName.value.trim()
+    );
+
+
+    addHiddenField_(
+      form,
+      'mssv',
+      studentMssv.value.trim()
+    );
+
+
+    addHiddenField_(
+      form,
+      'email',
+      studentEmail.value.trim()
+    );
+
+
+    addHiddenField_(
+      form,
+      'topic',
+      studentTopic.value.trim()
+    );
+
+
+    /* -----------------------------------------------------
+       Submit
+       ----------------------------------------------------- */
+
+    document.body.appendChild(
+      form
+    );
+
+
+    form.submit();
 
   }
 );
