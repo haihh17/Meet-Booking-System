@@ -1,6 +1,5 @@
 /* =========================================================
    STUDENT MEETING BOOKING
-   APP.JS — CLEAN VERSION
    ========================================================= */
 
 
@@ -1056,6 +1055,104 @@ function addHiddenField_(
    FORM EVENTS
    ========================================================= */
 
+function setupBookingResponseFrame() {
+
+  let frame =
+    document.getElementById(
+      'bookingResponseFrame'
+    );
+
+
+  if (!frame) {
+
+    frame =
+      document.createElement(
+        'iframe'
+      );
+
+    frame.id =
+      'bookingResponseFrame';
+
+    frame.name =
+      'bookingResponseFrame';
+
+    frame.style.display =
+      'none';
+
+    document.body.appendChild(
+      frame
+    );
+
+  }
+
+
+  window.addEventListener(
+    'message',
+    event => {
+
+      const data =
+        event.data || {};
+
+
+      if (
+        data.type !==
+        'STUDENT_MEETING_BOOKING'
+      ) {
+
+        return;
+
+      }
+
+
+      if (
+        data.status === 'success' &&
+        data.eventId
+      ) {
+
+        const successUrl =
+          './booking-success.html' +
+          '?status=success' +
+          '&eventId=' +
+          encodeURIComponent(
+            data.eventId
+          );
+
+
+        window.location.replace(
+          successUrl
+        );
+
+        return;
+
+      }
+
+
+      if (
+        data.status === 'error'
+      ) {
+
+        const errorUrl =
+          './booking-success.html' +
+          '?status=error' +
+          '&message=' +
+          encodeURIComponent(
+            data.message ||
+            'Booking không thành công.'
+          );
+
+
+        window.location.replace(
+          errorUrl
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
 function setupFormEvents() {
 
   [
@@ -1144,7 +1241,7 @@ function setupFormEvents() {
 
 
       postForm.target =
-        '_self';
+        'bookingResponseFrame';
 
 
       postForm.style.display =
@@ -1224,6 +1321,8 @@ function startApp() {
     initDOM();
 
     checkRequiredElements();
+
+    setupBookingResponseFrame();
 
     setupFormEvents();
 
