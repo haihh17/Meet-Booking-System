@@ -37,9 +37,13 @@
         </h1>
 
         <p class="subtitle">
-          Lịch meeting của bạn đã được ghi nhận.
+          Lịch meeting của bạn đã được xác nhận.
         </p>
 
+
+        <!-- =================================================
+             BOOKING SUMMARY
+             ================================================= -->
 
         <div class="summary">
 
@@ -57,18 +61,211 @@
         </div>
 
 
-        <div class="summary">
+        <!-- =================================================
+             STUDENT
+             ================================================= -->
+
+        <div
+          id="studentSummary"
+          class="summary"
+          style="display: none;"
+        >
 
           <div class="summary-title">
-            Tiếp theo
+            Thông tin sinh viên
+          </div>
+
+          <div
+            id="studentName"
+            style="margin-bottom: 6px;"
+          ></div>
+
+          <div
+            id="studentMssv"
+            style="margin-bottom: 6px;"
+          ></div>
+
+          <div
+            id="studentTopic"
+          ></div>
+
+        </div>
+
+
+        <!-- =================================================
+             GOOGLE MEET
+             ================================================= -->
+
+        <div
+          id="meetSummary"
+          class="summary"
+          style="display: none;"
+        >
+
+          <div class="summary-title">
+            Google Meet
+          </div>
+
+          <div
+            style="
+              word-break: break-all;
+              margin-bottom: 12px;
+            "
+          >
+
+            <a
+              id="meetLink"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Đang tải...
+            </a>
+
+          </div>
+
+
+          <a
+            id="joinMeetButton"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="confirm-button"
+            style="
+              display: block;
+              text-decoration: none;
+              text-align: center;
+              margin-top: 12px;
+            "
+          >
+            Join Google Meet
+          </a>
+
+
+          <button
+            id="copyMeetButton"
+            type="button"
+            class="confirm-button"
+            style="
+              width: 100%;
+              margin-top: 10px;
+            "
+          >
+            Copy Meet Link
+          </button>
+
+        </div>
+
+
+        <!-- =================================================
+             GOOGLE CALENDAR
+             ================================================= -->
+
+        <div
+          id="calendarSummary"
+          class="summary"
+          style="display: none;"
+        >
+
+          <div class="summary-title">
+            Google Calendar
+          </div>
+
+          <p
+            style="
+              margin-top: 0;
+              margin-bottom: 14px;
+            "
+          >
+            Bạn có thể thêm lịch meeting vào Google Calendar
+            để dễ dàng kiểm tra lại thời gian sau này.
+          </p>
+
+
+          <a
+            id="addCalendarButton"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="confirm-button"
+            style="
+              display: block;
+              text-decoration: none;
+              text-align: center;
+            "
+          >
+            Add to Google Calendar
+          </a>
+
+
+          <a
+            id="openCalendarButton"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="confirm-button"
+            style="
+              display: block;
+              text-decoration: none;
+              text-align: center;
+              margin-top: 10px;
+            "
+          >
+            Open Google Calendar Event
+          </a>
+
+        </div>
+
+
+        <!-- =================================================
+             REMINDER
+             ================================================= -->
+
+        <div
+          id="reminderSummary"
+          class="summary"
+          style="display: none;"
+        >
+
+          <div class="summary-title">
+            Lưu ý
           </div>
 
           <div>
-            Vui lòng kiểm tra email để nhận thông tin xác nhận meeting.
+            Bạn không cần tham gia Google Meet ngay lúc này.
+            Hãy lưu lại link Meet và sử dụng link này khi
+            đến giờ meeting.
           </div>
 
         </div>
 
+
+        <!-- =================================================
+             ERROR
+             ================================================= -->
+
+        <div
+          id="errorSummary"
+          class="summary"
+          style="display: none;"
+        >
+
+          <div class="summary-title">
+            Có lỗi xảy ra
+          </div>
+
+          <div
+            id="errorMessage"
+          >
+            Không thể tải thông tin booking.
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             BACK
+             ================================================= -->
 
         <a
           href="./"
@@ -92,33 +289,561 @@
 
   <script>
 
+    /* =====================================================
+       CONFIG
+       ===================================================== */
+
+    const API_URL =
+      'https://script.google.com/macros/s/AKfycbwDbTkT5KzUkp9tglbKZV9uu0iyZzepXNM6LFQR53ieEiGIY-IdP8yYOUMmxkbWn6EF/exec';
+
+
+    /* =====================================================
+       DOM
+       ===================================================== */
+
+    const bookingSlot =
+      document.getElementById(
+        'bookingSlot'
+      );
+
+    const studentSummary =
+      document.getElementById(
+        'studentSummary'
+      );
+
+    const studentName =
+      document.getElementById(
+        'studentName'
+      );
+
+    const studentMssv =
+      document.getElementById(
+        'studentMssv'
+      );
+
+    const studentTopic =
+      document.getElementById(
+        'studentTopic'
+      );
+
+    const meetSummary =
+      document.getElementById(
+        'meetSummary'
+      );
+
+    const meetLink =
+      document.getElementById(
+        'meetLink'
+      );
+
+    const joinMeetButton =
+      document.getElementById(
+        'joinMeetButton'
+      );
+
+    const copyMeetButton =
+      document.getElementById(
+        'copyMeetButton'
+      );
+
+    const calendarSummary =
+      document.getElementById(
+        'calendarSummary'
+      );
+
+    const addCalendarButton =
+      document.getElementById(
+        'addCalendarButton'
+      );
+
+    const openCalendarButton =
+      document.getElementById(
+        'openCalendarButton'
+      );
+
+    const reminderSummary =
+      document.getElementById(
+        'reminderSummary'
+      );
+
+    const errorSummary =
+      document.getElementById(
+        'errorSummary'
+      );
+
+    const errorMessage =
+      document.getElementById(
+        'errorMessage'
+      );
+
+
+    /* =====================================================
+       URL PARAMS
+       ===================================================== */
+
     const params =
       new URLSearchParams(
         window.location.search
       );
 
+    const status =
+      params.get('status');
 
-    const slot =
-      params.get('slot');
+    const eventId =
+      params.get('eventId');
 
 
-    const element =
-      document.getElementById(
-        'bookingSlot'
+    /* =====================================================
+       FORMAT GOOGLE CALENDAR DATES
+       ===================================================== */
+
+    function createCalendarDateRange(
+      dateString,
+      timeString
+    ) {
+
+      /*
+       * Date:
+       * YYYY-MM-DD
+       *
+       * Time:
+       * HH:MM–HH:MM
+       */
+
+      const timeMatch =
+        String(timeString || '').match(
+          /(\d{1,2}):(\d{2})\s*[–-]\s*(\d{1,2}):(\d{2})/
+        );
+
+
+      if (
+        !dateString ||
+        !timeMatch
+      ) {
+
+        return '';
+
+      }
+
+
+      const startHour =
+        String(
+          timeMatch[1]
+        ).padStart(2, '0');
+
+      const startMinute =
+        String(
+          timeMatch[2]
+        ).padStart(2, '0');
+
+      const endHour =
+        String(
+          timeMatch[3]
+        ).padStart(2, '0');
+
+      const endMinute =
+        String(
+          timeMatch[4]
+        ).padStart(2, '0');
+
+
+      const date =
+        String(dateString)
+          .replace(
+            /-/g,
+            ''
+          );
+
+
+      return (
+        date +
+        'T' +
+        startHour +
+        startMinute +
+        '00/' +
+        date +
+        'T' +
+        endHour +
+        endMinute +
+        '00'
       );
 
+    }
 
-    if (slot) {
 
-      element.textContent =
-        slot;
+    /* =====================================================
+       CREATE GOOGLE CALENDAR LINK
+       ===================================================== */
 
-    } else {
+    function createGoogleCalendarUrl(
+      data
+    ) {
 
-      element.textContent =
-        'Booking đã được ghi nhận.';
+      const dateRange =
+        createCalendarDateRange(
+          data.date,
+          data.time
+        );
+
+
+      if (!dateRange) {
+
+        return '';
+
+      }
+
+
+      const details =
+        [
+          `Sinh viên: ${data.student || ''}`,
+          `MSSV: ${data.mssv || ''}`,
+          `Nội dung: ${data.topic || ''}`,
+          '',
+          `Google Meet: ${data.meetLink || ''}`
+        ]
+          .join('\n');
+
+
+      const calendarParams =
+        new URLSearchParams({
+
+          action:
+            'TEMPLATE',
+
+          text:
+            `Student Meeting – ${data.student || ''}`,
+
+          dates:
+            dateRange,
+
+          details:
+            details,
+
+          ctz:
+            'Asia/Ho_Chi_Minh'
+
+        });
+
+
+      return (
+        'https://calendar.google.com/calendar/render?' +
+        calendarParams.toString()
+      );
 
     }
+
+
+    /* =====================================================
+       SHOW ERROR
+       ===================================================== */
+
+    function showError(
+      message
+    ) {
+
+      errorSummary.style.display =
+        'block';
+
+      errorMessage.textContent =
+        message ||
+        'Không thể tải thông tin booking.';
+
+
+      bookingSlot.textContent =
+        'Không thể tải thông tin booking.';
+
+    }
+
+
+    /* =====================================================
+       COPY MEET LINK
+       ===================================================== */
+
+    copyMeetButton.addEventListener(
+      'click',
+      async function () {
+
+        const url =
+          meetLink.href;
+
+
+        if (!url || url === '#') {
+
+          return;
+
+        }
+
+
+        try {
+
+          await navigator.clipboard.writeText(
+            url
+          );
+
+          copyMeetButton.textContent =
+            'Copied ✓';
+
+
+          setTimeout(
+            function () {
+
+              copyMeetButton.textContent =
+                'Copy Meet Link';
+
+            },
+            1800
+          );
+
+        } catch (error) {
+
+          /*
+           * Fallback for browsers
+           * that block navigator.clipboard.
+           */
+
+          const tempInput =
+            document.createElement(
+              'textarea'
+            );
+
+          tempInput.value =
+            url;
+
+          document.body.appendChild(
+            tempInput
+          );
+
+          tempInput.select();
+
+          document.execCommand(
+            'copy'
+          );
+
+          tempInput.remove();
+
+
+          copyMeetButton.textContent =
+            'Copied ✓';
+
+
+          setTimeout(
+            function () {
+
+              copyMeetButton.textContent =
+                'Copy Meet Link';
+
+            },
+            1800
+          );
+
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       API CALLBACK
+       ===================================================== */
+
+    window.handleBooking =
+      function (data) {
+
+        if (
+          !data ||
+          !data.success
+        ) {
+
+          showError(
+            data &&
+            data.error
+              ? data.error
+              : 'Không tìm thấy booking.'
+          );
+
+          return;
+
+        }
+
+
+        /* -------------------------------------------------
+           BOOKING
+           ------------------------------------------------- */
+
+        bookingSlot.textContent =
+          `${data.displayDate} — ${data.time}`;
+
+
+        /* -------------------------------------------------
+           STUDENT
+           ------------------------------------------------- */
+
+        studentName.textContent =
+          `Họ và tên: ${data.student}`;
+
+        studentMssv.textContent =
+          `MSSV: ${data.mssv}`;
+
+        studentTopic.textContent =
+          `Nội dung: ${data.topic || 'Chưa cung cấp'}`;
+
+
+        studentSummary.style.display =
+          'block';
+
+
+        /* -------------------------------------------------
+           GOOGLE MEET
+           ------------------------------------------------- */
+
+        if (data.meetLink) {
+
+          meetLink.href =
+            data.meetLink;
+
+          meetLink.textContent =
+            data.meetLink;
+
+          joinMeetButton.href =
+            data.meetLink;
+
+          meetSummary.style.display =
+            'block';
+
+        }
+
+
+        /* -------------------------------------------------
+           GOOGLE CALENDAR
+           ------------------------------------------------- */
+
+        const addCalendarUrl =
+          createGoogleCalendarUrl(
+            data
+          );
+
+
+        if (addCalendarUrl) {
+
+          addCalendarButton.href =
+            addCalendarUrl;
+
+          calendarSummary.style.display =
+            'block';
+
+        }
+
+
+        /*
+         * Open the actual Calendar event
+         * created by the lecturer.
+         */
+        if (data.calendarLink) {
+
+          openCalendarButton.href =
+            data.calendarLink;
+
+        } else {
+
+          openCalendarButton.style.display =
+            'none';
+
+        }
+
+
+        /* -------------------------------------------------
+           REMINDER
+           ------------------------------------------------- */
+
+        reminderSummary.style.display =
+          'block';
+
+      };
+
+
+    /* =====================================================
+       LOAD BOOKING
+       ===================================================== */
+
+    function loadBooking() {
+
+      if (
+        status === 'error'
+      ) {
+
+        showError(
+          params.get('message') ||
+          'Booking không thành công.'
+        );
+
+        return;
+
+      }
+
+
+      if (!eventId) {
+
+        showError(
+          'Không tìm thấy Event ID của booking.'
+        );
+
+        return;
+
+      }
+
+
+      /*
+       * JSONP
+       *
+       * Apps Script hỗ trợ callback,
+       * nên không bị CORS như fetch().
+       */
+
+      const script =
+        document.createElement(
+          'script'
+        );
+
+
+      const callbackName =
+        'handleBooking';
+
+
+      script.src =
+        API_URL +
+        '?action=booking' +
+        '&eventId=' +
+        encodeURIComponent(
+          eventId
+        ) +
+        '&callback=' +
+        callbackName +
+        '&t=' +
+        Date.now();
+
+
+      script.onerror =
+        function () {
+
+          showError(
+            'Không thể kết nối tới hệ thống booking.'
+          );
+
+        };
+
+
+      document.body.appendChild(
+        script
+      );
+
+    }
+
+
+    /* =====================================================
+       START
+       ===================================================== */
+
+    loadBooking();
 
   </script>
 
