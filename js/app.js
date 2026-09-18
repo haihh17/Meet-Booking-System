@@ -804,3 +804,18 @@ bookingForm.addEventListener(
 
   }
 );
+bookingForm.addEventListener(
+  'submit',
+  function (event) {
+
+    event.preventDefault();
+
+    if (!validateBookingForm()) {
+      return;
+    }
+
+    formMessage.textContent =
+      'Thông tin hợp lệ. Sẵn sàng gửi booking.';
+
+  }
+);
