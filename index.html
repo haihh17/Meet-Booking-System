@@ -132,31 +132,166 @@
       </section>
 
 
-      <!-- SUMMARY -->
+<!-- SUMMARY -->
 
-      <section
-        id="summarySection"
-        class="section hidden"
+<section
+  id="summarySection"
+  class="section hidden"
+>
+
+  <div class="section-label">
+    04 — Xác nhận thời gian
+  </div>
+
+  <div class="summary">
+
+    <div class="summary-title">
+      Lịch meeting đã chọn
+    </div>
+
+    <div
+      id="summaryValue"
+      class="summary-value"
+    ></div>
+
+  </div>
+
+</section>
+
+
+<!-- STUDENT INFORMATION -->
+
+<section
+  id="studentSection"
+  class="section hidden"
+>
+
+  <div class="section-label">
+    05 — Thông tin của bạn
+  </div>
+
+
+  <form id="bookingForm">
+
+    <!-- NAME -->
+
+    <div class="form-group">
+
+      <label for="studentName">
+        Họ và tên
+      </label>
+
+      <input
+        id="studentName"
+        name="studentName"
+        type="text"
+        placeholder="Nhập họ và tên"
+        autocomplete="name"
+        required
       >
 
-        <div class="section-label">
-          Đã chọn
-        </div>
+      <div
+        class="field-error"
+        id="nameError"
+      ></div>
 
-        <div class="summary">
+    </div>
 
-          <div class="summary-title">
-            Lịch meeting
-          </div>
 
-          <div
-            id="summaryValue"
-            class="summary-value"
-          ></div>
+    <!-- MSSV -->
 
-        </div>
+    <div class="form-group">
 
-      </section>
+      <label for="studentMssv">
+        MSSV
+      </label>
+
+      <input
+        id="studentMssv"
+        name="studentMssv"
+        type="text"
+        placeholder="Nhập mã số sinh viên"
+        autocomplete="off"
+        required
+      >
+
+      <div
+        class="field-error"
+        id="mssvError"
+      ></div>
+
+    </div>
+
+
+    <!-- EMAIL -->
+
+    <div class="form-group">
+
+      <label for="studentEmail">
+        Email
+      </label>
+
+      <input
+        id="studentEmail"
+        name="studentEmail"
+        type="email"
+        placeholder="example@email.com"
+        autocomplete="email"
+        required
+      >
+
+      <div
+        class="field-error"
+        id="emailError"
+      ></div>
+
+    </div>
+
+
+    <!-- TOPIC -->
+
+    <div class="form-group">
+
+      <label for="studentTopic">
+        Bạn muốn trao đổi gì?
+      </label>
+
+      <textarea
+        id="studentTopic"
+        name="studentTopic"
+        rows="4"
+        placeholder="Ví dụ: Em muốn hỏi về concept, layout hoặc feedback Assignment 2."
+        required
+      ></textarea>
+
+      <div
+        class="field-error"
+        id="topicError"
+      ></div>
+
+    </div>
+
+
+    <!-- CONFIRM -->
+
+    <button
+      id="confirmButton"
+      class="confirm-button"
+      type="submit"
+      disabled
+    >
+      Xác nhận booking
+    </button>
+
+
+    <div
+      id="formMessage"
+      class="form-message"
+    ></div>
+
+  </form>
+
+</section>
 
 
     </div>
