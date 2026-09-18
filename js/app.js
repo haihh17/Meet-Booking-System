@@ -603,6 +603,14 @@ function showSummary() {
     'hidden'
   );
 
+
+  studentSection.classList.remove(
+    'hidden'
+  );
+
+
+  validateBookingForm();
+
 }
 
 
@@ -639,3 +647,160 @@ function updateActiveButtons(
    ===================================================== */
 
 initialize();
+function validateBookingForm() {
+
+  const name =
+    studentName.value.trim();
+
+  const mssv =
+    studentMssv.value.trim();
+
+  const email =
+    studentEmail.value.trim();
+
+  const topic =
+    studentTopic.value.trim();
+
+
+  let isValid = true;
+
+
+  /* -----------------------------------------------------
+     NAME
+     ----------------------------------------------------- */
+
+  nameError.textContent = '';
+
+
+  if (!name) {
+
+    nameError.textContent =
+      'Vui lòng nhập họ và tên.';
+
+    isValid = false;
+
+  } else if (name.length < 2) {
+
+    nameError.textContent =
+      'Họ và tên chưa hợp lệ.';
+
+    isValid = false;
+
+  }
+
+
+  /* -----------------------------------------------------
+     MSSV
+     ----------------------------------------------------- */
+
+  mssvError.textContent = '';
+
+
+  if (!mssv) {
+
+    mssvError.textContent =
+      'Vui lòng nhập MSSV.';
+
+    isValid = false;
+
+  }
+
+
+  /* -----------------------------------------------------
+     EMAIL
+     ----------------------------------------------------- */
+
+  emailError.textContent = '';
+
+
+  const emailPattern =
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+  if (!email) {
+
+    emailError.textContent =
+      'Vui lòng nhập email.';
+
+    isValid = false;
+
+  } else if (
+    !emailPattern.test(email)
+  ) {
+
+    emailError.textContent =
+      'Email chưa đúng định dạng.';
+
+    isValid = false;
+
+  }
+
+
+  /* -----------------------------------------------------
+     TOPIC
+     ----------------------------------------------------- */
+
+  topicError.textContent = '';
+
+
+  if (!topic) {
+
+    topicError.textContent =
+      'Vui lòng nhập nội dung cần trao đổi.';
+
+    isValid = false;
+
+  } else if (
+    topic.length < 5
+  ) {
+
+    topicError.textContent =
+      'Vui lòng mô tả nội dung chi tiết hơn.';
+
+    isValid = false;
+
+  }
+
+
+  confirmButton.disabled =
+    !isValid;
+
+  return isValid;
+
+}
+[
+  studentName,
+  studentMssv,
+  studentEmail,
+  studentTopic
+].forEach(
+  field => {
+
+    field.addEventListener(
+      'input',
+      validateBookingForm
+    );
+
+  }
+);
+bookingForm.addEventListener(
+  'submit',
+  function (event) {
+
+    event.preventDefault();
+
+
+    if (
+      !validateBookingForm()
+    ) {
+
+      return;
+
+    }
+
+
+    formMessage.textContent =
+      'Thông tin hợp lệ. Sẵn sàng gửi booking.';
+
+  }
+);
