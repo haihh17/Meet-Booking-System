@@ -1,6 +1,11 @@
 /* =========================================================
    STUDENT MEETING BOOKING
-   FRONTEND APPLICATION
+   APP.JS — CLEAN VERSION
+   ========================================================= */
+
+
+/* =========================================================
+   STATE
    ========================================================= */
 
 let allSlots = [];
@@ -46,74 +51,182 @@ const MONTHS = {
    DOM
    ========================================================= */
 
-const monthOptions =
-  document.getElementById('monthOptions');
+let monthOptions;
+let weekdayOptions;
+let dateOptions;
+let timeOptions;
 
-const weekdayOptions =
-  document.getElementById('weekdayOptions');
+let statusText;
+let errorText;
 
-const dateOptions =
-  document.getElementById('dateOptions');
+let weekdaySection;
+let dateSection;
+let timeSection;
+let summarySection;
+let summaryValue;
 
-const timeOptions =
-  document.getElementById('timeOptions');
+let studentSection;
+let bookingForm;
 
-const statusText =
-  document.getElementById('status');
+let studentName;
+let studentMssv;
+let studentEmail;
+let studentTopic;
 
-const errorText =
-  document.getElementById('error');
+let confirmButton;
+let formMessage;
 
-const weekdaySection =
-  document.getElementById('weekdaySection');
+let nameError;
+let mssvError;
+let emailError;
+let topicError;
 
-const dateSection =
-  document.getElementById('dateSection');
 
-const timeSection =
-  document.getElementById('timeSection');
+/* =========================================================
+   INIT DOM
+   ========================================================= */
 
-const summarySection =
-  document.getElementById('summarySection');
+function initDOM() {
 
-const summaryValue =
-  document.getElementById('summaryValue');
+  monthOptions =
+    document.getElementById('monthOptions');
 
-const studentSection =
-  document.getElementById('studentSection');
+  weekdayOptions =
+    document.getElementById('weekdayOptions');
 
-const bookingForm =
-  document.getElementById('bookingForm');
+  dateOptions =
+    document.getElementById('dateOptions');
 
-const studentName =
-  document.getElementById('studentName');
+  timeOptions =
+    document.getElementById('timeOptions');
 
-const studentMssv =
-  document.getElementById('studentMssv');
+  statusText =
+    document.getElementById('status');
 
-const studentEmail =
-  document.getElementById('studentEmail');
+  errorText =
+    document.getElementById('error');
 
-const studentTopic =
-  document.getElementById('studentTopic');
+  weekdaySection =
+    document.getElementById('weekdaySection');
 
-const confirmButton =
-  document.getElementById('confirmButton');
+  dateSection =
+    document.getElementById('dateSection');
 
-const formMessage =
-  document.getElementById('formMessage');
+  timeSection =
+    document.getElementById('timeSection');
 
-const nameError =
-  document.getElementById('nameError');
+  summarySection =
+    document.getElementById('summarySection');
 
-const mssvError =
-  document.getElementById('mssvError');
+  summaryValue =
+    document.getElementById('summaryValue');
 
-const emailError =
-  document.getElementById('emailError');
+  studentSection =
+    document.getElementById('studentSection');
 
-const topicError =
-  document.getElementById('topicError');
+  bookingForm =
+    document.getElementById('bookingForm');
+
+  studentName =
+    document.getElementById('studentName');
+
+  studentMssv =
+    document.getElementById('studentMssv');
+
+  studentEmail =
+    document.getElementById('studentEmail');
+
+  studentTopic =
+    document.getElementById('studentTopic');
+
+  confirmButton =
+    document.getElementById('confirmButton');
+
+  formMessage =
+    document.getElementById('formMessage');
+
+  nameError =
+    document.getElementById('nameError');
+
+  mssvError =
+    document.getElementById('mssvError');
+
+  emailError =
+    document.getElementById('emailError');
+
+  topicError =
+    document.getElementById('topicError');
+
+}
+
+
+/* =========================================================
+   DOM CHECK
+   ========================================================= */
+
+function checkRequiredElements() {
+
+  const required = {
+
+    monthOptions,
+    weekdayOptions,
+    dateOptions,
+    timeOptions,
+
+    statusText,
+    errorText,
+
+    weekdaySection,
+    dateSection,
+    timeSection,
+
+    summarySection,
+    summaryValue,
+
+    studentSection,
+    bookingForm,
+
+    studentName,
+    studentMssv,
+    studentEmail,
+    studentTopic,
+
+    confirmButton,
+    formMessage,
+
+    nameError,
+    mssvError,
+    emailError,
+    topicError
+
+  };
+
+
+  const missing = [];
+
+
+  Object.entries(required)
+    .forEach(
+      ([name, element]) => {
+
+        if (!element) {
+          missing.push(name);
+        }
+
+      }
+    );
+
+
+  if (missing.length > 0) {
+
+    throw new Error(
+      'Thiếu thành phần HTML: ' +
+      missing.join(', ')
+    );
+
+  }
+
+}
 
 
 /* =========================================================
@@ -122,27 +235,43 @@ const topicError =
 
 function parseDate(dateString) {
 
-  const parts =
-    dateString.split('-').map(Number);
+  const [
+    year,
+    month,
+    day
+  ] =
+    dateString
+      .split('-')
+      .map(Number);
+
 
   return new Date(
-    parts[0],
-    parts[1] - 1,
-    parts[2]
+    year,
+    month - 1,
+    day
   );
 
 }
 
 
-function formatDateForDisplay(dateString) {
+function formatDateForDisplay(
+  dateString
+) {
 
   const date =
-    parseDate(dateString);
+    parseDate(
+      dateString
+    );
+
 
   return (
-    String(date.getDate()).padStart(2, '0') +
+    String(
+      date.getDate()
+    ).padStart(2, '0') +
     '/' +
-    String(date.getMonth() + 1).padStart(2, '0') +
+    String(
+      date.getMonth() + 1
+    ).padStart(2, '0') +
     '/' +
     date.getFullYear()
   );
@@ -170,29 +299,35 @@ function sortDates(a, b) {
 
 
 /* =========================================================
-   UI HELPERS
+   UI
    ========================================================= */
 
 function showError(message) {
 
-  if (statusText) {
-    statusText.classList.add('hidden');
-  }
+  statusText.textContent = '';
 
-  if (errorText) {
-    errorText.textContent = message;
-    errorText.classList.remove('hidden');
-  }
+  statusText.classList.add(
+    'hidden'
+  );
+
+
+  errorText.textContent =
+    message;
+
+  errorText.classList.remove(
+    'hidden'
+  );
 
 }
 
 
 function hideError() {
 
-  if (errorText) {
-    errorText.textContent = '';
-    errorText.classList.add('hidden');
-  }
+  errorText.textContent = '';
+
+  errorText.classList.add(
+    'hidden'
+  );
 
 }
 
@@ -202,19 +337,16 @@ function updateActiveButtons(
   activeButton
 ) {
 
-  if (!container) {
-    return;
-  }
+  [...container.children]
+    .forEach(
+      child => {
 
-  [...container.children].forEach(
-    child => {
+        child.classList.remove(
+          'active'
+        );
 
-      child.classList.remove(
-        'active'
-      );
-
-    }
-  );
+      }
+    );
 
 
   activeButton.classList.add(
@@ -224,26 +356,8 @@ function updateActiveButtons(
 }
 
 
-function addHiddenField_(
-  form,
-  name,
-  value
-) {
-
-  const input =
-    document.createElement('input');
-
-  input.type = 'hidden';
-  input.name = name;
-  input.value = value;
-
-  form.appendChild(input);
-
-}
-
-
 /* =========================================================
-   LOAD DATA
+   LOAD SLOTS
    ========================================================= */
 
 function initialize() {
@@ -251,14 +365,21 @@ function initialize() {
   hideError();
 
 
+  statusText.textContent =
+    'Đang tải lịch...';
+
+
+  /**
+   * Check API function.
+   */
   if (
     typeof loadSlots !==
     'function'
   ) {
 
     showError(
-      'Không thể tải hệ thống booking. ' +
-      'Vui lòng kiểm tra api.js.'
+      'Không tìm thấy loadSlots(). ' +
+      'Hãy kiểm tra js/api.js.'
     );
 
     return;
@@ -266,60 +387,55 @@ function initialize() {
   }
 
 
-  if (statusText) {
-    statusText.textContent =
-      'Đang tải lịch...';
-  }
-
-
   loadSlots()
 
-    .then(slots => {
+    .then(
+      slots => {
 
-      allSlots =
-        Array.isArray(slots)
-          ? slots.sort(sortDates)
-          : [];
+        allSlots =
+          Array.isArray(slots)
+            ? slots.sort(sortDates)
+            : [];
 
-
-      if (statusText) {
 
         statusText.textContent =
           `Đã tải ${allSlots.length} slot.`;
 
+
+        if (
+          allSlots.length === 0
+        ) {
+
+          showError(
+            'Hiện chưa có slot meeting.'
+          );
+
+          return;
+
+        }
+
+
+        renderMonths();
+
       }
+    )
 
+    .catch(
+      error => {
 
-      if (
-        allSlots.length === 0
-      ) {
-
-        showError(
-          'Hiện chưa có slot meeting.'
+        console.error(
+          'LOAD ERROR:',
+          error
         );
 
-        return;
+
+        showError(
+          error.message ||
+          'Không thể tải lịch booking.'
+        );
 
       }
-
-
-      renderMonths();
-
-    })
-
-    .catch(error => {
-
-      console.error(
-        'Load slots error:',
-        error
-      );
-
-      showError(
-        error.message ||
-        'Không thể tải lịch booking.'
-      );
-
-    });
+    );
 
 }
 
@@ -349,17 +465,6 @@ function renderMonths() {
   months.forEach(
     monthKey => {
 
-      const button =
-        document.createElement('button');
-
-
-      button.type =
-        'button';
-
-      button.className =
-        'option';
-
-
       const [
         year,
         month
@@ -367,6 +472,20 @@ function renderMonths() {
         monthKey
           .split('-')
           .map(Number);
+
+
+      const button =
+        document.createElement(
+          'button'
+        );
+
+
+      button.type =
+        'button';
+
+
+      button.className =
+        'option';
 
 
       button.textContent =
@@ -400,17 +519,21 @@ function renderMonths() {
             'hidden'
           );
 
+
           dateSection.classList.add(
             'hidden'
           );
+
 
           timeSection.classList.add(
             'hidden'
           );
 
+
           summarySection.classList.add(
             'hidden'
           );
+
 
           studentSection.classList.add(
             'hidden'
@@ -482,11 +605,14 @@ function renderWeekdays() {
     weekday => {
 
       const button =
-        document.createElement('button');
+        document.createElement(
+          'button'
+        );
 
 
       button.type =
         'button';
+
 
       button.className =
         'option';
@@ -520,13 +646,16 @@ function renderWeekdays() {
             'hidden'
           );
 
+
           timeSection.classList.add(
             'hidden'
           );
 
+
           summarySection.classList.add(
             'hidden'
           );
+
 
           studentSection.classList.add(
             'hidden'
@@ -568,13 +697,14 @@ function renderDates() {
       )
       .filter(
         slot =>
-          parseDate(slot.date)
-            .getDay() ===
+          parseDate(
+            slot.date
+          ).getDay() ===
           selectedWeekday
       );
 
 
-  const uniqueDates = [
+  const dates = [
     ...new Set(
       slots.map(
         slot =>
@@ -584,10 +714,10 @@ function renderDates() {
   ];
 
 
-  uniqueDates.sort();
+  dates.sort();
 
 
-  uniqueDates.forEach(
+  dates.forEach(
     dateString => {
 
       const date =
@@ -597,11 +727,14 @@ function renderDates() {
 
 
       const card =
-        document.createElement('button');
+        document.createElement(
+          'button'
+        );
 
 
       card.type =
         'button';
+
 
       card.className =
         'date-card';
@@ -639,9 +772,11 @@ function renderDates() {
             'hidden'
           );
 
+
           summarySection.classList.add(
             'hidden'
           );
+
 
           studentSection.classList.add(
             'hidden'
@@ -674,23 +809,25 @@ function renderTimes() {
 
 
   const slots =
-    allSlots
-      .filter(
-        slot =>
-          slot.date ===
-          selectedDate
-      );
+    allSlots.filter(
+      slot =>
+        slot.date ===
+        selectedDate
+    );
 
 
   slots.forEach(
     slot => {
 
       const card =
-        document.createElement('button');
+        document.createElement(
+          'button'
+        );
 
 
       card.type =
         'button';
+
 
       card.className =
         'time-card';
@@ -773,7 +910,7 @@ function showSummary() {
 
 
 /* =========================================================
-   FORM VALIDATION
+   VALIDATION
    ========================================================= */
 
 function validateBookingForm() {
@@ -791,14 +928,13 @@ function validateBookingForm() {
     studentTopic.value.trim();
 
 
-  let isValid = true;
+  let valid = true;
 
-
-  /* -------------------------------------------------------
-     NAME
-     ------------------------------------------------------- */
 
   nameError.textContent = '';
+  mssvError.textContent = '';
+  emailError.textContent = '';
+  topicError.textContent = '';
 
 
   if (!name) {
@@ -806,7 +942,7 @@ function validateBookingForm() {
     nameError.textContent =
       'Vui lòng nhập họ và tên.';
 
-    isValid = false;
+    valid = false;
 
   } else if (
     name.length < 2
@@ -815,16 +951,9 @@ function validateBookingForm() {
     nameError.textContent =
       'Họ và tên chưa hợp lệ.';
 
-    isValid = false;
+    valid = false;
 
   }
-
-
-  /* -------------------------------------------------------
-     MSSV
-     ------------------------------------------------------- */
-
-  mssvError.textContent = '';
 
 
   if (!mssv) {
@@ -832,16 +961,9 @@ function validateBookingForm() {
     mssvError.textContent =
       'Vui lòng nhập MSSV.';
 
-    isValid = false;
+    valid = false;
 
   }
-
-
-  /* -------------------------------------------------------
-     EMAIL
-     ------------------------------------------------------- */
-
-  emailError.textContent = '';
 
 
   const emailPattern =
@@ -853,7 +975,7 @@ function validateBookingForm() {
     emailError.textContent =
       'Vui lòng nhập email.';
 
-    isValid = false;
+    valid = false;
 
   } else if (
     !emailPattern.test(email)
@@ -862,16 +984,9 @@ function validateBookingForm() {
     emailError.textContent =
       'Email chưa đúng định dạng.';
 
-    isValid = false;
+    valid = false;
 
   }
-
-
-  /* -------------------------------------------------------
-     TOPIC
-     ------------------------------------------------------- */
-
-  topicError.textContent = '';
 
 
   if (!topic) {
@@ -879,7 +994,7 @@ function validateBookingForm() {
     topicError.textContent =
       'Vui lòng nhập nội dung cần trao đổi.';
 
-    isValid = false;
+    valid = false;
 
   } else if (
     topic.length < 5
@@ -888,205 +1003,294 @@ function validateBookingForm() {
     topicError.textContent =
       'Vui lòng mô tả nội dung chi tiết hơn.';
 
-    isValid = false;
+    valid = false;
 
   }
 
 
   confirmButton.disabled =
-    !isValid;
+    !valid;
 
 
-  return isValid;
+  return valid;
 
 }
 
 
 /* =========================================================
-   FORM INPUT EVENTS
+   HIDDEN FIELD
    ========================================================= */
 
-[
-  studentName,
-  studentMssv,
-  studentEmail,
-  studentTopic
-].forEach(
-  field => {
+function addHiddenField_(
+  form,
+  name,
+  value
+) {
 
-    field.addEventListener(
-      'input',
-      validateBookingForm
+  const input =
+    document.createElement(
+      'input'
     );
 
-  }
-);
+
+  input.type =
+    'hidden';
+
+
+  input.name =
+    name;
+
+
+  input.value =
+    value;
+
+
+  form.appendChild(
+    input
+  );
+
+}
 
 
 /* =========================================================
-   BOOKING SUBMIT
+   FORM EVENTS
    ========================================================= */
 
-bookingForm.addEventListener(
-  'submit',
-  function (event) {
+function setupFormEvents() {
 
-    event.preventDefault();
+  [
+    studentName,
+    studentMssv,
+    studentEmail,
+    studentTopic
+  ].forEach(
+    field => {
 
-
-    /* -----------------------------------------------------
-       Validate
-       ----------------------------------------------------- */
-
-    if (
-      !validateBookingForm()
-    ) {
-
-      return;
+      field.addEventListener(
+        'input',
+        validateBookingForm
+      );
 
     }
+  );
 
 
-    /* -----------------------------------------------------
-       Validate selected slot
-       ----------------------------------------------------- */
+  bookingForm.addEventListener(
+    'submit',
+    event => {
 
-    if (
-      !selectedDate ||
-      !selectedTime
-    ) {
+      event.preventDefault();
+
+
+      if (
+        !validateBookingForm()
+      ) {
+
+        return;
+
+      }
+
+
+      if (
+        !selectedDate ||
+        !selectedTime
+      ) {
+
+        formMessage.textContent =
+          'Vui lòng chọn khung giờ meeting.';
+
+        return;
+
+      }
+
+
+      confirmButton.disabled =
+        true;
+
+
+      confirmButton.textContent =
+        'Đang xác nhận...';
+
 
       formMessage.textContent =
-        'Vui lòng chọn khung giờ meeting.';
+        'Đang kiểm tra và xác nhận lịch meeting...';
 
-      return;
+
+      const slot =
+        `${formatSelectedDate_()} | ${selectedTime}`;
+
+
+      const bookingId =
+        'BK-' +
+        Date.now() +
+        '-' +
+        Math.random()
+          .toString(36)
+          .slice(2, 8);
+
+
+      const postForm =
+        document.createElement(
+          'form'
+        );
+
+
+      postForm.method =
+        'POST';
+
+
+      postForm.action =
+        API_URL;
+
+
+      postForm.target =
+        '_self';
+
+
+      postForm.style.display =
+        'none';
+
+
+      addHiddenField_(
+        postForm,
+        'action',
+        'book'
+      );
+
+
+      addHiddenField_(
+        postForm,
+        'bookingId',
+        bookingId
+      );
+
+
+      addHiddenField_(
+        postForm,
+        'slot',
+        slot
+      );
+
+
+      addHiddenField_(
+        postForm,
+        'student',
+        studentName.value.trim()
+      );
+
+
+      addHiddenField_(
+        postForm,
+        'mssv',
+        studentMssv.value.trim()
+      );
+
+
+      addHiddenField_(
+        postForm,
+        'email',
+        studentEmail.value.trim()
+      );
+
+
+      addHiddenField_(
+        postForm,
+        'topic',
+        studentTopic.value.trim()
+      );
+
+
+      document.body.appendChild(
+        postForm
+      );
+
+
+      postForm.submit();
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   APP START
+   ========================================================= */
+
+function startApp() {
+
+  try {
+
+    initDOM();
+
+    checkRequiredElements();
+
+    setupFormEvents();
+
+    initialize();
+
+  } catch (error) {
+
+    console.error(
+      'APP START ERROR:',
+      error
+    );
+
+
+    /**
+     * Try to show error
+     * even if normal DOM is incomplete.
+     */
+    const errorElement =
+      document.getElementById('error');
+
+
+    const statusElement =
+      document.getElementById('status');
+
+
+    if (statusElement) {
+
+      statusElement.classList.add(
+        'hidden'
+      );
 
     }
 
 
-    /* -----------------------------------------------------
-       Loading state
-       ----------------------------------------------------- */
+    if (errorElement) {
 
-    confirmButton.disabled =
-      true;
-
-    confirmButton.textContent =
-      'Đang xác nhận...';
+      errorElement.textContent =
+        error.message;
 
 
-    formMessage.textContent =
-      'Đang kiểm tra và xác nhận lịch meeting...';
+      errorElement.classList.remove(
+        'hidden'
+      );
 
-
-    /* -----------------------------------------------------
-       Create booking data
-       ----------------------------------------------------- */
-
-    const slot =
-      `${formatSelectedDate_()} | ${selectedTime}`;
-
-
-    const bookingId =
-      'BK-' +
-      Date.now() +
-      '-' +
-      Math.random()
-        .toString(36)
-        .slice(2, 8);
-
-
-    /* -----------------------------------------------------
-       Create POST form
-       ----------------------------------------------------- */
-
-    const postForm =
-      document.createElement('form');
-
-
-    postForm.method =
-      'POST';
-
-    postForm.action =
-      API_URL;
-
-    postForm.target =
-      '_self';
-
-    postForm.style.display =
-      'none';
-
-
-    /* -----------------------------------------------------
-       Hidden data
-       ----------------------------------------------------- */
-
-    addHiddenField_(
-      postForm,
-      'action',
-      'book'
-    );
-
-
-    addHiddenField_(
-      postForm,
-      'bookingId',
-      bookingId
-    );
-
-
-    addHiddenField_(
-      postForm,
-      'slot',
-      slot
-    );
-
-
-    addHiddenField_(
-      postForm,
-      'student',
-      studentName.value.trim()
-    );
-
-
-    addHiddenField_(
-      postForm,
-      'mssv',
-      studentMssv.value.trim()
-    );
-
-
-    addHiddenField_(
-      postForm,
-      'email',
-      studentEmail.value.trim()
-    );
-
-
-    addHiddenField_(
-      postForm,
-      'topic',
-      studentTopic.value.trim()
-    );
-
-
-    /* -----------------------------------------------------
-       Submit
-       ----------------------------------------------------- */
-
-    document.body.appendChild(
-      postForm
-    );
-
-
-    postForm.submit();
+    }
 
   }
-);
+
+}
 
 
 /* =========================================================
-   START APPLICATION
+   DOM READY
    ========================================================= */
 
-initialize();
+if (
+  document.readyState ===
+  'loading'
+) {
+
+  document.addEventListener(
+    'DOMContentLoaded',
+    startApp
+  );
+
+} else {
+
+  startApp();
+
+}
