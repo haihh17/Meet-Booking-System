@@ -936,3 +936,51 @@ bookingForm.addEventListener(
 
   }
 );
+function addHiddenField_(
+  form,
+  name,
+  value
+) {
+
+  const input =
+    document.createElement('input');
+
+
+  input.type =
+    'hidden';
+
+
+  input.name =
+    name;
+
+
+  input.value =
+    value;
+
+
+  form.appendChild(
+    input
+  );
+
+}
+function formatSelectedDate_() {
+
+  const date =
+    parseDate(
+      selectedDate
+    );
+
+
+  return (
+    String(
+      date.getDate()
+    ).padStart(2, '0') +
+    '/' +
+    String(
+      date.getMonth() + 1
+    ).padStart(2, '0') +
+    '/' +
+    date.getFullYear()
+  );
+
+}
