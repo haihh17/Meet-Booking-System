@@ -1085,75 +1085,212 @@ function setupBookingResponseFrame() {
 
   }
 
-
-  window.addEventListener(
-    'message',
-    event => {
-
-      const data =
-        event.data || {};
+}
 
 
-      if (
-        data.type !==
-        'STUDENT_MEETING_BOOKING'
-      ) {
+function pollBookingStatus_(
+  bookingId,
+  attempt = 0
+) {
 
-        return;
+  const MAX_ATTEMPTS =
+    20;
 
-      }
-
-
-      if (
-        data.status === 'success' &&
-        data.eventId
-      ) {
-
-        const successUrl =
-          './booking-success.html' +
-          '?status=success' +
-          '&eventId=' +
-          encodeURIComponent(
-            data.eventId
-          );
+  const POLL_DELAY =
+    800;
 
 
-        window.location.replace(
-          successUrl
-        );
+  if (
+    attempt >= MAX_ATTEMPTS
+  ) {
 
-        return;
+    confirmButton.disabled =
+      false;
 
-      }
+    confirmButton.textContent =
+      'Xác nhận booking';
 
+    formMessage.textContent =
+      'Hệ thống chưa trả về kết quả booking. ' +
+      'Vui lòng kiểm tra lại trước khi đặt lần nữa.';
 
-      if (
-        data.status === 'error'
-      ) {
+    return;
 
-        const errorUrl =
-          './booking-success.html' +
-          '?status=error' +
-          '&message=' +
-          encodeURIComponent(
-            data.message ||
-            'Booking không thành công.'
-          );
+  }
 
 
-        window.location.replace(
-          errorUrl
-        );
+  const callbackName =
+    'bookingStatus_' +
+    Date.now() +
+    '_' +
+    attempt;
 
-      }
+
+  const script =
+    document.createElement(
+      'script'
+    );
+
+
+  let finished =
+    false;
+
+
+  function cleanup() {
+
+    if (finished) {
+
+      return;
 
     }
+
+    finished =
+      true;
+
+
+    script.remove();
+
+
+    try {
+
+      delete window[
+        callbackName
+      ];
+
+    } catch (error) {
+
+      window[
+        callbackName
+      ] = undefined;
+
+    }
+
+  }
+
+
+  window[
+    callbackName
+  ] = function(data) {
+
+    cleanup();
+
+
+    /*
+     * SUCCESS
+     */
+    if (
+      data &&
+      data.success &&
+      data.eventId
+    ) {
+
+      const successUrl =
+        './booking-success.html' +
+        '?status=success' +
+        '&eventId=' +
+        encodeURIComponent(
+          data.eventId
+        );
+
+
+      window.location.replace(
+        successUrl
+      );
+
+      return;
+
+    }
+
+
+    /*
+     * ERROR
+     */
+    if (
+      data &&
+      data.success === false &&
+      !data.pending &&
+      data.error
+    ) {
+
+      const errorUrl =
+        './booking-success.html' +
+        '?status=error' +
+        '&message=' +
+        encodeURIComponent(
+          data.error
+        );
+
+
+      window.location.replace(
+        errorUrl
+      );
+
+      return;
+
+    }
+
+
+    /*
+     * PENDING
+     */
+    setTimeout(
+      function() {
+
+        pollBookingStatus_(
+          bookingId,
+          attempt + 1
+        );
+
+      },
+      POLL_DELAY
+    );
+
+  };
+
+
+  script.onerror =
+    function() {
+
+      cleanup();
+
+
+      setTimeout(
+        function() {
+
+          pollBookingStatus_(
+            bookingId,
+            attempt + 1
+          );
+
+        },
+        POLL_DELAY
+      );
+
+    };
+
+
+  script.src =
+    API_URL +
+    '?action=bookingStatus' +
+    '&bookingId=' +
+    encodeURIComponent(
+      bookingId
+    ) +
+    '&callback=' +
+    callbackName +
+    '&t=' +
+    Date.now();
+
+
+  document.body.appendChild(
+    script
   );
 
 }
 
 
 function setupFormEvents() {
+
 
   [
     studentName,
@@ -1303,6 +1440,14 @@ function setupFormEvents() {
 
 
       postForm.submit();
+
+
+      /*
+       * Poll independently of the POST iframe response.
+       */
+      pollBookingStatus_(
+        bookingId
+      );
 
     }
   );
