@@ -1,5 +1,5 @@
 const API_URL =
-  'PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
+  'https://script.google.com/macros/s/AKfycbwDbTkT5KzUkp9tglbKZV9uu0iyZzepXNM6LFQR53ieEiGIY-IdP8yYOUMmxkbWn6EF/exec';
 
 
 function loadSlots() {
