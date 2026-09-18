@@ -783,7 +783,140 @@ function validateBookingForm() {
 
   }
 );
+bookingForm.addEventListener(
+  'submit',
+  function (event) {
 
+    event.preventDefault();
+
+
+    /* ===================================================
+       VALIDATE
+       =================================================== */
+
+    if (!validateBookingForm()) {
+      return;
+    }
+
+
+    /* ===================================================
+       CHECK SLOT
+       =================================================== */
+
+    if (!selectedDate || !selectedTime) {
+
+      formMessage.textContent =
+        'Vui lòng chọn khung giờ meeting.';
+
+      return;
+
+    }
+
+
+    /* ===================================================
+       UI: PROCESSING
+       =================================================== */
+
+    confirmButton.disabled = true;
+
+    confirmButton.textContent =
+      'Đang xác nhận...';
+
+    formMessage.textContent =
+      'Đang kiểm tra và xác nhận lịch meeting...';
+
+
+    /* ===================================================
+       BUILD SLOT
+       =================================================== */
+
+    const slot =
+      `${formatSelectedDate_()} | ${selectedTime}`;
+
+
+    /* ===================================================
+       CREATE NATIVE POST FORM
+       =================================================== */
+
+    const postForm =
+      document.createElement('form');
+
+
+    postForm.method = 'POST';
+
+    postForm.action = API_URL;
+
+    postForm.target = '_self';
+
+    postForm.style.display = 'none';
+
+
+    /* ===================================================
+       HIDDEN FIELDS
+       =================================================== */
+
+    addHiddenField_(
+      postForm,
+      'action',
+      'book'
+    );
+
+
+    addHiddenField_(
+      postForm,
+      'bookingId',
+      'BK-' + Date.now()
+    );
+
+
+    addHiddenField_(
+      postForm,
+      'slot',
+      slot
+    );
+
+
+    addHiddenField_(
+      postForm,
+      'student',
+      studentName.value.trim()
+    );
+
+
+    addHiddenField_(
+      postForm,
+      'mssv',
+      studentMssv.value.trim()
+    );
+
+
+    addHiddenField_(
+      postForm,
+      'email',
+      studentEmail.value.trim()
+    );
+
+
+    addHiddenField_(
+      postForm,
+      'topic',
+      studentTopic.value.trim()
+    );
+
+
+    /* ===================================================
+       SUBMIT
+       =================================================== */
+
+    document.body.appendChild(
+      postForm
+    );
+
+
+    postForm.submit();
+
+  }
+);
 
     /* -----------------------------------------------------
        Validate
