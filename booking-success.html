@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Booking thành công</title>
+
+  <link
+    rel="stylesheet"
+    href="css/style.css"
+  >
+
+</head>
+
+
+<body>
+
+  <div class="app">
+
+    <div class="container">
+
+      <section class="section">
+
+        <div class="eyebrow">
+          Student Consultation
+        </div>
+
+        <h1 class="title">
+          Booking thành công
+        </h1>
+
+        <p class="subtitle">
+          Lịch meeting của bạn đã được ghi nhận.
+        </p>
+
+
+        <div class="summary">
+
+          <div class="summary-title">
+            Lịch meeting
+          </div>
+
+          <div
+            id="bookingSlot"
+            class="summary-value"
+          >
+            Đang tải...
+          </div>
+
+        </div>
+
+
+        <div class="summary">
+
+          <div class="summary-title">
+            Tiếp theo
+          </div>
+
+          <div>
+            Vui lòng kiểm tra email để nhận thông tin xác nhận meeting.
+          </div>
+
+        </div>
+
+
+        <a
+          href="./"
+          class="confirm-button"
+          style="
+            display: block;
+            text-decoration: none;
+            text-align: center;
+            margin-top: 16px;
+          "
+        >
+          Quay lại trang booking
+        </a>
+
+      </section>
+
+    </div>
+
+  </div>
+
+
+  <script>
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+
+    const slot =
+      params.get('slot');
+
+
+    const element =
+      document.getElementById(
+        'bookingSlot'
+      );
+
+
+    if (slot) {
+
+      element.textContent =
+        slot;
+
+    } else {
+
+      element.textContent =
+        'Booking đã được ghi nhận.';
+
+    }
+
+  </script>
+
+</body>
+
+</html>
