@@ -72,6 +72,41 @@ const summarySection =
 
 const summaryValue =
   document.getElementById('summaryValue');
+const studentSection =
+  document.getElementById('studentSection');
+
+const bookingForm =
+  document.getElementById('bookingForm');
+
+const studentName =
+  document.getElementById('studentName');
+
+const studentMssv =
+  document.getElementById('studentMssv');
+
+const studentEmail =
+  document.getElementById('studentEmail');
+
+const studentTopic =
+  document.getElementById('studentTopic');
+
+const confirmButton =
+  document.getElementById('confirmButton');
+
+const formMessage =
+  document.getElementById('formMessage');
+
+const nameError =
+  document.getElementById('nameError');
+
+const mssvError =
+  document.getElementById('mssvError');
+
+const emailError =
+  document.getElementById('emailError');
+
+const topicError =
+  document.getElementById('topicError');
 
 
 /* =====================================================
