@@ -1,693 +1,2588 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Booking thành công</title>
-  <link rel="stylesheet" href="style_step5_visual_realignment_fixed.css">
-  <style>
-    .success-shell { min-height: 100vh; display:flex; align-items:flex-start; }
-    .success-shell .container { width:100% !important; max-width:1280px !important; display:block !important; margin:0 auto !important; }
-    .success-card-main { position:relative; display:grid; width:100%; max-width:1280px; min-width:0; grid-template-columns:minmax(340px,.88fr) minmax(0,1.12fr); overflow:hidden; border:1px solid #cfd2d7; border-radius:2px; background:#fff; box-shadow:14px 16px 0 rgba(13,15,19,.10),0 20px 40px rgba(13,15,19,.10); transform:rotate(-.8deg); }
-    .success-card-main::before { display:none; }
-    .success-hero { position:relative; min-height:690px; padding:clamp(34px,4vw,54px); background:radial-gradient(circle at 20% 20%, rgba(255,101,24,.22) 0 1px, transparent 1.5px) 0 0 / 10px 10px, #0d0f13; overflow:hidden; color:#fff; }
-    .success-hero::before { content:""; position:absolute; left:-30px; top:160px; width:260px; height:72px; background:#ff6518; transform:rotate(-15deg) skewX(-18deg); box-shadow:120px 300px 0 -14px rgba(255,101,24,.78); }
-    .success-hero::after { content:"MEETING\A CONFIRMED!"; position:absolute; left:44px; bottom:92px; white-space:pre; color:#fff; font-family:Impact,Haettenschweiler,"Arial Narrow Bold",Arial,sans-serif; font-size:clamp(30px,3.2vw,45px); line-height:.86; transform:rotate(-7deg); text-shadow:8px 8px 0 #ff6518; }
-    .success-hero-inner { position:relative; z-index:3; max-width:420px; }
-    .success-mark { width:54px; height:54px; display:grid; place-items:center; margin-bottom:22px; background:#ff6518; color:#fff; font-size:28px; font-weight:900; line-height:1; transform:skewX(-7deg); box-shadow:5px 5px 0 rgba(255,255,255,.08); }
-    .success-mark span { transform:skewX(7deg); }
-    .success-kicker { margin:0 0 8px; color:rgba(255,255,255,.68); font-size:10px; font-weight:800; letter-spacing:.17em; text-transform:uppercase; }
-    .success-title { margin:0; max-width:8ch; color:#fff; font-family:Impact,Haettenschweiler,"Arial Narrow Bold",Arial,sans-serif; font-size:clamp(54px,7.2vw,84px); line-height:.84; font-weight:900; letter-spacing:-.035em; text-transform:uppercase; }
-    .success-title strong { color:#ff6518; font-weight:inherit; }
-    .success-subtitle { margin:16px 0 0; max-width:330px; color:rgba(255,255,255,.74); font-size:13px; line-height:1.6; }
-    .success-body { padding:clamp(26px,4vw,44px); background:#fff; }
-    .success-status-row { display:flex; align-items:center; justify-content:space-between; gap:14px; margin-bottom:6px; padding-bottom:14px; border-bottom:1px solid #d8dbe0; }
-    .success-status-label { color:#68707c; font-size:10px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
-    .success-status-badge { display:inline-flex; align-items:center; gap:7px; padding:7px 10px; background:#eaf7f1; color:#16805b; font-size:11px; font-weight:800; line-height:1; }
-    .success-status-badge::before { content:""; width:7px; height:7px; border-radius:50%; background:currentColor; }
-    .success-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
-    .success-info-card { position:relative; min-width:0; padding:16px; border:1px solid #d9dce1; background:#fff; box-shadow:none; }
-    .success-info-card::after { content:""; position:absolute; right:0; top:0; width:26px; height:3px; background:#ff6518; transform:skewX(-28deg); transform-origin:top right; }
-    .success-info-card.wide { grid-column:1/-1; }
-    .success-card-label { margin-bottom:8px; color:#68707c; font-size:10px; font-weight:800; letter-spacing:.11em; text-transform:uppercase; }
-    .success-card-value { color:#101217; font-size:15px; font-weight:800; line-height:1.45; }
-    .student-info { display:grid; gap:9px; line-height:1.5; }
-    .student-info-row { display:grid; grid-template-columns:82px minmax(0,1fr); gap:10px; align-items:start; }
-    .student-info-row span { color:#68707c; font-size:12px; }
-    .student-info-row strong { min-width:0; color:#171b22; font-size:13px; font-weight:700; overflow-wrap:anywhere; }
-    .meet-link-box { margin-top:10px; padding:11px 12px; background:#f2f3f4; border-left:4px solid #ff6518; }
-    .meet-link-box a { display:block; color:#101217; font-size:12px; font-weight:700; line-height:1.5; overflow-wrap:anywhere; text-decoration:none; }
-    .action-stack { display:grid; grid-template-columns:1.2fr .9fr; gap:8px; margin-top:12px; }
-    .secondary-button { width:100%; min-height:44px; display:inline-flex; align-items:center; justify-content:center; gap:7px; padding:12px 16px; border:1px solid #d8dbe0; border-radius:4px; background:#f2f3f4; color:#171b22; font:inherit; font-weight:800; line-height:1.2; text-decoration:none; cursor:pointer; transition:160ms ease; }
-    .secondary-button:hover { border-color:#b9c0c9; transform:translateY(-1px); }
-    .secondary-button:active { transform:translateY(1px); }
-    .button-icon { font-weight:900; }
-    .reminder-text { color:#68707c; font-size:12px; line-height:1.65; }
-    .loading-panel,.error-panel { margin-bottom:14px; padding:16px; border:1px solid #d8dbe0; background:#f2f3f4; }
-    .loading-panel { display:flex; align-items:center; gap:12px; }
-    .loading-dot { width:10px; height:10px; flex:0 0 auto; border-radius:50%; background:#ff6518; animation:successPulse 1000ms ease-in-out infinite; }
-    @keyframes successPulse { 0%,100% { transform:scale(.75); opacity:.45; } 50% { transform:scale(1); opacity:1; } }
-    .error-panel { border-color:#f1c1bc; background:#fff6f4; }
-    .error-panel .success-card-label { color:#b42318; }
-    .booking-id { margin-top:16px; color:#68707c; font-family:monospace; font-size:10px; line-height:1.5; overflow-wrap:anywhere; }
-    .back-link { margin-top:14px; }
-    .hidden { display:none !important; }
-    @media(max-width:980px){ .success-card-main{grid-template-columns:1fr;transform:none}.success-hero{min-height:300px}.success-hero::after{left:auto;right:34px;bottom:48px} }
-    @media(max-width:640px){ .success-hero{min-height:300px;padding:24px}.success-title{font-size:clamp(48px,14vw,66px)}.success-hero::after{left:28px;right:auto;bottom:40px;font-size:27px}.success-body{padding:18px 16px}.success-grid{grid-template-columns:1fr}.success-info-card.wide{grid-column:auto}.action-stack{grid-template-columns:1fr}.student-info-row{grid-template-columns:72px minmax(0,1fr)} }
-    @media(prefers-reduced-motion:reduce){.loading-dot,.secondary-button{animation:none;transition:none}}
-  </style>
-</head>
-<body>
-  <div class="app success-shell">
-    <div class="container">
-      <section class="success-card-main">
-        <header class="success-hero">
-          <div class="success-hero-inner">
-            <div class="success-mark" aria-hidden="true"><span>✓</span></div>
-            <p class="success-kicker">Student Consultation / 04 — CONFIRM</p>
-            <h1 class="success-title">Booking <strong>thành công.</strong></h1>
-            <p class="success-subtitle">Lịch meeting của bạn đã được xác nhận. Lưu lại thời gian và sử dụng link Google Meet khi đến giờ.</p>
-          </div>
-        </header>
-        <div class="success-body">
-          <div class="success-status-row">
-            <div class="success-status-label">Booking Status</div>
-            <div class="success-status-badge">Confirmed</div>
-          </div>
-          <div id="loadingState" class="loading-panel">
-            <div class="loading-dot" aria-hidden="true"></div>
-            <div><div class="success-card-label">Booking</div><div class="success-card-value">Đang tải thông tin...</div></div>
-          </div>
-          <div id="bookingContent" class="success-grid hidden">
-            <div class="success-info-card wide">
-              <div class="success-card-label">01 — Lịch meeting</div>
-              <div id="bookingSlot" class="success-card-value">—</div>
-            </div>
-            <div class="success-info-card">
-              <div class="success-card-label">02 — Thông tin sinh viên</div>
-              <div class="student-info">
-                <div class="student-info-row"><span>Họ và tên</span><strong id="studentName"></strong></div>
-                <div class="student-info-row"><span>MSSV</span><strong id="studentMssv"></strong></div>
-                <div class="student-info-row"><span>Nội dung</span><strong id="studentTopic"></strong></div>
-              </div>
-            </div>
-            <div id="meetSummary" class="success-info-card">
-              <div class="success-card-label">03 — Google Meet</div>
-              <div class="meet-link-box"><a id="meetLink" href="#" target="_blank" rel="noopener noreferrer">Đang tải...</a></div>
-              <div class="action-stack">
-                <a id="joinMeetButton" href="#" target="_blank" rel="noopener noreferrer" class="confirm-button" style="text-decoration:none;"><span class="button-icon">↗</span>Join Google Meet</a>
-                <button id="copyMeetButton" type="button" class="secondary-button"><span class="button-icon">⧉</span>Copy Meet Link</button>
-              </div>
-            </div>
-            <div id="calendarSummary" class="success-info-card wide">
-              <div class="success-card-label">04 — Google Calendar</div>
-              <div class="reminder-text">Thêm lịch vào Google Calendar để dễ kiểm tra lại thời gian meeting.</div>
-              <div class="action-stack">
-                <a id="addCalendarButton" href="#" target="_blank" rel="noopener noreferrer" class="confirm-button" style="text-decoration:none;"><span class="button-icon">+</span>Add to Google Calendar</a>
-                <a id="openCalendarButton" href="#" target="_blank" rel="noopener noreferrer" class="secondary-button"><span class="button-icon">↗</span>Open Calendar Event</a>
-              </div>
-            </div>
-            <div id="reminderSummary" class="success-info-card wide">
-              <div class="success-card-label">05 — Lưu ý</div>
-              <div class="reminder-text">Bạn không cần tham gia Google Meet ngay lúc này. Hãy lưu lại link Meet và sử dụng link này khi đến giờ meeting.</div>
-            </div>
-            <div id="bookingIdText" class="booking-id"></div>
-          </div>
-          <div id="errorSummary" class="error-panel hidden">
-            <div class="success-card-label">Có lỗi xảy ra</div>
-            <div id="errorMessage" class="reminder-text">Không thể tải thông tin booking.</div>
-          </div>
-          <div class="back-link"><a href="./" class="secondary-button"><span class="button-icon">←</span>Quay lại trang booking</a></div>
-        </div>
-      </section>
-    </div>
-  </div>
-
-  <script>
-
-    /* =====================================================
-       CONFIG
-       ===================================================== */
-
-    const API_URL =
-      'https://script.google.com/macros/s/AKfycbwDbTkT5KzUkp9tglbKZV9uu0iyZzepXNM6LFQR53ieEiGIY-IdP8yYOUMmxkbWn6EF/exec';
-
-
-    /* =====================================================
-       DOM
-       ===================================================== */
-
-    const loadingState =
-      document.getElementById(
-        'loadingState'
-      );
-
-    const bookingContent =
-      document.getElementById(
-        'bookingContent'
-      );
-
-    const bookingSlot =
-      document.getElementById(
-        'bookingSlot'
-      );
-
-    const studentName =
-      document.getElementById(
-        'studentName'
-      );
-
-    const studentMssv =
-      document.getElementById(
-        'studentMssv'
-      );
-
-    const studentTopic =
-      document.getElementById(
-        'studentTopic'
-      );
-
-    const meetSummary =
-      document.getElementById(
-        'meetSummary'
-      );
-
-    const meetLink =
-      document.getElementById(
-        'meetLink'
-      );
-
-    const joinMeetButton =
-      document.getElementById(
-        'joinMeetButton'
-      );
-
-    const copyMeetButton =
-      document.getElementById(
-        'copyMeetButton'
-      );
-
-    const calendarSummary =
-      document.getElementById(
-        'calendarSummary'
-      );
-
-    const addCalendarButton =
-      document.getElementById(
-        'addCalendarButton'
-      );
-
-    const openCalendarButton =
-      document.getElementById(
-        'openCalendarButton'
-      );
-
-    const reminderSummary =
-      document.getElementById(
-        'reminderSummary'
-      );
-
-    const bookingIdText =
-      document.getElementById(
-        'bookingIdText'
-      );
-
-    const errorSummary =
-      document.getElementById(
-        'errorSummary'
-      );
-
-    const errorMessage =
-      document.getElementById(
-        'errorMessage'
-      );
-
-
-    /* =====================================================
-       URL PARAMS
-       ===================================================== */
-
-    const params =
-      new URLSearchParams(
-        window.location.search
-      );
-
-    const status =
-      params.get('status');
-
-    const eventId =
-      params.get('eventId');
-
-
-    /* =====================================================
-       CALENDAR URL
-       ===================================================== */
-
-    function createCalendarDateRange(
-      dateString,
-      timeString
-    ) {
-
-      const timeMatch =
-        String(timeString || '').match(
-          /(\d{1,2}):(\d{2})\s*[–-]\s*(\d{1,2}):(\d{2})/
-        );
-
-
-      if (
-        !dateString ||
-        !timeMatch
-      ) {
-
-        return '';
-
-      }
-
-
-      const startHour =
-        String(
-          timeMatch[1]
-        ).padStart(2, '0');
-
-      const startMinute =
-        String(
-          timeMatch[2]
-        ).padStart(2, '0');
-
-      const endHour =
-        String(
-          timeMatch[3]
-        ).padStart(2, '0');
-
-      const endMinute =
-        String(
-          timeMatch[4]
-        ).padStart(2, '0');
-
-      const date =
-        String(dateString)
-          .replace(
-            /-/g,
-            ''
-          );
-
-
-      return (
-        date +
-        'T' +
-        startHour +
-        startMinute +
-        '00/' +
-        date +
-        'T' +
-        endHour +
-        endMinute +
-        '00'
-      );
-
-    }
-
-
-    function createGoogleCalendarUrl(
-      data
-    ) {
-
-      const dateRange =
-        createCalendarDateRange(
-          data.date,
-          data.time
-        );
-
-
-      if (!dateRange) {
-
-        return '';
-
-      }
-
-
-      const details =
-        [
-          `Sinh viên: ${data.student || ''}`,
-          `MSSV: ${data.mssv || ''}`,
-          `Nội dung: ${data.topic || ''}`,
-          '',
-          `Google Meet: ${data.meetLink || ''}`
-        ].join('\n');
-
-
-      const calendarParams =
-        new URLSearchParams({
-
-          action:
-            'TEMPLATE',
-
-          text:
-            `Student Meeting – ${data.student || ''}`,
-
-          dates:
-            dateRange,
-
-          details:
-            details,
-
-          ctz:
-            'Asia/Ho_Chi_Minh'
-
-        });
-
-
-      return (
-        'https://calendar.google.com/calendar/render?' +
-        calendarParams.toString()
-      );
-
-    }
-
-
-    /* =====================================================
-       ERROR
-       ===================================================== */
-
-    function showError(
-      message
-    ) {
-
-      loadingState.classList.add(
-        'hidden'
-      );
-
-      bookingContent.classList.add(
-        'hidden'
-      );
-
-      errorSummary.classList.remove(
-        'hidden'
-      );
-
-      errorMessage.textContent =
-        message ||
-        'Không thể tải thông tin booking.';
-
-    }
-
-
-    /* =====================================================
-       COPY LINK
-       ===================================================== */
-
-    copyMeetButton.addEventListener(
-      'click',
-      async function () {
-
-        const url =
-          meetLink.href;
-
-
-        if (
-          !url ||
-          url === '#'
-        ) {
-
-          return;
-
-        }
-
-
-        try {
-
-          await navigator.clipboard.writeText(
-            url
-          );
-
-        } catch (error) {
-
-          const tempInput =
-            document.createElement(
-              'textarea'
-            );
-
-          tempInput.value =
-            url;
-
-          document.body.appendChild(
-            tempInput
-          );
-
-          tempInput.select();
-
-          document.execCommand(
-            'copy'
-          );
-
-          tempInput.remove();
-
-        }
-
-
-        copyMeetButton.innerHTML =
-          '<span class="button-icon">✓</span> Copied';
-
-
-        setTimeout(
-          function () {
-
-            copyMeetButton.innerHTML =
-              '<span class="button-icon">⧉</span> Copy Meet Link';
-
-          },
-          1800
-        );
-
-      }
-    );
-
-
-    /* =====================================================
-       API CALLBACK
-       ===================================================== */
-
-    window.handleBooking =
-      function (data) {
-
-        if (
-          !data ||
-          !data.success
-        ) {
-
-          showError(
-            data &&
-            data.error
-              ? data.error
-              : 'Không tìm thấy booking.'
-          );
-
-          return;
-
-        }
-
-
-        /* -------------------------------------------------
-           BOOKING
-           ------------------------------------------------- */
-
-        bookingSlot.textContent =
-          `${data.displayDate} — ${data.time}`;
-
-
-        /* -------------------------------------------------
-           STUDENT
-           ------------------------------------------------- */
-
-        studentName.textContent =
-          data.student || '—';
-
-        studentMssv.textContent =
-          data.mssv || '—';
-
-        studentTopic.textContent =
-          data.topic ||
-          'Chưa cung cấp';
-
-
-        /* -------------------------------------------------
-           BOOKING ID
-           ------------------------------------------------- */
-
-        if (data.eventId) {
-
-          bookingIdText.textContent =
-            `Event ID: ${data.eventId}`;
-
-        }
-
-
-        /* -------------------------------------------------
-           MEET
-           ------------------------------------------------- */
-
-        if (data.meetLink) {
-
-          meetLink.href =
-            data.meetLink;
-
-          meetLink.textContent =
-            data.meetLink;
-
-          joinMeetButton.href =
-            data.meetLink;
-
-          meetSummary.classList.remove(
-            'hidden'
-          );
-
-        } else {
-
-          meetSummary.classList.add(
-            'hidden'
-          );
-
-        }
-
-
-        /* -------------------------------------------------
-           CALENDAR
-           ------------------------------------------------- */
-
-        const addCalendarUrl =
-          createGoogleCalendarUrl(
-            data
-          );
-
-
-        if (addCalendarUrl) {
-
-          addCalendarButton.href =
-            addCalendarUrl;
-
-        } else {
-
-          addCalendarButton.classList.add(
-            'hidden'
-          );
-
-        }
-
-
-        if (data.calendarLink) {
-
-          openCalendarButton.href =
-            data.calendarLink;
-
-        } else {
-
-          openCalendarButton.classList.add(
-            'hidden'
-          );
-
-        }
-
-
-        /* -------------------------------------------------
-           SHOW CONTENT
-           ------------------------------------------------- */
-
-        loadingState.classList.add(
-          'hidden'
-        );
-
-        bookingContent.classList.remove(
-          'hidden'
-        );
-
-        reminderSummary.classList.remove(
-          'hidden'
-        );
-
-      };
-
-
-    /* =====================================================
-       LOAD BOOKING
-       ===================================================== */
-
-    function loadBooking() {
-
-      if (
-        status === 'error'
-      ) {
-
-        showError(
-          params.get('message') ||
-          'Booking không thành công.'
-        );
-
-        return;
-
-      }
-
-
-      if (!eventId) {
-
-        showError(
-          'Không tìm thấy Event ID của booking.'
-        );
-
-        return;
-
-      }
-
-
-      const script =
-        document.createElement(
-          'script'
-        );
-
-
-      const callbackName =
-        'handleBooking';
-
-
-      script.src =
-        API_URL +
-        '?action=booking' +
-        '&eventId=' +
-        encodeURIComponent(
-          eventId
-        ) +
-        '&callback=' +
-        callbackName +
-        '&t=' +
-        Date.now();
-
-
-      script.onerror =
-        function () {
-
-          showError(
-            'Không thể kết nối tới hệ thống booking.'
-          );
-
-        };
-
-
-      document.body.appendChild(
-        script
-      );
-
-    }
-
-
-    /* =====================================================
-       START
-       ===================================================== */
-
-    loadBooking();
-
-  </script>
-
-</body>
-
-
-</body>
-</html>
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #f4f4f1;
+  --surface: #ffffff;
+  --surface-soft: #f0f1f2;
+  --text: #171b22;
+  --text-strong: #111318;
+  --muted: #68707c;
+  --border: #dfe3e8;
+  --border-strong: #b9c0c9;
+  --primary: #f36f21;
+  --primary-dark: #d95b12;
+  --primary-soft: #fff1e7;
+  --success: #16805b;
+  --danger: #b42318;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 2px 10px rgba(17, 19, 24, 0.05);
+}
+
+html {
+  min-width: 320px;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.app {
+  min-height: 100vh;
+  padding: clamp(28px, 5vw, 56px) 20px;
+}
+
+.container {
+  width: min(760px, 100%);
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.eyebrow::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  display: inline-block;
+  background: var(--primary);
+}
+
+.title {
+  margin: 0;
+  max-width: 12ch;
+  font-size: clamp(32px, 5vw, 48px);
+  line-height: 0.98;
+  font-weight: 850;
+  letter-spacing: -0.035em;
+  color: var(--text-strong);
+}
+
+.subtitle {
+  margin: 12px 0 0;
+  max-width: 680px;
+  color: var(--muted);
+  font-size: clamp(14px, 2vw, 16px);
+  line-height: 1.55;
+}
+
+.loading,
+.error,
+.empty {
+  color: var(--muted);
+}
+
+#status:not(.hidden) {
+  margin-bottom: 14px;
+  font-size: 14px;
+  font-weight: 650;
+}
+
+#error,
+.error {
+  color: var(--danger);
+}
+
+.section {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: clamp(18px, 3vw, 24px);
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.section::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 54px;
+  height: 4px;
+  background: var(--primary);
+  transform: skewX(-28deg);
+  transform-origin: top right;
+}
+
+.section-label {
+  margin-bottom: 14px;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-strong);
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.option {
+  min-height: 44px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.2;
+  transition: 160ms ease;
+}
+
+.option:hover:not(:disabled),
+.date-card:hover,
+.time-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.option.active,
+.date-card.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+  box-shadow: 3px 3px 0 rgba(17, 19, 24, 0.18);
+}
+
+.option.active:hover,
+.date-card.active:hover {
+  background: var(--primary-dark);
+  color: #fff;
+}
+
+.option:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.dates {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
+  gap: 8px;
+}
+
+.date-card {
+  min-height: 88px;
+  width: 100%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: var(--radius-md);
+  padding: 13px 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: 160ms ease;
+}
+
+.date-number {
+  font-size: 24px;
+  font-weight: 850;
+  line-height: 1;
+}
+
+.date-month {
+  margin-top: 6px;
+  font-size: 11px;
+  line-height: 1.2;
+  opacity: 0.72;
+}
+
+.times {
+  display: grid;
+  gap: 8px;
+}
+
+.time-card {
+  width: 100%;
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  text-align: left;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: 160ms ease;
+}
+
+.time-card.active {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  box-shadow: inset 4px 0 0 var(--primary);
+}
+
+.time-label {
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.time-status {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--success);
+  font-weight: 650;
+}
+
+.time-card.active .time-status {
+  color: var(--primary-dark);
+}
+
+.summary {
+  position: relative;
+  background: var(--surface-soft);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin-bottom: 10px;
+}
+
+.summary:last-child {
+  margin-bottom: 0;
+}
+
+.summary-title {
+  margin-bottom: 5px;
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.summary-value {
+  font-weight: 800;
+  color: var(--text-strong);
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 750;
+  color: var(--text-strong);
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  border-radius: var(--radius-md);
+  padding: 13px 14px;
+  font: inherit;
+  line-height: 1.45;
+  outline: none;
+  transition: 160ms ease;
+}
+
+.form-group input:hover,
+.form-group textarea:hover {
+  border-color: var(--border-strong);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(243, 111, 33, 0.12);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #9aa1ac;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+.field-error {
+  min-height: 18px;
+  margin-top: 5px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--danger);
+}
+
+.confirm-button {
+  width: 100%;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  padding: 13px 18px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 800;
+  line-height: 1.2;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 rgba(17, 19, 24, 0.18);
+  transition: 160ms ease;
+}
+
+.confirm-button:hover:not(:disabled) {
+  background: var(--primary-dark);
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 rgba(17, 19, 24, 0.18);
+}
+
+.confirm-button:active:not(:disabled) {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 rgba(17, 19, 24, 0.18);
+}
+
+.confirm-button:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.form-message {
+  margin-top: 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.option:focus-visible,
+.date-card:focus-visible,
+.time-card:focus-visible,
+.confirm-button:focus-visible {
+  outline: 3px solid rgba(243, 111, 33, 0.24);
+  outline-offset: 2px;
+}
+
+@media (max-width: 760px) {
+  .app {
+    padding: 28px 16px 40px;
+  }
+
+  .container {
+    width: min(100%, 680px);
+  }
+
+  .header {
+    margin-bottom: 22px;
+  }
+
+  .section::after {
+    width: 42px;
+  }
+
+  .options {
+    gap: 7px;
+  }
+
+  .option {
+    min-height: 42px;
+    padding: 10px 13px;
+  }
+}
+
+@media (max-width: 600px) {
+  .app {
+    padding: 22px 12px 32px;
+  }
+
+  .header {
+    margin-bottom: 18px;
+  }
+
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+  }
+
+  .title {
+    max-width: 11ch;
+    font-size: clamp(30px, 10vw, 38px);
+    line-height: 0.96;
+  }
+
+  .subtitle {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+
+  .section {
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  .section-label {
+    margin-bottom: 12px;
+    font-size: 11px;
+  }
+
+  .option {
+    min-height: 42px;
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .dates {
+    grid-template-columns: repeat(auto-fit, minmax(82px, 1fr));
+    gap: 7px;
+  }
+
+  .date-card {
+    min-height: 82px;
+    padding: 12px 8px;
+  }
+
+  .date-number {
+    font-size: 22px;
+  }
+
+  .time-card {
+    min-height: 66px;
+    padding: 13px 14px;
+  }
+
+  .time-label {
+    font-size: 14px;
+  }
+
+  .time-status {
+    font-size: 11px;
+  }
+
+  .summary {
+    padding: 13px 14px;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 12px 13px;
+    font-size: 14px;
+  }
+
+  .confirm-button {
+    min-height: 46px;
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 380px) {
+  .app {
+    padding: 18px 10px 28px;
+  }
+
+  .section {
+    padding: 14px;
+  }
+
+  .option {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .dates {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .title {
+    font-size: 31px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}
+
+
+/* =========================================================
+   STEP 2 — INDEX PAGE LAYOUT
+   ========================================================= */
+
+.header {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 250px;
+  margin-bottom: 14px;
+  padding: clamp(26px, 5vw, 42px);
+  border-radius: var(--radius-lg);
+  background: #111318;
+  color: #ffffff;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.header::before {
+  content: "";
+  position: absolute;
+  inset: auto -40px -70px auto;
+  width: 240px;
+  height: 180px;
+  background: var(--primary);
+  clip-path: polygon(35% 0, 100% 0, 100% 100%, 0 100%);
+  opacity: 0.96;
+}
+
+.header::after {
+  content: "";
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 80px;
+  height: 8px;
+  background: var(--primary);
+  transform: skewX(-28deg);
+}
+
+.header-main,
+.header-meta {
+  position: relative;
+  z-index: 1;
+}
+
+.header .eyebrow {
+  color: #b8bec8;
+}
+
+.header .eyebrow::before {
+  background: var(--primary);
+}
+
+.header .title {
+  max-width: 8ch;
+  margin-top: 8px;
+  color: #ffffff;
+  font-size: clamp(46px, 8vw, 80px);
+  line-height: 0.88;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+}
+
+.header .title span {
+  color: var(--primary);
+}
+
+.header .subtitle {
+  max-width: 610px;
+  margin-top: 18px;
+  color: #d9dde3;
+}
+
+.header-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-top: 26px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  color: #9ea5b0;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+}
+
+.status-bar {
+  min-height: 28px;
+  display: flex;
+  align-items: center;
+  margin: 0 2px 12px;
+  padding: 0 2px;
+}
+
+.status-message {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.booking-flow {
+  display: grid;
+  gap: 12px;
+}
+
+.section {
+  margin-bottom: 0;
+}
+
+.section-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  margin-bottom: 17px;
+}
+
+.section-number {
+  flex: 0 0 auto;
+  min-width: 46px;
+  height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #111318;
+  color: var(--primary);
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1;
+  border-radius: 6px;
+}
+
+.section-label {
+  margin-bottom: 3px;
+}
+
+.section-helper {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.summary-section {
+  background: #111318;
+  border-color: #111318;
+  color: #ffffff;
+}
+
+.summary-section .section-number {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.summary-section .section-label,
+.summary-section .section-helper {
+  color: #ffffff;
+}
+
+.summary-section .section-helper {
+  opacity: 0.7;
+}
+
+.summary-highlight {
+  background: #23262d;
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.summary-highlight .summary-title {
+  color: #aab0ba;
+}
+
+.summary-highlight .summary-value {
+  color: #ffffff;
+}
+
+.form-group + .form-group {
+  margin-top: 2px;
+}
+
+.confirm-button span {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.page-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 2px 0;
+  color: #8c939d;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 900px) {
+
+  .app {
+    padding:
+      clamp(38px, 5vw, 64px)
+      24px;
+  }
+
+  .container {
+    width:
+      min(880px, 100%);
+  }
+
+  .booking-flow {
+    gap: 14px;
+  }
+
+  .section {
+    padding:
+      26px 28px;
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .header {
+    min-height: 220px;
+    padding: 22px 20px 20px;
+  }
+
+  .header::before {
+    width: 150px;
+    height: 120px;
+    right: -30px;
+    bottom: -48px;
+  }
+
+  .header::after {
+    top: 14px;
+    right: 14px;
+    width: 52px;
+    height: 6px;
+  }
+
+  .header .title {
+    font-size: clamp(44px, 15vw, 60px);
+  }
+
+  .header .subtitle {
+    max-width: 92%;
+    margin-top: 14px;
+  }
+
+  .header-meta {
+    gap: 7px 12px;
+    margin-top: 20px;
+    padding-top: 12px;
+    font-size: 8px;
+  }
+
+  .status-bar {
+    margin-bottom: 10px;
+  }
+
+  .section-heading {
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .section-number {
+    min-width: 40px;
+    height: 40px;
+    font-size: 12px;
+  }
+
+  .section-helper {
+    font-size: 11px;
+  }
+
+  .page-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 10px;
+  }
+
+}
+
+@media (max-width: 380px) {
+
+  .header {
+    padding:
+      20px 16px;
+  }
+
+  .header .title {
+    font-size: 43px;
+  }
+
+  .section-heading {
+    gap: 8px;
+  }
+
+  .section-number {
+    min-width: 36px;
+    height: 36px;
+  }
+
+}
+
+/* =========================================================
+   STEP 3 — COMPONENT POLISH
+   Keep HTML + JS structure unchanged.
+   ========================================================= */
+
+:root {
+  --shadow-card: 0 2px 0 rgba(17, 19, 24, 0.05), 0 10px 24px rgba(17, 19, 24, 0.04);
+  --shadow-active: 4px 4px 0 rgba(17, 19, 24, 0.16);
+  --shadow-button: 4px 4px 0 #111318;
+}
+
+/* ---------- STATUS ---------- */
+
+.status-bar {
+  min-height: 32px;
+}
+
+#status:not(.hidden) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+#status:not(.hidden)::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  margin-right: 7px;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-soft);
+}
+
+#error:not(.hidden) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  margin-left: 8px;
+  padding: 5px 10px;
+  border: 1px solid rgba(180, 35, 24, 0.20);
+  border-radius: 999px;
+  background: #fff5f4;
+  font-size: 11px;
+  font-weight: 750;
+}
+
+/* ---------- SECTION ---------- */
+
+.section {
+  box-shadow: var(--shadow-card);
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.section:hover {
+  border-color: #d5d9de;
+}
+
+.section::after {
+  width: 62px;
+  height: 5px;
+}
+
+.section-heading {
+  position: relative;
+}
+
+.section-number {
+  position: relative;
+  border-radius: 4px;
+  box-shadow: 3px 3px 0 rgba(17, 19, 24, 0.10);
+}
+
+.section-number::after {
+  content: "";
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  width: 8px;
+  height: 8px;
+  background: var(--primary);
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}
+
+.summary-section .section-number::after {
+  background: #ffffff;
+}
+
+.section-label {
+  letter-spacing: 0.12em;
+}
+
+.section-helper {
+  max-width: 560px;
+}
+
+/* ---------- MONTH / WEEKDAY OPTIONS ---------- */
+
+.options {
+  gap: 9px;
+}
+
+.option {
+  position: relative;
+  overflow: hidden;
+  border-color: #d8dde2;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfbfb 100%);
+  border-radius: 7px;
+  box-shadow: 0 1px 0 rgba(17, 19, 24, 0.03);
+  letter-spacing: 0.01em;
+}
+
+.option::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: var(--primary);
+  transition: width 150ms ease;
+}
+
+.option:hover:not(:disabled) {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0 rgba(17, 19, 24, 0.10);
+}
+
+.option:hover:not(:disabled)::before {
+  width: 3px;
+}
+
+.option.active {
+  position: relative;
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+  box-shadow: var(--shadow-active);
+  transform: translate(-1px, -1px);
+}
+
+.option.active::before {
+  width: 4px;
+  background: #ffffff;
+}
+
+.option.active::after {
+  content: "✓";
+  position: absolute;
+  top: 50%;
+  right: 9px;
+  transform: translateY(-50%);
+  font-size: 11px;
+  font-weight: 900;
+  opacity: 0.9;
+}
+
+.option.active:hover {
+  background: var(--primary-dark);
+  transform: translate(-1px, -1px);
+}
+
+/* ---------- DATE CARDS ---------- */
+
+.dates {
+  grid-template-columns: repeat(auto-fit, minmax(104px, 1fr));
+  gap: 9px;
+}
+
+.date-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 94px;
+  border-color: #d8dde2;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+  box-shadow: 0 1px 0 rgba(17, 19, 24, 0.03);
+}
+
+.date-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 0;
+  background: var(--primary);
+  transition: height 160ms ease;
+}
+
+.date-card:hover {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0 rgba(17, 19, 24, 0.10);
+}
+
+.date-card:hover::before {
+  height: 100%;
+}
+
+.date-card.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+  box-shadow: var(--shadow-active);
+  transform: translate(-1px, -1px);
+}
+
+.date-card.active::before {
+  height: 100%;
+  background: #ffffff;
+}
+
+.date-card.active::after {
+  content: "✓";
+  position: absolute;
+  top: 8px;
+  right: 9px;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.date-card.active:hover {
+  background: var(--primary-dark);
+}
+
+.date-number {
+  letter-spacing: -0.04em;
+}
+
+.date-month {
+  font-weight: 750;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ---------- TIME CARDS ---------- */
+
+.time-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 74px;
+  border-color: #d8dde2;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+  box-shadow: 0 1px 0 rgba(17, 19, 24, 0.03);
+}
+
+.time-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: var(--primary);
+  transition: width 150ms ease;
+}
+
+.time-card::after {
+  content: "→";
+  color: #a0a7b1;
+  font-size: 17px;
+  font-weight: 900;
+  transition: transform 150ms ease, color 150ms ease;
+}
+
+.time-card:hover {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0 rgba(17, 19, 24, 0.10);
+}
+
+.time-card:hover::before {
+  width: 4px;
+}
+
+.time-card:hover::after {
+  color: var(--primary-dark);
+  transform: translateX(2px);
+}
+
+.time-card.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+  box-shadow: var(--shadow-active);
+  transform: translate(-1px, -1px);
+}
+
+.time-card.active::before {
+  width: 5px;
+  background: #ffffff;
+}
+
+.time-card.active::after {
+  color: #ffffff;
+  transform: translateX(2px);
+}
+
+.time-card.active .time-status {
+  color: #ffffff;
+}
+
+.time-label {
+  font-size: 16px;
+  letter-spacing: -0.015em;
+}
+
+.time-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.time-status::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.75;
+}
+
+/* ---------- SUMMARY ---------- */
+
+.summary-highlight {
+  border-radius: 8px;
+  box-shadow: inset 4px 0 0 var(--primary);
+}
+
+.summary-value {
+  font-size: clamp(15px, 2vw, 17px);
+  line-height: 1.45;
+}
+
+/* ---------- FORM ---------- */
+
+.form-group {
+  margin-bottom: 19px;
+}
+
+.form-group label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 7px;
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.form-group label::after {
+  content: "";
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--primary);
+}
+
+.form-group input,
+.form-group textarea {
+  border-color: #d7dce1;
+  background: #fbfbfb;
+  border-radius: 8px;
+  box-shadow: inset 0 1px 0 rgba(17, 19, 24, 0.02);
+  transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.form-group input:hover,
+.form-group textarea:hover {
+  border-color: #c8ced6;
+  background: #ffffff;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--primary);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(243, 111, 33, 0.12), 3px 3px 0 rgba(17, 19, 24, 0.06);
+  transform: translate(-1px, -1px);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #a1a8b2;
+  opacity: 1;
+}
+
+.field-error:not(:empty) {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-top: 7px;
+  font-weight: 700;
+}
+
+.field-error:not(:empty)::before {
+  content: "!";
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--danger);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+/* ---------- CONFIRM BUTTON ---------- */
+
+.confirm-button {
+  position: relative;
+  overflow: hidden;
+  min-height: 52px;
+  justify-content: space-between;
+  padding: 0 8px 0 18px;
+  border-radius: 7px;
+  background: var(--primary);
+  box-shadow: var(--shadow-button);
+  letter-spacing: 0.01em;
+}
+
+.confirm-button::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0;
+  background: rgba(255, 255, 255, 0.10);
+  transition: width 170ms ease;
+}
+
+.confirm-button:hover:not(:disabled)::before {
+  width: 100%;
+}
+
+.confirm-button span {
+  position: relative;
+  z-index: 1;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #111318;
+  color: var(--primary);
+  font-size: 18px;
+  transition: transform 160ms ease;
+}
+
+.confirm-button:hover:not(:disabled) {
+  background: var(--primary-dark);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #111318;
+}
+
+.confirm-button:hover:not(:disabled) span {
+  transform: translateX(2px);
+}
+
+.confirm-button:active:not(:disabled) {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 #111318;
+}
+
+.confirm-button:disabled {
+  background: #b9bec5;
+  color: #f7f7f7;
+}
+
+.confirm-button:disabled span {
+  background: #8e949d;
+  color: #dfe3e8;
+}
+
+.form-message {
+  min-height: 18px;
+  font-weight: 650;
+}
+
+/* ---------- FOOTER ---------- */
+
+.page-footer {
+  padding-top: 18px;
+}
+
+/* ---------- TOUCH / SMALL SCREENS ---------- */
+
+@media (hover: none) {
+  .section:hover {
+    border-color: var(--border);
+  }
+
+  .option:hover:not(:disabled),
+  .date-card:hover,
+  .time-card:hover,
+  .confirm-button:hover:not(:disabled) {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 600px) {
+  #status:not(.hidden),
+  #error:not(.hidden) {
+    font-size: 10px;
+  }
+
+  .dates {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .date-card {
+    min-height: 88px;
+  }
+
+  .time-card {
+    min-height: 68px;
+  }
+
+  .confirm-button {
+    min-height: 50px;
+  }
+}
+
+@media (max-width: 380px) {
+  .options {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .option {
+    width: 100%;
+  }
+
+  .date-card.active,
+  .option.active,
+  .time-card.active {
+    box-shadow: 3px 3px 0 rgba(17, 19, 24, 0.14);
+  }
+}
+
+/* =========================================================
+   STEP 4 — MICRO INTERACTION & UX
+   CSS-only enhancement. No JS / backend changes.
+   ========================================================= */
+
+:root {
+  --motion-fast: 140ms;
+  --motion-med: 220ms;
+  --motion-slow: 420ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-snap: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ---------- PAGE ENTRY ---------- */
+
+.header {
+  animation: step4-header-in var(--motion-slow) var(--ease-out) both;
+}
+
+.status-bar {
+  animation: step4-fade-up 360ms var(--ease-out) 70ms both;
+}
+
+.booking-flow > .section:not(.hidden) {
+  animation: step4-section-in 380ms var(--ease-out) both;
+}
+
+.booking-flow > .section:nth-child(2):not(.hidden) { animation-delay: 45ms; }
+.booking-flow > .section:nth-child(3):not(.hidden) { animation-delay: 90ms; }
+.booking-flow > .section:nth-child(4):not(.hidden) { animation-delay: 135ms; }
+.booking-flow > .section:nth-child(5):not(.hidden) { animation-delay: 180ms; }
+.booking-flow > .section:nth-child(6):not(.hidden) { animation-delay: 225ms; }
+
+/* Newly revealed sections get a clearer state change without moving the page too much. */
+.section:not(.hidden) .section-number {
+  animation: step4-number-in 360ms var(--ease-snap) both;
+}
+
+.summary-section:not(.hidden) .summary-highlight {
+  animation: step4-summary-in 400ms var(--ease-out) 80ms both;
+}
+
+/* ---------- STATUS ---------- */
+
+#status:not(.hidden)::before {
+  animation: step4-status-pulse 1.8s ease-in-out infinite;
+}
+
+/* ---------- OPTION MICRO STATES ---------- */
+
+.option,
+.date-card,
+.time-card {
+  will-change: transform;
+}
+
+.option:active:not(:disabled),
+.date-card:active,
+.time-card:active {
+  transform: translate(0, 0) scale(0.985);
+  transition-duration: 70ms;
+}
+
+.option.active,
+.date-card.active,
+.time-card.active {
+  animation: step4-selected-pop 240ms var(--ease-snap);
+}
+
+.option.active::after,
+.date-card.active::after {
+  animation: step4-check-in 220ms var(--ease-snap) 35ms both;
+}
+
+/* Keep the active time arrow crisp while giving it one small entrance movement. */
+.time-card.active::after {
+  animation: step4-arrow-in 220ms var(--ease-out) 40ms both;
+}
+
+/* ---------- INPUT MICRO STATES ---------- */
+
+.form-group input,
+.form-group textarea {
+  will-change: border-color, box-shadow, transform;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  transition-duration: 120ms;
+}
+
+.form-group input:valid:not(:placeholder-shown),
+.form-group textarea:valid:not(:placeholder-shown) {
+  border-color: rgba(22, 128, 91, 0.42);
+}
+
+/* ---------- CONFIRM BUTTON ---------- */
+
+.confirm-button {
+  will-change: transform, box-shadow;
+}
+
+.confirm-button:focus-visible {
+  animation: step4-button-focus 1.2s ease-in-out infinite;
+}
+
+.confirm-button:active:not(:disabled) {
+  transition-duration: 70ms;
+}
+
+/* ---------- ERROR / FORM MESSAGE ---------- */
+
+.field-error:not(:empty) {
+  animation: step4-error-in 220ms var(--ease-out) both;
+}
+
+.form-message:not(:empty) {
+  animation: step4-fade-up 220ms var(--ease-out) both;
+}
+
+/* ---------- KEYFRAMES ---------- */
+
+@keyframes step4-header-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes step4-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes step4-section-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes step4-number-in {
+  from {
+    opacity: 0;
+    transform: scale(0.88) rotate(-2deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+@keyframes step4-summary-in {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes step4-selected-pop {
+  0% {
+    transform: translate(-1px, -1px) scale(0.985);
+  }
+  65% {
+    transform: translate(-1px, -1px) scale(1.012);
+  }
+  100% {
+    transform: translate(-1px, -1px) scale(1);
+  }
+}
+
+@keyframes step4-check-in {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.5);
+  }
+  to {
+    opacity: 0.9;
+    transform: translateY(-50%) scale(1);
+  }
+}
+
+@keyframes step4-arrow-in {
+  from {
+    opacity: 0;
+    transform: translateX(-3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(2px);
+  }
+}
+
+@keyframes step4-status-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 3px var(--primary-soft);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(243, 111, 33, 0.08);
+  }
+}
+
+@keyframes step4-button-focus {
+  0%, 100% {
+    box-shadow: 0 0 0 3px rgba(243, 111, 33, 0.24), var(--shadow-button);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(243, 111, 33, 0.12), var(--shadow-button);
+  }
+}
+
+@keyframes step4-error-in {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- MOBILE ---------- */
+
+@media (max-width: 600px) {
+  .option:active:not(:disabled),
+  .date-card:active,
+  .time-card:active {
+    transform: scale(0.985);
+  }
+
+  .booking-flow > .section:not(.hidden) {
+    animation-duration: 320ms;
+  }
+}
+
+/* ---------- REDUCED MOTION ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .status-bar,
+  .booking-flow > .section:not(.hidden),
+  .section:not(.hidden) .section-number,
+  .summary-section:not(.hidden) .summary-highlight,
+  #status:not(.hidden)::before,
+  .option.active,
+  .date-card.active,
+  .time-card.active,
+  .option.active::after,
+  .date-card.active::after,
+  .time-card.active::after,
+  .confirm-button:focus-visible,
+  .field-error:not(:empty),
+  .form-message:not(:empty) {
+    animation: none !important;
+  }
+
+  .option,
+  .date-card,
+  .time-card,
+  .form-group input,
+  .form-group textarea,
+  .confirm-button {
+    will-change: auto;
+  }
+}
+
+
+/* =========================================================
+   STEP 5.5 — VISUAL REALIGNMENT / DEMO-LED ART DIRECTION
+   Keep existing JS + DOM IDs. UI only.
+   ========================================================= */
+
+:root {
+  --demo-black: #0d0f13;
+  --demo-ink: #101217;
+  --demo-white: #f8f8f5;
+  --demo-paper: #ffffff;
+  --demo-orange: #ff6518;
+  --demo-orange-dark: #e9530d;
+  --demo-line: #d8dbe0;
+}
+
+body {
+  background:
+    radial-gradient(circle at 15% 10%, rgba(255,101,24,.055) 0 1px, transparent 1.5px) 0 0 / 12px 12px,
+    var(--bg);
+}
+
+.app {
+  position: relative;
+  min-height: 100vh;
+  padding: clamp(18px, 4vw, 40px);
+  overflow-x: clip;
+}
+
+.app::before,
+.app::after {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.app::before {
+  top: -60px;
+  left: -90px;
+  width: 360px;
+  height: 150px;
+  background: var(--demo-orange);
+  transform: rotate(-12deg) skewX(-22deg);
+  opacity: .95;
+}
+
+.app::after {
+  right: -80px;
+  bottom: 40px;
+  width: 300px;
+  height: 110px;
+  background: var(--demo-black);
+  transform: rotate(-18deg) skewX(-18deg);
+}
+
+.container {
+  width: min(1220px, 100%);
+  margin: 0 auto;
+}
+
+/* ---------- INDEX: poster + paper composition ---------- */
+
+.container > .header {
+  grid-area: poster;
+}
+
+.container > .status-bar {
+  grid-area: status;
+}
+
+.container > .booking-flow {
+  grid-area: flow;
+}
+
+.container > .page-footer {
+  grid-area: footer;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: minmax(300px, .78fr) minmax(480px, 1.22fr);
+  grid-template-areas:
+    "poster status"
+    "poster flow"
+    "footer footer";
+  column-gap: clamp(16px, 2.2vw, 30px);
+  row-gap: 0;
+  align-items: start;
+}
+
+.header {
+  position: relative;
+  min-height: 700px;
+  margin: 0;
+  padding: clamp(34px, 4vw, 52px);
+  border: 1px solid #191c22;
+  border-radius: 2px;
+  background:
+    radial-gradient(circle at 24% 23%, rgba(255,101,24,.22) 0 1px, transparent 1.5px) 0 0 / 10px 10px,
+    linear-gradient(140deg, transparent 0 63%, rgba(255,101,24,.10) 63.2% 63.7%, transparent 63.9%),
+    var(--demo-black);
+  box-shadow: 0 20px 40px rgba(13,15,19,.16);
+  overflow: hidden;
+  transform: rotate(-1.1deg);
+}
+
+.header::before {
+  content: "";
+  position: absolute;
+  left: -35px;
+  top: 120px;
+  width: 260px;
+  height: 74px;
+  background: var(--demo-orange);
+  transform: rotate(-17deg) skewX(-18deg);
+  box-shadow: 220px 225px 0 -12px rgba(255,101,24,.86), -35px 420px 0 -16px rgba(255,101,24,.72);
+}
+
+.header::after {
+  content: "";
+  position: absolute;
+  right: -40px;
+  bottom: 110px;
+  width: 220px;
+  height: 135px;
+  background: var(--demo-orange);
+  transform: skewX(-22deg);
+  opacity: .96;
+}
+
+.header-main,
+.header-meta {
+  position: relative;
+  z-index: 2;
+}
+
+.header-main {
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+.header .eyebrow {
+  margin-bottom: 20px;
+  color: rgba(255,255,255,.72);
+  font-size: 10px;
+  letter-spacing: .18em;
+}
+
+.header .eyebrow::before {
+  width: 6px;
+  height: 6px;
+  background: var(--demo-orange);
+}
+
+.header .title {
+  max-width: 5.6ch;
+  margin-top: 0;
+  color: #fff;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", Arial, sans-serif;
+  font-size: clamp(58px, 8.3vw, 104px);
+  font-weight: 900;
+  line-height: .84;
+  letter-spacing: -.035em;
+  text-transform: uppercase;
+}
+
+.header .title span {
+  display: block;
+  margin-left: .02em;
+  color: var(--demo-orange);
+}
+
+.header .subtitle {
+  max-width: 300px;
+  margin-top: 28px;
+  color: rgba(255,255,255,.78);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.header .subtitle::after {
+  content: "GOOD IDEAS\A BETTER PEOPLE.";
+  display: block;
+  margin-top: 80px;
+  white-space: pre;
+  color: #fff;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", Arial, sans-serif;
+  font-size: clamp(29px, 3.3vw, 44px);
+  line-height: .88;
+  transform: rotate(-7deg);
+  transform-origin: left top;
+}
+
+.header-meta {
+  align-self: stretch;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,.20);
+  color: rgba(255,255,255,.62);
+}
+
+.status-bar {
+  min-height: 34px;
+  margin: 4px 0 10px;
+  padding: 0 4px;
+}
+
+.status-message {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border: 1px solid var(--demo-line);
+  background: rgba(255,255,255,.82);
+  border-radius: 999px;
+  color: #66707c;
+  font-size: 11px;
+  font-weight: 700;
+  box-shadow: 0 3px 10px rgba(17,19,24,.04);
+}
+
+.status-message::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  margin-right: 7px;
+  border-radius: 50%;
+  background: var(--demo-orange);
+}
+
+.booking-flow {
+  position: relative;
+  display: grid;
+  gap: 0;
+  padding: clamp(24px, 3.2vw, 40px);
+  background: var(--demo-paper);
+  border: 1px solid #d7d9dd;
+  box-shadow: 14px 16px 0 rgba(13,15,19,.10), 0 20px 40px rgba(13,15,19,.08);
+  transform: rotate(1deg);
+}
+
+.booking-flow::before {
+  content: "";
+  position: absolute;
+  right: 16px;
+  top: 0;
+  width: 54px;
+  height: 5px;
+  background: var(--demo-orange);
+  transform: skewX(-28deg);
+}
+
+.section,
+.summary-section {
+  position: relative;
+  margin: 0;
+  padding: 22px 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--demo-line);
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.section:last-child {
+  border-bottom: 0;
+}
+
+.section::after {
+  display: none;
+}
+
+.section-heading {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  margin-bottom: 16px;
+}
+
+.section-number {
+  min-width: 0;
+  height: auto;
+  padding: 0;
+  background: transparent;
+  color: var(--demo-black);
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", Arial, sans-serif;
+  font-size: 32px;
+  line-height: .9;
+  letter-spacing: -.02em;
+  border-radius: 0;
+}
+
+.section-label {
+  margin: 0 0 3px;
+  font-size: 11px;
+  letter-spacing: .12em;
+}
+
+.section-helper {
+  font-size: 11px;
+}
+
+.options {
+  gap: 8px;
+}
+
+.option {
+  min-height: 42px;
+  padding: 9px 13px;
+  border-radius: 7px;
+  background: #fff;
+  border-color: #d5d9df;
+  font-size: 12px;
+}
+
+.option.active,
+.date-card.active {
+  background: var(--demo-orange);
+  border-color: var(--demo-orange);
+  box-shadow: 3px 3px 0 rgba(13,15,19,.16);
+}
+
+.dates {
+  grid-template-columns: repeat(auto-fit, minmax(86px, 1fr));
+}
+
+.date-card {
+  min-height: 76px;
+  border-radius: 6px;
+  padding: 11px 8px;
+}
+
+.date-number {
+  font-size: 23px;
+}
+
+.times {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.time-card {
+  min-height: 66px;
+  border-radius: 6px;
+  padding: 12px 13px;
+}
+
+.time-card.active {
+  background: #fff7f2;
+  border-color: var(--demo-orange);
+  box-shadow: inset 4px 0 0 var(--demo-orange);
+}
+
+.summary-section {
+  background: var(--demo-black);
+  margin: 0 -1px;
+  padding: 22px 20px;
+  border: 0;
+  color: #fff;
+}
+
+.summary-section .section-number {
+  color: var(--demo-orange);
+}
+
+.summary-section .section-label,
+.summary-section .section-helper {
+  color: #fff;
+}
+
+.summary-highlight {
+  margin: 0;
+  padding: 14px 16px;
+  background: #20242b;
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 3px;
+}
+
+.summary-highlight .summary-title { color: #aeb5bf; }
+.summary-highlight .summary-value { color: #fff; }
+
+#bookingForm {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(140px, .65fr);
+  gap: 14px 12px;
+}
+
+#bookingForm .form-group {
+  margin: 0;
+}
+
+#bookingForm .form-group:nth-of-type(3),
+#bookingForm .form-group:nth-of-type(4),
+#bookingForm .confirm-button,
+#bookingForm .form-message {
+  grid-column: 1 / -1;
+}
+
+.form-group label {
+  margin-bottom: 6px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.form-group input,
+.form-group textarea {
+  border-radius: 5px;
+  padding: 11px 12px;
+  background: #f5f6f7;
+  border-color: #d7dbe0;
+  font-size: 13px;
+}
+
+.form-group textarea {
+  min-height: 92px;
+}
+
+.confirm-button {
+  min-height: 48px;
+  border-radius: 3px;
+  background: var(--demo-orange);
+  box-shadow: 4px 4px 0 var(--demo-black);
+  text-transform: none;
+}
+
+.confirm-button::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  border: 2px solid rgba(255,255,255,.85);
+  border-radius: 2px;
+  margin-right: 3px;
+}
+
+.page-footer {
+  grid-area: footer;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 2px 0;
+  color: #7c858f;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .10em;
+  text-transform: uppercase;
+}
+
+/* ---------- SUCCESS: confirmed poster + paper ---------- */
+
+.success-shell .container {
+  width: min(1220px, 100%);
+}
+
+.success-card-main {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(300px, .72fr) minmax(500px, 1.28fr);
+  overflow: hidden;
+  border: 1px solid #cfd2d7;
+  border-radius: 2px;
+  background: #fff;
+  box-shadow: 14px 16px 0 rgba(13,15,19,.10), 0 20px 40px rgba(13,15,19,.10);
+  transform: rotate(-.8deg);
+}
+
+.success-card-main::before {
+  display: none;
+}
+
+.success-hero {
+  min-height: 690px;
+  padding: clamp(34px, 4vw, 54px);
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255,101,24,.22) 0 1px, transparent 1.5px) 0 0 / 10px 10px,
+    var(--demo-black);
+  overflow: hidden;
+}
+
+.success-hero::before {
+  content: "";
+  position: absolute;
+  left: -30px;
+  top: 160px;
+  width: 260px;
+  height: 72px;
+  background: var(--demo-orange);
+  transform: rotate(-15deg) skewX(-18deg);
+  box-shadow: 120px 300px 0 -14px rgba(255,101,24,.78);
+}
+
+.success-hero::after {
+  content: "MEETING\A CONFIRMED!";
+  position: absolute;
+  left: 44px;
+  bottom: 92px;
+  white-space: pre;
+  color: #fff;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", Arial, sans-serif;
+  font-size: clamp(30px, 3.2vw, 45px);
+  line-height: .86;
+  transform: rotate(-7deg);
+  text-shadow: 8px 8px 0 var(--demo-orange);
+}
+
+.success-hero-inner {
+  z-index: 3;
+  max-width: 420px;
+}
+
+.success-mark {
+  width: 54px;
+  height: 54px;
+  margin-bottom: 22px;
+  background: var(--demo-orange);
+  box-shadow: 5px 5px 0 rgba(255,255,255,.08);
+}
+
+.success-kicker {
+  font-size: 10px;
+  letter-spacing: .17em;
+}
+
+.success-title {
+  max-width: 8ch;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", Arial, sans-serif;
+  font-size: clamp(54px, 7.2vw, 84px);
+  line-height: .84;
+  text-transform: uppercase;
+}
+
+.success-title strong {
+  color: var(--demo-orange);
+}
+
+.success-subtitle {
+  max-width: 330px;
+  font-size: 13px;
+}
+
+.success-body {
+  padding: clamp(26px, 4vw, 44px);
+  background: var(--demo-paper);
+}
+
+.success-status-row {
+  margin-bottom: 6px;
+  padding-bottom: 14px;
+}
+
+.success-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.success-info-card {
+  padding: 16px;
+  border-color: #d9dce1;
+  box-shadow: none;
+  background: #fff;
+}
+
+.success-info-card::after {
+  width: 26px;
+  height: 3px;
+}
+
+.success-card-label {
+  font-size: 10px;
+  letter-spacing: .11em;
+}
+
+.success-card-value {
+  font-size: 15px;
+}
+
+.meet-link-box {
+  margin-top: 10px;
+  background: #f2f3f4;
+  padding: 11px 12px;
+}
+
+.action-stack {
+  grid-template-columns: 1.2fr .9fr;
+}
+
+.calendar-summary,
+#calendarSummary,
+#reminderSummary {
+  grid-column: 1 / -1;
+}
+
+#calendarSummary .action-stack {
+  grid-template-columns: 1fr 1fr;
+}
+
+#reminderSummary {
+  background: #f2f3f4;
+}
+
+.back-link {
+  margin-top: 14px;
+}
+
+.secondary-button {
+  min-height: 44px;
+  border-radius: 4px;
+}
+
+/* ---------- Responsive re-composition ---------- */
+
+@media (max-width: 980px) {
+  .container {
+    width: min(760px, 100%);
+    display: block;
+  }
+
+  .header {
+    min-height: 320px;
+    transform: none;
+    margin-bottom: 16px;
+  }
+
+  .header-main {
+    min-height: 250px;
+  }
+
+  .header .title {
+    max-width: 8ch;
+    font-size: clamp(54px, 10vw, 78px);
+  }
+
+  .header .subtitle::after {
+    margin-top: 34px;
+    font-size: clamp(24px, 5vw, 34px);
+  }
+
+  .booking-flow {
+    transform: none;
+    box-shadow: 8px 10px 0 rgba(13,15,19,.08), 0 14px 28px rgba(13,15,19,.07);
+  }
+
+  .success-card-main {
+    grid-template-columns: 1fr;
+    transform: none;
+  }
+
+  .success-hero {
+    min-height: 300px;
+  }
+
+  .success-hero::after {
+    left: auto;
+    right: 34px;
+    bottom: 48px;
+  }
+}
+
+@media (max-width: 640px) {
+  .app {
+    padding: 12px;
+  }
+
+  .header {
+    min-height: 330px;
+    padding: 24px;
+  }
+
+  .header .title {
+    max-width: 8ch;
+    font-size: clamp(48px, 16vw, 68px);
+  }
+
+  .header .subtitle {
+    max-width: 230px;
+    font-size: 12px;
+  }
+
+  .header .subtitle::after {
+    margin-top: 24px;
+    font-size: 25px;
+  }
+
+  .header-meta {
+    gap: 8px 12px;
+    font-size: 8px;
+  }
+
+  .booking-flow {
+    padding: 18px 16px;
+  }
+
+  .section {
+    padding: 18px 0;
+  }
+
+  .section-heading {
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 9px;
+  }
+
+  .section-number {
+    font-size: 27px;
+  }
+
+  .times {
+    grid-template-columns: 1fr;
+  }
+
+  #bookingForm {
+    grid-template-columns: 1fr;
+  }
+
+  #bookingForm .form-group:nth-of-type(3),
+  #bookingForm .form-group:nth-of-type(4),
+  #bookingForm .confirm-button,
+  #bookingForm .form-message {
+    grid-column: auto;
+  }
+
+  .page-footer {
+    font-size: 8px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .success-hero {
+    min-height: 300px;
+    padding: 24px;
+  }
+
+  .success-title {
+    font-size: clamp(48px, 14vw, 66px);
+  }
+
+  .success-hero::after {
+    left: 28px;
+    right: auto;
+    bottom: 40px;
+    font-size: 27px;
+  }
+
+  .success-body {
+    padding: 18px 16px;
+  }
+
+  .success-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .success-info-card.wide,
+  #calendarSummary,
+  #reminderSummary {
+    grid-column: auto;
+  }
+
+  .action-stack,
+  #calendarSummary .action-stack {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =====================================================
+   FIX — SUCCESS PAGE WIDTH / OVERFLOW
+   Keep the visual-realightment composition intact while
+   preventing the content panel from being clipped.
+   ===================================================== */
+.success-shell {
+  width: 100%;
+  min-height: 100vh;
+  padding: clamp(24px, 4vw, 56px) clamp(16px, 3vw, 40px);
+  overflow-x: hidden;
+}
+
+.success-shell .container {
+  width: 100% !important;
+  max-width: 1280px !important;
+  margin: 0 auto !important;
+}
+
+.success-card-main {
+  width: 100%;
+  max-width: 1280px;
+  grid-template-columns: minmax(360px, 0.88fr) minmax(0, 1.12fr) !important;
+  min-width: 0;
+}
+
+.success-hero,
+.success-body,
+.success-grid,
+.success-info-card {
+  min-width: 0;
+}
+
+.success-body {
+  overflow: hidden;
+}
+
+.success-grid {
+  width: 100%;
+}
+
+@media (max-width: 980px) {
+  .success-card-main {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .success-shell {
+    padding: 12px;
+  }
+}
+
+/* =====================================================
+   FIX 2 — TWO MAJOR VISUAL BUGS
+   1) Selected time slot: keep text readable on white card.
+   2) Success page: remove inherited index grid from .container
+      so the success panel can use the full available width.
+   ===================================================== */
+
+/* 1 — Selected time slot contrast */
+.time-card.active {
+  color: var(--text-strong) !important;
+  background: #fff7f2 !important;
+  border-color: var(--demo-orange) !important;
+  box-shadow: inset 4px 0 0 var(--demo-orange), 3px 3px 0 rgba(13,15,19,.08) !important;
+}
+
+.time-card.active .time-label {
+  color: var(--text-strong) !important;
+}
+
+.time-card.active .time-status {
+  color: var(--success) !important;
+}
+
+.time-card.active::after {
+  color: var(--demo-orange) !important;
+}
+
+/* 2 — Success page must NOT inherit the index.html 2-column container grid */
+.success-shell .container {
+  display: block !important;
+  width: 100% !important;
+  max-width: 1280px !important;
+  margin: 0 auto !important;
+}
+
+.success-card-main {
+  width: 100% !important;
+  max-width: 1280px !important;
+  min-width: 0 !important;
+  grid-template-columns: minmax(340px, .88fr) minmax(0, 1.12fr) !important;
+}
+
+.success-hero,
+.success-body {
+  min-width: 0 !important;
+}
+
+@media (max-width: 980px) {
+  .success-card-main {
+    grid-template-columns: 1fr !important;
+  }
+}
