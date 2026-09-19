@@ -1,291 +1,496 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
-
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Booking thành công</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* =====================================================
+       STEP 5 — SUCCESS PAGE / VISUAL POLISH
+       Logic remains unchanged. Page uses the same visual
+       language as index.html: orange / black / white.
+       ===================================================== */
 
-  <link
-    rel="stylesheet"
-    href="css/style.css"
-  >
+    .success-shell {
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+    }
 
+    .success-card-main {
+      position: relative;
+      overflow: hidden;
+      padding: 0;
+      background: var(--surface);
+    }
+
+    .success-card-main::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 8px;
+      height: 100%;
+      background: var(--primary);
+    }
+
+    .success-hero {
+      position: relative;
+      padding: clamp(28px, 6vw, 48px);
+      background: var(--text-strong);
+      color: #fff;
+      overflow: hidden;
+    }
+
+    .success-hero::after {
+      content: "";
+      position: absolute;
+      right: -28px;
+      bottom: -34px;
+      width: 180px;
+      height: 150px;
+      background: var(--primary);
+      clip-path: polygon(35% 0, 100% 0, 100% 100%, 0 100%);
+      opacity: 0.98;
+    }
+
+    .success-hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 620px;
+    }
+
+    .success-mark {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1;
+      transform: skewX(-7deg);
+      box-shadow: 5px 5px 0 rgba(255,255,255,0.10);
+    }
+
+    .success-mark span {
+      transform: skewX(7deg);
+    }
+
+    .success-kicker {
+      margin: 0 0 8px;
+      color: rgba(255,255,255,0.68);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .success-title {
+      margin: 0;
+      max-width: 12ch;
+      color: #fff;
+      font-size: clamp(34px, 7vw, 58px);
+      line-height: 0.95;
+      font-weight: 900;
+      letter-spacing: -0.045em;
+    }
+
+    .success-title strong {
+      color: var(--primary);
+      font-weight: inherit;
+    }
+
+    .success-subtitle {
+      margin: 16px 0 0;
+      max-width: 560px;
+      color: rgba(255,255,255,0.74);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .success-body {
+      padding: clamp(20px, 4vw, 30px);
+    }
+
+    .success-status-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 18px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .success-status-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .success-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 10px;
+      background: #eaf7f1;
+      color: var(--success);
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .success-status-badge::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .success-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .success-info-card {
+      position: relative;
+      min-width: 0;
+      padding: 18px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .success-info-card::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 24px;
+      height: 3px;
+      background: var(--primary);
+      transform: skewX(-28deg);
+      transform-origin: top right;
+    }
+
+    .success-info-card.wide {
+      grid-column: 1 / -1;
+    }
+
+    .success-card-label {
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+    }
+
+    .success-card-value {
+      color: var(--text-strong);
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+
+    .student-info {
+      display: grid;
+      gap: 9px;
+      line-height: 1.5;
+    }
+
+    .student-info-row {
+      display: grid;
+      grid-template-columns: 82px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+    }
+
+    .student-info-row span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .student-info-row strong {
+      min-width: 0;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .meet-link-box {
+      margin-top: 12px;
+      padding: 12px 14px;
+      background: var(--surface-soft);
+      border-left: 4px solid var(--primary);
+    }
+
+    .meet-link-box a {
+      display: block;
+      color: var(--text-strong);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+      text-decoration: none;
+    }
+
+    .meet-link-box a:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+
+    .action-stack {
+      display: grid;
+      gap: 9px;
+      margin-top: 14px;
+    }
+
+    .secondary-button {
+      width: 100%;
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--surface-soft);
+      color: var(--text);
+      font: inherit;
+      font-weight: 800;
+      line-height: 1.2;
+      text-decoration: none;
+      cursor: pointer;
+      transition: 160ms ease;
+    }
+
+    .secondary-button:hover {
+      border-color: var(--border-strong);
+      transform: translateY(-1px);
+    }
+
+    .secondary-button:active {
+      transform: translateY(1px);
+    }
+
+    .button-icon {
+      font-weight: 900;
+    }
+
+    .reminder-text {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .loading-panel,
+    .error-panel {
+      margin-bottom: 14px;
+      padding: 18px;
+      border: 1px solid var(--border);
+      background: var(--surface-soft);
+    }
+
+    .loading-panel {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .loading-dot {
+      width: 10px;
+      height: 10px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: var(--primary);
+      animation: successPulse 1000ms ease-in-out infinite;
+    }
+
+    @keyframes successPulse {
+      0%, 100% { transform: scale(0.75); opacity: 0.45; }
+      50% { transform: scale(1); opacity: 1; }
+    }
+
+    .error-panel {
+      border-color: #f1c1bc;
+      background: #fff6f4;
+    }
+
+    .error-panel .success-card-label {
+      color: var(--danger);
+    }
+
+    .booking-id {
+      margin-top: 16px;
+      color: var(--muted);
+      font-family: monospace;
+      font-size: 11px;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .back-link {
+      margin-top: 16px;
+    }
+
+    @media (max-width: 640px) {
+      .success-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .success-info-card.wide {
+        grid-column: auto;
+      }
+
+      .student-info-row {
+        grid-template-columns: 72px minmax(0, 1fr);
+      }
+
+      .success-hero {
+        padding: 28px 22px;
+      }
+
+      .success-body {
+        padding: 18px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .loading-dot {
+        animation: none;
+      }
+
+      .secondary-button {
+        transition: none;
+      }
+    }
+  </style>
 </head>
 
-
 <body>
-
-  <div class="app">
-
+  <div class="app success-shell">
     <div class="container">
+      <section class="section success-card-main">
 
-      <section class="section">
+        <header class="success-hero">
+          <div class="success-hero-inner">
+            <div class="success-mark" aria-hidden="true"><span>✓</span></div>
+            <p class="success-kicker">Student Consultation / 04 — CONFIRM</p>
+            <h1 class="success-title">Booking <strong>thành công.</strong></h1>
+            <p class="success-subtitle">
+              Lịch meeting của bạn đã được xác nhận. Lưu lại thời gian và sử dụng link Google Meet khi đến giờ.
+            </p>
+          </div>
+        </header>
 
-        <div class="eyebrow">
-          Student Consultation
-        </div>
-
-        <h1 class="title">
-          Booking thành công
-        </h1>
-
-        <p class="subtitle">
-          Lịch meeting của bạn đã được xác nhận.
-        </p>
-
-
-        <!-- =================================================
-             BOOKING SUMMARY
-             ================================================= -->
-
-        <div class="summary">
-
-          <div class="summary-title">
-            Lịch meeting
+        <div class="success-body">
+          <div class="success-status-row">
+            <div class="success-status-label">Booking Status</div>
+            <div class="success-status-badge">Confirmed</div>
           </div>
 
-          <div
-            id="bookingSlot"
-            class="summary-value"
-          >
-            Đang tải...
+          <div id="loadingState" class="loading-panel">
+            <div class="loading-dot" aria-hidden="true"></div>
+            <div>
+              <div class="success-card-label">Booking</div>
+              <div class="success-card-value">Đang tải thông tin...</div>
+            </div>
           </div>
 
-        </div>
+          <div id="bookingContent" class="success-grid hidden">
+            <div class="success-info-card wide">
+              <div class="success-card-label">01 — Lịch meeting</div>
+              <div id="bookingSlot" class="success-card-value">—</div>
+            </div>
 
+            <div class="success-info-card">
+              <div class="success-card-label">02 — Thông tin sinh viên</div>
+              <div class="student-info">
+                <div class="student-info-row">
+                  <span>Họ và tên</span>
+                  <strong id="studentName"></strong>
+                </div>
+                <div class="student-info-row">
+                  <span>MSSV</span>
+                  <strong id="studentMssv"></strong>
+                </div>
+                <div class="student-info-row">
+                  <span>Nội dung</span>
+                  <strong id="studentTopic"></strong>
+                </div>
+              </div>
+            </div>
 
-        <!-- =================================================
-             STUDENT
-             ================================================= -->
+            <div id="meetSummary" class="success-info-card">
+              <div class="success-card-label">03 — Google Meet</div>
+              <div class="meet-link-box">
+                <a id="meetLink" href="#" target="_blank" rel="noopener noreferrer">Đang tải...</a>
+              </div>
+              <div class="action-stack">
+                <a id="joinMeetButton" href="#" target="_blank" rel="noopener noreferrer" class="confirm-button" style="text-decoration:none;">
+                  <span class="button-icon">↗</span>
+                  Join Google Meet
+                </a>
+                <button id="copyMeetButton" type="button" class="secondary-button">
+                  <span class="button-icon">⧉</span>
+                  Copy Meet Link
+                </button>
+              </div>
+            </div>
 
-        <div
-          id="studentSummary"
-          class="summary"
-          style="display: none;"
-        >
+            <div id="calendarSummary" class="success-info-card wide">
+              <div class="success-card-label">04 — Google Calendar</div>
+              <div class="reminder-text">
+                Thêm lịch vào Google Calendar để dễ kiểm tra lại thời gian meeting.
+              </div>
+              <div class="action-stack">
+                <a id="addCalendarButton" href="#" target="_blank" rel="noopener noreferrer" class="confirm-button" style="text-decoration:none;">
+                  <span class="button-icon">+</span>
+                  Add to Google Calendar
+                </a>
+                <a id="openCalendarButton" href="#" target="_blank" rel="noopener noreferrer" class="secondary-button">
+                  <span class="button-icon">↗</span>
+                  Open Calendar Event
+                </a>
+              </div>
+            </div>
 
-          <div class="summary-title">
-            Thông tin sinh viên
+            <div id="reminderSummary" class="success-info-card wide">
+              <div class="success-card-label">05 — Lưu ý</div>
+              <div class="reminder-text">
+                Bạn không cần tham gia Google Meet ngay lúc này. Hãy lưu lại link Meet và sử dụng link này khi đến giờ meeting.
+              </div>
+            </div>
+
+            <div id="bookingIdText" class="booking-id"></div>
           </div>
 
-          <div
-            id="studentName"
-            style="margin-bottom: 6px;"
-          ></div>
-
-          <div
-            id="studentMssv"
-            style="margin-bottom: 6px;"
-          ></div>
-
-          <div
-            id="studentTopic"
-          ></div>
-
-        </div>
-
-
-        <!-- =================================================
-             GOOGLE MEET
-             ================================================= -->
-
-        <div
-          id="meetSummary"
-          class="summary"
-          style="display: none;"
-        >
-
-          <div class="summary-title">
-            Google Meet
+          <div id="errorSummary" class="error-panel hidden">
+            <div class="success-card-label">Có lỗi xảy ra</div>
+            <div id="errorMessage" class="reminder-text">Không thể tải thông tin booking.</div>
           </div>
 
-          <div
-            style="
-              word-break: break-all;
-              margin-bottom: 12px;
-            "
-          >
-
-            <a
-              id="meetLink"
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Đang tải...
+          <div class="back-link">
+            <a href="./" class="secondary-button">
+              <span class="button-icon">←</span>
+              Quay lại trang booking
             </a>
-
           </div>
-
-
-          <a
-            id="joinMeetButton"
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="confirm-button"
-            style="
-              display: block;
-              text-decoration: none;
-              text-align: center;
-              margin-top: 12px;
-            "
-          >
-            Join Google Meet
-          </a>
-
-
-          <button
-            id="copyMeetButton"
-            type="button"
-            class="confirm-button"
-            style="
-              width: 100%;
-              margin-top: 10px;
-            "
-          >
-            Copy Meet Link
-          </button>
-
         </div>
-
-
-        <!-- =================================================
-             GOOGLE CALENDAR
-             ================================================= -->
-
-        <div
-          id="calendarSummary"
-          class="summary"
-          style="display: none;"
-        >
-
-          <div class="summary-title">
-            Google Calendar
-          </div>
-
-          <p
-            style="
-              margin-top: 0;
-              margin-bottom: 14px;
-            "
-          >
-            Bạn có thể thêm lịch meeting vào Google Calendar
-            để dễ dàng kiểm tra lại thời gian sau này.
-          </p>
-
-
-          <a
-            id="addCalendarButton"
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="confirm-button"
-            style="
-              display: block;
-              text-decoration: none;
-              text-align: center;
-            "
-          >
-            Add to Google Calendar
-          </a>
-
-
-          <a
-            id="openCalendarButton"
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="confirm-button"
-            style="
-              display: block;
-              text-decoration: none;
-              text-align: center;
-              margin-top: 10px;
-            "
-          >
-            Open Google Calendar Event
-          </a>
-
-        </div>
-
-
-        <!-- =================================================
-             REMINDER
-             ================================================= -->
-
-        <div
-          id="reminderSummary"
-          class="summary"
-          style="display: none;"
-        >
-
-          <div class="summary-title">
-            Lưu ý
-          </div>
-
-          <div>
-            Bạn không cần tham gia Google Meet ngay lúc này.
-            Hãy lưu lại link Meet và sử dụng link này khi
-            đến giờ meeting.
-          </div>
-
-        </div>
-
-
-        <!-- =================================================
-             ERROR
-             ================================================= -->
-
-        <div
-          id="errorSummary"
-          class="summary"
-          style="display: none;"
-        >
-
-          <div class="summary-title">
-            Có lỗi xảy ra
-          </div>
-
-          <div
-            id="errorMessage"
-          >
-            Không thể tải thông tin booking.
-          </div>
-
-        </div>
-
-
-        <!-- =================================================
-             BACK
-             ================================================= -->
-
-        <a
-          href="./"
-          class="confirm-button"
-          style="
-            display: block;
-            text-decoration: none;
-            text-align: center;
-            margin-top: 16px;
-          "
-        >
-          Quay lại trang booking
-        </a>
-
       </section>
-
     </div>
-
   </div>
-
 
   <script>
 
@@ -301,14 +506,19 @@
        DOM
        ===================================================== */
 
+    const loadingState =
+      document.getElementById(
+        'loadingState'
+      );
+
+    const bookingContent =
+      document.getElementById(
+        'bookingContent'
+      );
+
     const bookingSlot =
       document.getElementById(
         'bookingSlot'
-      );
-
-    const studentSummary =
-      document.getElementById(
-        'studentSummary'
       );
 
     const studentName =
@@ -366,6 +576,11 @@
         'reminderSummary'
       );
 
+    const bookingIdText =
+      document.getElementById(
+        'bookingIdText'
+      );
+
     const errorSummary =
       document.getElementById(
         'errorSummary'
@@ -394,21 +609,13 @@
 
 
     /* =====================================================
-       FORMAT GOOGLE CALENDAR DATES
+       CALENDAR URL
        ===================================================== */
 
     function createCalendarDateRange(
       dateString,
       timeString
     ) {
-
-      /*
-       * Date:
-       * YYYY-MM-DD
-       *
-       * Time:
-       * HH:MM–HH:MM
-       */
 
       const timeMatch =
         String(timeString || '').match(
@@ -446,7 +653,6 @@
           timeMatch[4]
         ).padStart(2, '0');
 
-
       const date =
         String(dateString)
           .replace(
@@ -470,10 +676,6 @@
 
     }
 
-
-    /* =====================================================
-       CREATE GOOGLE CALENDAR LINK
-       ===================================================== */
 
     function createGoogleCalendarUrl(
       data
@@ -500,8 +702,7 @@
           `Nội dung: ${data.topic || ''}`,
           '',
           `Google Meet: ${data.meetLink || ''}`
-        ]
-          .join('\n');
+        ].join('\n');
 
 
       const calendarParams =
@@ -534,29 +735,34 @@
 
 
     /* =====================================================
-       SHOW ERROR
+       ERROR
        ===================================================== */
 
     function showError(
       message
     ) {
 
-      errorSummary.style.display =
-        'block';
+      loadingState.classList.add(
+        'hidden'
+      );
+
+      bookingContent.classList.add(
+        'hidden'
+      );
+
+      errorSummary.classList.remove(
+        'hidden'
+      );
 
       errorMessage.textContent =
         message ||
-        'Không thể tải thông tin booking.';
-
-
-      bookingSlot.textContent =
         'Không thể tải thông tin booking.';
 
     }
 
 
     /* =====================================================
-       COPY MEET LINK
+       COPY LINK
        ===================================================== */
 
     copyMeetButton.addEventListener(
@@ -567,7 +773,10 @@
           meetLink.href;
 
 
-        if (!url || url === '#') {
+        if (
+          !url ||
+          url === '#'
+        ) {
 
           return;
 
@@ -580,26 +789,7 @@
             url
           );
 
-          copyMeetButton.textContent =
-            'Copied ✓';
-
-
-          setTimeout(
-            function () {
-
-              copyMeetButton.textContent =
-                'Copy Meet Link';
-
-            },
-            1800
-          );
-
         } catch (error) {
-
-          /*
-           * Fallback for browsers
-           * that block navigator.clipboard.
-           */
 
           const tempInput =
             document.createElement(
@@ -621,22 +811,22 @@
 
           tempInput.remove();
 
-
-          copyMeetButton.textContent =
-            'Copied ✓';
-
-
-          setTimeout(
-            function () {
-
-              copyMeetButton.textContent =
-                'Copy Meet Link';
-
-            },
-            1800
-          );
-
         }
+
+
+        copyMeetButton.innerHTML =
+          '<span class="button-icon">✓</span> Copied';
+
+
+        setTimeout(
+          function () {
+
+            copyMeetButton.innerHTML =
+              '<span class="button-icon">⧉</span> Copy Meet Link';
+
+          },
+          1800
+        );
 
       }
     );
@@ -679,21 +869,30 @@
            ------------------------------------------------- */
 
         studentName.textContent =
-          `Họ và tên: ${data.student}`;
+          data.student || '—';
 
         studentMssv.textContent =
-          `MSSV: ${data.mssv}`;
+          data.mssv || '—';
 
         studentTopic.textContent =
-          `Nội dung: ${data.topic || 'Chưa cung cấp'}`;
-
-
-        studentSummary.style.display =
-          'block';
+          data.topic ||
+          'Chưa cung cấp';
 
 
         /* -------------------------------------------------
-           GOOGLE MEET
+           BOOKING ID
+           ------------------------------------------------- */
+
+        if (data.eventId) {
+
+          bookingIdText.textContent =
+            `Event ID: ${data.eventId}`;
+
+        }
+
+
+        /* -------------------------------------------------
+           MEET
            ------------------------------------------------- */
 
         if (data.meetLink) {
@@ -707,14 +906,21 @@
           joinMeetButton.href =
             data.meetLink;
 
-          meetSummary.style.display =
-            'block';
+          meetSummary.classList.remove(
+            'hidden'
+          );
+
+        } else {
+
+          meetSummary.classList.add(
+            'hidden'
+          );
 
         }
 
 
         /* -------------------------------------------------
-           GOOGLE CALENDAR
+           CALENDAR
            ------------------------------------------------- */
 
         const addCalendarUrl =
@@ -728,16 +934,15 @@
           addCalendarButton.href =
             addCalendarUrl;
 
-          calendarSummary.style.display =
-            'block';
+        } else {
+
+          addCalendarButton.classList.add(
+            'hidden'
+          );
 
         }
 
 
-        /*
-         * Open the actual Calendar event
-         * created by the lecturer.
-         */
         if (data.calendarLink) {
 
           openCalendarButton.href =
@@ -745,18 +950,28 @@
 
         } else {
 
-          openCalendarButton.style.display =
-            'none';
+          openCalendarButton.classList.add(
+            'hidden'
+          );
 
         }
 
 
         /* -------------------------------------------------
-           REMINDER
+           SHOW CONTENT
            ------------------------------------------------- */
 
-        reminderSummary.style.display =
-          'block';
+        loadingState.classList.add(
+          'hidden'
+        );
+
+        bookingContent.classList.remove(
+          'hidden'
+        );
+
+        reminderSummary.classList.remove(
+          'hidden'
+        );
 
       };
 
@@ -791,13 +1006,6 @@
 
       }
 
-
-      /*
-       * JSONP
-       *
-       * Apps Script hỗ trợ callback,
-       * nên không bị CORS như fetch().
-       */
 
       const script =
         document.createElement(
@@ -849,4 +1057,6 @@
 
 </body>
 
+
+</body>
 </html>
