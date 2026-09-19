@@ -2586,3 +2586,35 @@ body {
     grid-template-columns: 1fr !important;
   }
 }
+
+/* =====================================================
+   FIX 3 — SMALL VISUAL CLEANUP
+   1) Remove leftover white pseudo icon from orange buttons.
+   2) Keep the orange graphic asset away from SUCCESS title text.
+   3) Remove the lower orange asset that collided with
+      "MEETING CONFIRMED!".
+   4) Use a black confirmation check on the orange mark.
+   ===================================================== */
+
+/* 1 — The white outlined square was an old pseudo-element.
+   The real icon/arrow already exists inside the button. */
+.confirm-button::before {
+  display: none !important;
+}
+
+/* 2 + 3 — Reposition/remove the orange decorative asset so
+   it decorates the poster without sitting under orange copy. */
+.success-hero::before {
+  left: -72px !important;
+  top: 92px !important;
+  width: 220px !important;
+  height: 52px !important;
+  transform: rotate(-13deg) skewX(-18deg) !important;
+  box-shadow: none !important;
+}
+
+/* 4 — Black check on the orange confirmation tile. */
+.success-mark,
+.success-mark span {
+  color: var(--demo-black) !important;
+}
