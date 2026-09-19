@@ -871,3 +871,561 @@ a {
   }
 
 }
+
+/* =========================================================
+   STEP 3 — COMPONENT POLISH
+   Keep HTML + JS structure unchanged.
+   ========================================================= */
+
+:root {
+  --shadow-card: 0 2px 0 rgba(17, 19, 24, 0.05), 0 10px 24px rgba(17, 19, 24, 0.04);
+  --shadow-active: 4px 4px 0 rgba(17, 19, 24, 0.16);
+  --shadow-button: 4px 4px 0 #111318;
+}
+
+/* ---------- STATUS ---------- */
+
+.status-bar {
+  min-height: 32px;
+}
+
+#status:not(.hidden) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+#status:not(.hidden)::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  margin-right: 7px;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-soft);
+}
+
+#error:not(.hidden) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  margin-left: 8px;
+  padding: 5px 10px;
+  border: 1px solid rgba(180, 35, 24, 0.20);
+  border-radius: 999px;
+  background: #fff5f4;
+  font-size: 11px;
+  font-weight: 750;
+}
+
+/* ---------- SECTION ---------- */
+
+.section {
+  box-shadow: var(--shadow-card);
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.section:hover {
+  border-color: #d5d9de;
+}
+
+.section::after {
+  width: 62px;
+  height: 5px;
+}
+
+.section-heading {
+  position: relative;
+}
+
+.section-number {
+  position: relative;
+  border-radius: 4px;
+  box-shadow: 3px 3px 0 rgba(17, 19, 24, 0.10);
+}
+
+.section-number::after {
+  content: "";
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  width: 8px;
+  height: 8px;
+  background: var(--primary);
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}
+
+.summary-section .section-number::after {
+  background: #ffffff;
+}
+
+.section-label {
+  letter-spacing: 0.12em;
+}
+
+.section-helper {
+  max-width: 560px;
+}
+
+/* ---------- MONTH / WEEKDAY OPTIONS ---------- */
+
+.options {
+  gap: 9px;
+}
+
+.option {
+  position: relative;
+  overflow: hidden;
+  border-color: #d8dde2;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfbfb 100%);
+  border-radius: 7px;
+  box-shadow: 0 1px 0 rgba(17, 19, 24, 0.03);
+  letter-spacing: 0.01em;
+}
+
+.option::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: var(--primary);
+  transition: width 150ms ease;
+}
+
+.option:hover:not(:disabled) {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0 rgba(17, 19, 24, 0.10);
+}
+
+.option:hover:not(:disabled)::before {
+  width: 3px;
+}
+
+.option.active {
+  position: relative;
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+  box-shadow: var(--shadow-active);
+  transform: translate(-1px, -1px);
+}
+
+.option.active::before {
+  width: 4px;
+  background: #ffffff;
+}
+
+.option.active::after {
+  content: "✓";
+  position: absolute;
+  top: 50%;
+  right: 9px;
+  transform: translateY(-50%);
+  font-size: 11px;
+  font-weight: 900;
+  opacity: 0.9;
+}
+
+.option.active:hover {
+  background: var(--primary-dark);
+  transform: translate(-1px, -1px);
+}
+
+/* ---------- DATE CARDS ---------- */
+
+.dates {
+  grid-template-columns: repeat(auto-fit, minmax(104px, 1fr));
+  gap: 9px;
+}
+
+.date-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 94px;
+  border-color: #d8dde2;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+  box-shadow: 0 1px 0 rgba(17, 19, 24, 0.03);
+}
+
+.date-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 0;
+  background: var(--primary);
+  transition: height 160ms ease;
+}
+
+.date-card:hover {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0 rgba(17, 19, 24, 0.10);
+}
+
+.date-card:hover::before {
+  height: 100%;
+}
+
+.date-card.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+  box-shadow: var(--shadow-active);
+  transform: translate(-1px, -1px);
+}
+
+.date-card.active::before {
+  height: 100%;
+  background: #ffffff;
+}
+
+.date-card.active::after {
+  content: "✓";
+  position: absolute;
+  top: 8px;
+  right: 9px;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.date-card.active:hover {
+  background: var(--primary-dark);
+}
+
+.date-number {
+  letter-spacing: -0.04em;
+}
+
+.date-month {
+  font-weight: 750;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ---------- TIME CARDS ---------- */
+
+.time-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 74px;
+  border-color: #d8dde2;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+  box-shadow: 0 1px 0 rgba(17, 19, 24, 0.03);
+}
+
+.time-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: var(--primary);
+  transition: width 150ms ease;
+}
+
+.time-card::after {
+  content: "→";
+  color: #a0a7b1;
+  font-size: 17px;
+  font-weight: 900;
+  transition: transform 150ms ease, color 150ms ease;
+}
+
+.time-card:hover {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0 rgba(17, 19, 24, 0.10);
+}
+
+.time-card:hover::before {
+  width: 4px;
+}
+
+.time-card:hover::after {
+  color: var(--primary-dark);
+  transform: translateX(2px);
+}
+
+.time-card.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+  box-shadow: var(--shadow-active);
+  transform: translate(-1px, -1px);
+}
+
+.time-card.active::before {
+  width: 5px;
+  background: #ffffff;
+}
+
+.time-card.active::after {
+  color: #ffffff;
+  transform: translateX(2px);
+}
+
+.time-card.active .time-status {
+  color: #ffffff;
+}
+
+.time-label {
+  font-size: 16px;
+  letter-spacing: -0.015em;
+}
+
+.time-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.time-status::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.75;
+}
+
+/* ---------- SUMMARY ---------- */
+
+.summary-highlight {
+  border-radius: 8px;
+  box-shadow: inset 4px 0 0 var(--primary);
+}
+
+.summary-value {
+  font-size: clamp(15px, 2vw, 17px);
+  line-height: 1.45;
+}
+
+/* ---------- FORM ---------- */
+
+.form-group {
+  margin-bottom: 19px;
+}
+
+.form-group label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 7px;
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.form-group label::after {
+  content: "";
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--primary);
+}
+
+.form-group input,
+.form-group textarea {
+  border-color: #d7dce1;
+  background: #fbfbfb;
+  border-radius: 8px;
+  box-shadow: inset 0 1px 0 rgba(17, 19, 24, 0.02);
+  transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.form-group input:hover,
+.form-group textarea:hover {
+  border-color: #c8ced6;
+  background: #ffffff;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--primary);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(243, 111, 33, 0.12), 3px 3px 0 rgba(17, 19, 24, 0.06);
+  transform: translate(-1px, -1px);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #a1a8b2;
+  opacity: 1;
+}
+
+.field-error:not(:empty) {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-top: 7px;
+  font-weight: 700;
+}
+
+.field-error:not(:empty)::before {
+  content: "!";
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--danger);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+/* ---------- CONFIRM BUTTON ---------- */
+
+.confirm-button {
+  position: relative;
+  overflow: hidden;
+  min-height: 52px;
+  justify-content: space-between;
+  padding: 0 8px 0 18px;
+  border-radius: 7px;
+  background: var(--primary);
+  box-shadow: var(--shadow-button);
+  letter-spacing: 0.01em;
+}
+
+.confirm-button::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0;
+  background: rgba(255, 255, 255, 0.10);
+  transition: width 170ms ease;
+}
+
+.confirm-button:hover:not(:disabled)::before {
+  width: 100%;
+}
+
+.confirm-button span {
+  position: relative;
+  z-index: 1;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #111318;
+  color: var(--primary);
+  font-size: 18px;
+  transition: transform 160ms ease;
+}
+
+.confirm-button:hover:not(:disabled) {
+  background: var(--primary-dark);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #111318;
+}
+
+.confirm-button:hover:not(:disabled) span {
+  transform: translateX(2px);
+}
+
+.confirm-button:active:not(:disabled) {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 #111318;
+}
+
+.confirm-button:disabled {
+  background: #b9bec5;
+  color: #f7f7f7;
+}
+
+.confirm-button:disabled span {
+  background: #8e949d;
+  color: #dfe3e8;
+}
+
+.form-message {
+  min-height: 18px;
+  font-weight: 650;
+}
+
+/* ---------- FOOTER ---------- */
+
+.page-footer {
+  padding-top: 18px;
+}
+
+/* ---------- TOUCH / SMALL SCREENS ---------- */
+
+@media (hover: none) {
+  .section:hover {
+    border-color: var(--border);
+  }
+
+  .option:hover:not(:disabled),
+  .date-card:hover,
+  .time-card:hover,
+  .confirm-button:hover:not(:disabled) {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 600px) {
+  #status:not(.hidden),
+  #error:not(.hidden) {
+    font-size: 10px;
+  }
+
+  .dates {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .date-card {
+    min-height: 88px;
+  }
+
+  .time-card {
+    min-height: 68px;
+  }
+
+  .confirm-button {
+    min-height: 50px;
+  }
+}
+
+@media (max-width: 380px) {
+  .options {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .option {
+    width: 100%;
+  }
+
+  .date-card.active,
+  .option.active,
+  .time-card.active {
+    box-shadow: 3px 3px 0 rgba(17, 19, 24, 0.14);
+  }
+}
