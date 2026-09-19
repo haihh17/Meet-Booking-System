@@ -1429,3 +1429,288 @@ a {
     box-shadow: 3px 3px 0 rgba(17, 19, 24, 0.14);
   }
 }
+
+/* =========================================================
+   STEP 4 — MICRO INTERACTION & UX
+   CSS-only enhancement. No JS / backend changes.
+   ========================================================= */
+
+:root {
+  --motion-fast: 140ms;
+  --motion-med: 220ms;
+  --motion-slow: 420ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-snap: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ---------- PAGE ENTRY ---------- */
+
+.header {
+  animation: step4-header-in var(--motion-slow) var(--ease-out) both;
+}
+
+.status-bar {
+  animation: step4-fade-up 360ms var(--ease-out) 70ms both;
+}
+
+.booking-flow > .section:not(.hidden) {
+  animation: step4-section-in 380ms var(--ease-out) both;
+}
+
+.booking-flow > .section:nth-child(2):not(.hidden) { animation-delay: 45ms; }
+.booking-flow > .section:nth-child(3):not(.hidden) { animation-delay: 90ms; }
+.booking-flow > .section:nth-child(4):not(.hidden) { animation-delay: 135ms; }
+.booking-flow > .section:nth-child(5):not(.hidden) { animation-delay: 180ms; }
+.booking-flow > .section:nth-child(6):not(.hidden) { animation-delay: 225ms; }
+
+/* Newly revealed sections get a clearer state change without moving the page too much. */
+.section:not(.hidden) .section-number {
+  animation: step4-number-in 360ms var(--ease-snap) both;
+}
+
+.summary-section:not(.hidden) .summary-highlight {
+  animation: step4-summary-in 400ms var(--ease-out) 80ms both;
+}
+
+/* ---------- STATUS ---------- */
+
+#status:not(.hidden)::before {
+  animation: step4-status-pulse 1.8s ease-in-out infinite;
+}
+
+/* ---------- OPTION MICRO STATES ---------- */
+
+.option,
+.date-card,
+.time-card {
+  will-change: transform;
+}
+
+.option:active:not(:disabled),
+.date-card:active,
+.time-card:active {
+  transform: translate(0, 0) scale(0.985);
+  transition-duration: 70ms;
+}
+
+.option.active,
+.date-card.active,
+.time-card.active {
+  animation: step4-selected-pop 240ms var(--ease-snap);
+}
+
+.option.active::after,
+.date-card.active::after {
+  animation: step4-check-in 220ms var(--ease-snap) 35ms both;
+}
+
+/* Keep the active time arrow crisp while giving it one small entrance movement. */
+.time-card.active::after {
+  animation: step4-arrow-in 220ms var(--ease-out) 40ms both;
+}
+
+/* ---------- INPUT MICRO STATES ---------- */
+
+.form-group input,
+.form-group textarea {
+  will-change: border-color, box-shadow, transform;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  transition-duration: 120ms;
+}
+
+.form-group input:valid:not(:placeholder-shown),
+.form-group textarea:valid:not(:placeholder-shown) {
+  border-color: rgba(22, 128, 91, 0.42);
+}
+
+/* ---------- CONFIRM BUTTON ---------- */
+
+.confirm-button {
+  will-change: transform, box-shadow;
+}
+
+.confirm-button:focus-visible {
+  animation: step4-button-focus 1.2s ease-in-out infinite;
+}
+
+.confirm-button:active:not(:disabled) {
+  transition-duration: 70ms;
+}
+
+/* ---------- ERROR / FORM MESSAGE ---------- */
+
+.field-error:not(:empty) {
+  animation: step4-error-in 220ms var(--ease-out) both;
+}
+
+.form-message:not(:empty) {
+  animation: step4-fade-up 220ms var(--ease-out) both;
+}
+
+/* ---------- KEYFRAMES ---------- */
+
+@keyframes step4-header-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes step4-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes step4-section-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes step4-number-in {
+  from {
+    opacity: 0;
+    transform: scale(0.88) rotate(-2deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+@keyframes step4-summary-in {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes step4-selected-pop {
+  0% {
+    transform: translate(-1px, -1px) scale(0.985);
+  }
+  65% {
+    transform: translate(-1px, -1px) scale(1.012);
+  }
+  100% {
+    transform: translate(-1px, -1px) scale(1);
+  }
+}
+
+@keyframes step4-check-in {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.5);
+  }
+  to {
+    opacity: 0.9;
+    transform: translateY(-50%) scale(1);
+  }
+}
+
+@keyframes step4-arrow-in {
+  from {
+    opacity: 0;
+    transform: translateX(-3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(2px);
+  }
+}
+
+@keyframes step4-status-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 3px var(--primary-soft);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(243, 111, 33, 0.08);
+  }
+}
+
+@keyframes step4-button-focus {
+  0%, 100% {
+    box-shadow: 0 0 0 3px rgba(243, 111, 33, 0.24), var(--shadow-button);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(243, 111, 33, 0.12), var(--shadow-button);
+  }
+}
+
+@keyframes step4-error-in {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- MOBILE ---------- */
+
+@media (max-width: 600px) {
+  .option:active:not(:disabled),
+  .date-card:active,
+  .time-card:active {
+    transform: scale(0.985);
+  }
+
+  .booking-flow > .section:not(.hidden) {
+    animation-duration: 320ms;
+  }
+}
+
+/* ---------- REDUCED MOTION ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .status-bar,
+  .booking-flow > .section:not(.hidden),
+  .section:not(.hidden) .section-number,
+  .summary-section:not(.hidden) .summary-highlight,
+  #status:not(.hidden)::before,
+  .option.active,
+  .date-card.active,
+  .time-card.active,
+  .option.active::after,
+  .date-card.active::after,
+  .time-card.active::after,
+  .confirm-button:focus-visible,
+  .field-error:not(:empty),
+  .form-message:not(:empty) {
+    animation: none !important;
+  }
+
+  .option,
+  .date-card,
+  .time-card,
+  .form-group input,
+  .form-group textarea,
+  .confirm-button {
+    will-change: auto;
+  }
+}
