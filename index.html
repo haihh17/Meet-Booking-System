@@ -27,271 +27,438 @@
     <div class="container">
 
 
-      <!-- HEADER -->
+      <!-- =================================================
+           HERO
+           ================================================= -->
 
       <header class="header">
 
-        <div class="eyebrow">
-          Student Consultation
+        <div class="header-main">
+
+          <div class="eyebrow">
+            Student Consultation
+          </div>
+
+          <h1 class="title">
+            Book a
+            <span>Meeting.</span>
+          </h1>
+
+          <p class="subtitle">
+            Chọn thời gian phù hợp để trao đổi về bài,
+            project hoặc feedback.
+          </p>
+
         </div>
 
-        <h1 class="title">
-          Book a Meeting
-        </h1>
 
-        <p class="subtitle">
-          Chọn thời gian phù hợp để trao đổi về bài,
-          project hoặc feedback.
-        </p>
+        <div class="header-meta">
+
+          <span>
+            01 — SCHEDULE
+          </span>
+
+          <span>
+            02 — DETAILS
+          </span>
+
+          <span>
+            03 — CONFIRM
+          </span>
+
+        </div>
 
       </header>
 
 
-      <!-- STATUS -->
+      <!-- =================================================
+           STATUS
+           ================================================= -->
 
-      <div id="status">
-        Đang tải lịch...
+      <div class="status-bar">
+
+        <div
+          id="status"
+          class="status-message"
+        >
+          Đang tải lịch...
+        </div>
+
+        <div
+          id="error"
+          class="error hidden"
+        ></div>
+
       </div>
 
-      <div
-        id="error"
-        class="error hidden"
-      ></div>
 
+      <!-- =================================================
+           BOOKING FLOW
+           ================================================= -->
 
-      <!-- MONTH -->
+      <main class="booking-flow">
 
-      <section class="section">
 
-        <div class="section-label">
-          01 — Chọn tháng
-        </div>
+        <!-- MONTH -->
 
-        <div
-          id="monthOptions"
-          class="options"
-        ></div>
+        <section class="section">
 
-      </section>
+          <div class="section-heading">
 
+            <div class="section-number">
+              01
+            </div>
 
-      <!-- WEEKDAY -->
+            <div>
 
-      <section
-        id="weekdaySection"
-        class="section hidden"
-      >
+              <div class="section-label">
+                Chọn tháng
+              </div>
 
-        <div class="section-label">
-          02 — Chọn thứ
-        </div>
+              <div class="section-helper">
+                Chọn tháng bạn muốn đặt lịch.
+              </div>
 
-        <div
-          id="weekdayOptions"
-          class="options"
-        ></div>
+            </div>
 
-      </section>
+          </div>
 
 
-      <!-- DATE -->
+          <div
+            id="monthOptions"
+            class="options"
+          ></div>
 
-      <section
-        id="dateSection"
-        class="section hidden"
-      >
+        </section>
 
-        <div class="section-label">
-          03 — Chọn ngày
-        </div>
 
-        <div
-          id="dateOptions"
-          class="dates"
-        ></div>
+        <!-- WEEKDAY -->
 
-      </section>
+        <section
+          id="weekdaySection"
+          class="section hidden"
+        >
 
+          <div class="section-heading">
 
-      <!-- TIME -->
+            <div class="section-number">
+              02
+            </div>
 
-      <section
-        id="timeSection"
-        class="section hidden"
-      >
+            <div>
 
-        <div class="section-label">
-          04 — Chọn khung giờ
-        </div>
+              <div class="section-label">
+                Chọn thứ
+              </div>
 
-        <div
-          id="timeOptions"
-          class="times"
-        ></div>
+              <div class="section-helper">
+                Chọn ngày trong tuần phù hợp.
+              </div>
 
-      </section>
+            </div>
 
+          </div>
 
-<!-- SUMMARY -->
 
-<section
-  id="summarySection"
-  class="section hidden"
->
+          <div
+            id="weekdayOptions"
+            class="options"
+          ></div>
 
-  <div class="section-label">
-    04 — Xác nhận thời gian
-  </div>
+        </section>
 
-  <div class="summary">
 
-    <div class="summary-title">
-      Lịch meeting đã chọn
-    </div>
+        <!-- DATE -->
 
-    <div
-      id="summaryValue"
-      class="summary-value"
-    ></div>
+        <section
+          id="dateSection"
+          class="section hidden"
+        >
 
-  </div>
+          <div class="section-heading">
 
-</section>
+            <div class="section-number">
+              03
+            </div>
 
+            <div>
 
-<!-- STUDENT INFORMATION -->
+              <div class="section-label">
+                Chọn ngày
+              </div>
 
-<section
-  id="studentSection"
-  class="section hidden"
->
+              <div class="section-helper">
+                Chọn ngày meeting.
+              </div>
 
-  <div class="section-label">
-    05 — Thông tin của bạn
-  </div>
+            </div>
 
+          </div>
 
-  <form id="bookingForm">
 
-    <!-- NAME -->
+          <div
+            id="dateOptions"
+            class="dates"
+          ></div>
 
-    <div class="form-group">
+        </section>
 
-      <label for="studentName">
-        Họ và tên
-      </label>
 
-      <input
-        id="studentName"
-        name="studentName"
-        type="text"
-        placeholder="Nhập họ và tên"
-        autocomplete="name"
-        required
-      >
+        <!-- TIME -->
 
-      <div
-        class="field-error"
-        id="nameError"
-      ></div>
+        <section
+          id="timeSection"
+          class="section hidden"
+        >
 
-    </div>
+          <div class="section-heading">
 
+            <div class="section-number">
+              04
+            </div>
 
-    <!-- MSSV -->
+            <div>
 
-    <div class="form-group">
+              <div class="section-label">
+                Chọn khung giờ
+              </div>
 
-      <label for="studentMssv">
-        MSSV
-      </label>
+              <div class="section-helper">
+                Chọn một khung giờ còn trống.
+              </div>
 
-      <input
-        id="studentMssv"
-        name="studentMssv"
-        type="text"
-        placeholder="Nhập mã số sinh viên"
-        autocomplete="off"
-        required
-      >
+            </div>
 
-      <div
-        class="field-error"
-        id="mssvError"
-      ></div>
+          </div>
 
-    </div>
 
+          <div
+            id="timeOptions"
+            class="times"
+          ></div>
 
-    <!-- EMAIL -->
+        </section>
 
-    <div class="form-group">
 
-      <label for="studentEmail">
-        Email
-      </label>
+        <!-- =================================================
+             SUMMARY
+             ================================================= -->
 
-      <input
-        id="studentEmail"
-        name="studentEmail"
-        type="email"
-        placeholder="example@email.com"
-        autocomplete="email"
-        required
-      >
+        <section
+          id="summarySection"
+          class="section summary-section hidden"
+        >
 
-      <div
-        class="field-error"
-        id="emailError"
-      ></div>
+          <div class="section-heading">
 
-    </div>
+            <div class="section-number">
+              ✓
+            </div>
 
+            <div>
 
-    <!-- TOPIC -->
+              <div class="section-label">
+                Xác nhận thời gian
+              </div>
 
-    <div class="form-group">
+              <div class="section-helper">
+                Kiểm tra lại lịch trước khi tiếp tục.
+              </div>
 
-      <label for="studentTopic">
-        Bạn muốn trao đổi gì?
-      </label>
+            </div>
 
-      <textarea
-        id="studentTopic"
-        name="studentTopic"
-        rows="4"
-        placeholder="Ví dụ: Em muốn hỏi về concept, layout hoặc feedback Assignment 2."
-        required
-      ></textarea>
+          </div>
 
-      <div
-        class="field-error"
-        id="topicError"
-      ></div>
 
-    </div>
+          <div class="summary summary-highlight">
 
+            <div class="summary-title">
+              Lịch meeting đã chọn
+            </div>
 
-    <!-- CONFIRM -->
+            <div
+              id="summaryValue"
+              class="summary-value"
+            ></div>
 
-    <button
-      id="confirmButton"
-      class="confirm-button"
-      type="submit"
-      disabled
-    >
-      Xác nhận booking
-    </button>
+          </div>
 
+        </section>
 
-    <div
-      id="formMessage"
-      class="form-message"
-    ></div>
 
-  </form>
+        <!-- =================================================
+             STUDENT INFORMATION
+             ================================================= -->
 
-</section>
+        <section
+          id="studentSection"
+          class="section hidden"
+        >
+
+          <div class="section-heading">
+
+            <div class="section-number">
+              05
+            </div>
+
+            <div>
+
+              <div class="section-label">
+                Thông tin của bạn
+              </div>
+
+              <div class="section-helper">
+                Điền thông tin để xác nhận booking.
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <form id="bookingForm">
+
+
+            <!-- NAME -->
+
+            <div class="form-group">
+
+              <label for="studentName">
+                Họ và tên
+              </label>
+
+              <input
+                id="studentName"
+                name="studentName"
+                type="text"
+                placeholder="Nhập họ và tên"
+                autocomplete="name"
+                required
+              >
+
+              <div
+                class="field-error"
+                id="nameError"
+              ></div>
+
+            </div>
+
+
+            <!-- MSSV -->
+
+            <div class="form-group">
+
+              <label for="studentMssv">
+                MSSV
+              </label>
+
+              <input
+                id="studentMssv"
+                name="studentMssv"
+                type="text"
+                placeholder="Nhập mã số sinh viên"
+                autocomplete="off"
+                required
+              >
+
+              <div
+                class="field-error"
+                id="mssvError"
+              ></div>
+
+            </div>
+
+
+            <!-- EMAIL -->
+
+            <div class="form-group">
+
+              <label for="studentEmail">
+                Email
+              </label>
+
+              <input
+                id="studentEmail"
+                name="studentEmail"
+                type="email"
+                placeholder="example@email.com"
+                autocomplete="email"
+                required
+              >
+
+              <div
+                class="field-error"
+                id="emailError"
+              ></div>
+
+            </div>
+
+
+            <!-- TOPIC -->
+
+            <div class="form-group">
+
+              <label for="studentTopic">
+                Bạn muốn trao đổi gì?
+              </label>
+
+              <textarea
+                id="studentTopic"
+                name="studentTopic"
+                rows="4"
+                placeholder="Ví dụ: Em muốn hỏi về concept, layout hoặc feedback Assignment 2."
+                required
+              ></textarea>
+
+              <div
+                class="field-error"
+                id="topicError"
+              ></div>
+
+            </div>
+
+
+            <!-- CONFIRM -->
+
+            <button
+              id="confirmButton"
+              class="confirm-button"
+              type="submit"
+              disabled
+            >
+              Xác nhận booking
+              <span aria-hidden="true">→</span>
+            </button>
+
+
+            <div
+              id="formMessage"
+              class="form-message"
+            ></div>
+
+          </form>
+
+        </section>
+
+
+      </main>
+
+
+      <!-- =================================================
+           FOOTER NOTE
+           ================================================= -->
+
+      <footer class="page-footer">
+
+        <span>
+          Student Meeting Booking
+        </span>
+
+        <span>
+          Book → Meet → Discuss
+        </span>
+
+      </footer>
 
 
     </div>
