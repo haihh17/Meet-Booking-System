@@ -56,6 +56,16 @@
     @media(max-width:640px){ .success-hero{min-height:300px;padding:24px}.success-title{font-size:clamp(48px,14vw,66px)}.success-hero::after{left:28px;right:auto;bottom:40px;font-size:27px}.success-body{padding:18px 16px}.success-grid{grid-template-columns:1fr}.success-info-card.wide{grid-column:auto}.action-stack{grid-template-columns:1fr}.student-info-row{grid-template-columns:72px minmax(0,1fr)} }
     @media(prefers-reduced-motion:reduce){.loading-dot,.secondary-button{animation:none;transition:none}}
   </style>
+
+<style>
+/* Final visual overrides: keep decorative assets clear of headline text. */
+.header::before { left:-85px !important; top:auto !important; bottom:-42px !important; width:230px !important; height:58px !important; transform:rotate(-12deg) skewX(-18deg) !important; box-shadow:none !important; }
+.header::after { right:-56px !important; top:auto !important; bottom:-34px !important; width:190px !important; height:92px !important; transform:skewX(-22deg) !important; }
+.success-hero::before { display:none !important; content:none !important; }
+.success-mark span { color:#0d0f13 !important; -webkit-text-fill-color:#0d0f13 !important; text-shadow:none !important; }
+.confirm-button::before, .confirm-button::after { content:none !important; display:none !important; }
+.confirm-button { border:0 !important; outline:none; }
+</style>
 </head>
 <body>
   <div class="app success-shell">
