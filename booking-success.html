@@ -4,489 +4,120 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Booking thành công</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="style_step5_visual_realignment.css">
   <style>
-    /* =====================================================
-       STEP 5 — SUCCESS PAGE / VISUAL POLISH
-       Logic remains unchanged. Page uses the same visual
-       language as index.html: orange / black / white.
-       ===================================================== */
-
-    .success-shell {
-      min-height: 100vh;
-      display: flex;
-      align-items: flex-start;
-    }
-
-    .success-card-main {
-      position: relative;
-      overflow: hidden;
-      padding: 0;
-      background: var(--surface);
-    }
-
-    .success-card-main::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 8px;
-      height: 100%;
-      background: var(--primary);
-    }
-
-    .success-hero {
-      position: relative;
-      padding: clamp(28px, 6vw, 48px);
-      background: var(--text-strong);
-      color: #fff;
-      overflow: hidden;
-    }
-
-    .success-hero::after {
-      content: "";
-      position: absolute;
-      right: -28px;
-      bottom: -34px;
-      width: 180px;
-      height: 150px;
-      background: var(--primary);
-      clip-path: polygon(35% 0, 100% 0, 100% 100%, 0 100%);
-      opacity: 0.98;
-    }
-
-    .success-hero-inner {
-      position: relative;
-      z-index: 1;
-      max-width: 620px;
-    }
-
-    .success-mark {
-      width: 54px;
-      height: 54px;
-      display: grid;
-      place-items: center;
-      margin-bottom: 18px;
-      background: var(--primary);
-      color: #fff;
-      font-size: 28px;
-      font-weight: 900;
-      line-height: 1;
-      transform: skewX(-7deg);
-      box-shadow: 5px 5px 0 rgba(255,255,255,0.10);
-    }
-
-    .success-mark span {
-      transform: skewX(7deg);
-    }
-
-    .success-kicker {
-      margin: 0 0 8px;
-      color: rgba(255,255,255,0.68);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-    }
-
-    .success-title {
-      margin: 0;
-      max-width: 12ch;
-      color: #fff;
-      font-size: clamp(34px, 7vw, 58px);
-      line-height: 0.95;
-      font-weight: 900;
-      letter-spacing: -0.045em;
-    }
-
-    .success-title strong {
-      color: var(--primary);
-      font-weight: inherit;
-    }
-
-    .success-subtitle {
-      margin: 16px 0 0;
-      max-width: 560px;
-      color: rgba(255,255,255,0.74);
-      font-size: 15px;
-      line-height: 1.6;
-    }
-
-    .success-body {
-      padding: clamp(20px, 4vw, 30px);
-    }
-
-    .success-status-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      margin-bottom: 18px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .success-status-label {
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .success-status-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 7px 10px;
-      background: #eaf7f1;
-      color: var(--success);
-      font-size: 12px;
-      font-weight: 800;
-      line-height: 1;
-    }
-
-    .success-status-badge::before {
-      content: "";
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: currentColor;
-    }
-
-    .success-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .success-info-card {
-      position: relative;
-      min-width: 0;
-      padding: 18px;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .success-info-card::after {
-      content: "";
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: 24px;
-      height: 3px;
-      background: var(--primary);
-      transform: skewX(-28deg);
-      transform-origin: top right;
-    }
-
-    .success-info-card.wide {
-      grid-column: 1 / -1;
-    }
-
-    .success-card-label {
-      margin-bottom: 8px;
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.10em;
-      text-transform: uppercase;
-    }
-
-    .success-card-value {
-      color: var(--text-strong);
-      font-size: 16px;
-      font-weight: 800;
-      line-height: 1.45;
-    }
-
-    .student-info {
-      display: grid;
-      gap: 9px;
-      line-height: 1.5;
-    }
-
-    .student-info-row {
-      display: grid;
-      grid-template-columns: 82px minmax(0, 1fr);
-      gap: 10px;
-      align-items: start;
-    }
-
-    .student-info-row span {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .student-info-row strong {
-      min-width: 0;
-      color: var(--text);
-      font-size: 14px;
-      font-weight: 700;
-      overflow-wrap: anywhere;
-    }
-
-    .meet-link-box {
-      margin-top: 12px;
-      padding: 12px 14px;
-      background: var(--surface-soft);
-      border-left: 4px solid var(--primary);
-    }
-
-    .meet-link-box a {
-      display: block;
-      color: var(--text-strong);
-      font-size: 13px;
-      font-weight: 700;
-      line-height: 1.5;
-      overflow-wrap: anywhere;
-      text-decoration: none;
-    }
-
-    .meet-link-box a:hover {
-      color: var(--primary-dark);
-      text-decoration: underline;
-    }
-
-    .action-stack {
-      display: grid;
-      gap: 9px;
-      margin-top: 14px;
-    }
-
-    .secondary-button {
-      width: 100%;
-      min-height: 48px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 7px;
-      padding: 12px 16px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      background: var(--surface-soft);
-      color: var(--text);
-      font: inherit;
-      font-weight: 800;
-      line-height: 1.2;
-      text-decoration: none;
-      cursor: pointer;
-      transition: 160ms ease;
-    }
-
-    .secondary-button:hover {
-      border-color: var(--border-strong);
-      transform: translateY(-1px);
-    }
-
-    .secondary-button:active {
-      transform: translateY(1px);
-    }
-
-    .button-icon {
-      font-weight: 900;
-    }
-
-    .reminder-text {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.65;
-    }
-
-    .loading-panel,
-    .error-panel {
-      margin-bottom: 14px;
-      padding: 18px;
-      border: 1px solid var(--border);
-      background: var(--surface-soft);
-    }
-
-    .loading-panel {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .loading-dot {
-      width: 10px;
-      height: 10px;
-      flex: 0 0 auto;
-      border-radius: 50%;
-      background: var(--primary);
-      animation: successPulse 1000ms ease-in-out infinite;
-    }
-
-    @keyframes successPulse {
-      0%, 100% { transform: scale(0.75); opacity: 0.45; }
-      50% { transform: scale(1); opacity: 1; }
-    }
-
-    .error-panel {
-      border-color: #f1c1bc;
-      background: #fff6f4;
-    }
-
-    .error-panel .success-card-label {
-      color: var(--danger);
-    }
-
-    .booking-id {
-      margin-top: 16px;
-      color: var(--muted);
-      font-family: monospace;
-      font-size: 11px;
-      line-height: 1.5;
-      overflow-wrap: anywhere;
-    }
-
-    .back-link {
-      margin-top: 16px;
-    }
-
-    @media (max-width: 640px) {
-      .success-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .success-info-card.wide {
-        grid-column: auto;
-      }
-
-      .student-info-row {
-        grid-template-columns: 72px minmax(0, 1fr);
-      }
-
-      .success-hero {
-        padding: 28px 22px;
-      }
-
-      .success-body {
-        padding: 18px;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .loading-dot {
-        animation: none;
-      }
-
-      .secondary-button {
-        transition: none;
-      }
-    }
+    .success-shell { min-height: 100vh; display:flex; align-items:flex-start; }
+    .success-shell .container { width:min(1220px,100%); }
+    .success-card-main { position:relative; display:grid; grid-template-columns:minmax(300px,.72fr) minmax(500px,1.28fr); overflow:hidden; border:1px solid #cfd2d7; border-radius:2px; background:#fff; box-shadow:14px 16px 0 rgba(13,15,19,.10),0 20px 40px rgba(13,15,19,.10); transform:rotate(-.8deg); }
+    .success-card-main::before { display:none; }
+    .success-hero { position:relative; min-height:690px; padding:clamp(34px,4vw,54px); background:radial-gradient(circle at 20% 20%, rgba(255,101,24,.22) 0 1px, transparent 1.5px) 0 0 / 10px 10px, #0d0f13; overflow:hidden; color:#fff; }
+    .success-hero::before { content:""; position:absolute; left:-30px; top:160px; width:260px; height:72px; background:#ff6518; transform:rotate(-15deg) skewX(-18deg); box-shadow:120px 300px 0 -14px rgba(255,101,24,.78); }
+    .success-hero::after { content:"MEETING\A CONFIRMED!"; position:absolute; left:44px; bottom:92px; white-space:pre; color:#fff; font-family:Impact,Haettenschweiler,"Arial Narrow Bold",Arial,sans-serif; font-size:clamp(30px,3.2vw,45px); line-height:.86; transform:rotate(-7deg); text-shadow:8px 8px 0 #ff6518; }
+    .success-hero-inner { position:relative; z-index:3; max-width:420px; }
+    .success-mark { width:54px; height:54px; display:grid; place-items:center; margin-bottom:22px; background:#ff6518; color:#fff; font-size:28px; font-weight:900; line-height:1; transform:skewX(-7deg); box-shadow:5px 5px 0 rgba(255,255,255,.08); }
+    .success-mark span { transform:skewX(7deg); }
+    .success-kicker { margin:0 0 8px; color:rgba(255,255,255,.68); font-size:10px; font-weight:800; letter-spacing:.17em; text-transform:uppercase; }
+    .success-title { margin:0; max-width:8ch; color:#fff; font-family:Impact,Haettenschweiler,"Arial Narrow Bold",Arial,sans-serif; font-size:clamp(54px,7.2vw,84px); line-height:.84; font-weight:900; letter-spacing:-.035em; text-transform:uppercase; }
+    .success-title strong { color:#ff6518; font-weight:inherit; }
+    .success-subtitle { margin:16px 0 0; max-width:330px; color:rgba(255,255,255,.74); font-size:13px; line-height:1.6; }
+    .success-body { padding:clamp(26px,4vw,44px); background:#fff; }
+    .success-status-row { display:flex; align-items:center; justify-content:space-between; gap:14px; margin-bottom:6px; padding-bottom:14px; border-bottom:1px solid #d8dbe0; }
+    .success-status-label { color:#68707c; font-size:10px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+    .success-status-badge { display:inline-flex; align-items:center; gap:7px; padding:7px 10px; background:#eaf7f1; color:#16805b; font-size:11px; font-weight:800; line-height:1; }
+    .success-status-badge::before { content:""; width:7px; height:7px; border-radius:50%; background:currentColor; }
+    .success-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+    .success-info-card { position:relative; min-width:0; padding:16px; border:1px solid #d9dce1; background:#fff; box-shadow:none; }
+    .success-info-card::after { content:""; position:absolute; right:0; top:0; width:26px; height:3px; background:#ff6518; transform:skewX(-28deg); transform-origin:top right; }
+    .success-info-card.wide { grid-column:1/-1; }
+    .success-card-label { margin-bottom:8px; color:#68707c; font-size:10px; font-weight:800; letter-spacing:.11em; text-transform:uppercase; }
+    .success-card-value { color:#101217; font-size:15px; font-weight:800; line-height:1.45; }
+    .student-info { display:grid; gap:9px; line-height:1.5; }
+    .student-info-row { display:grid; grid-template-columns:82px minmax(0,1fr); gap:10px; align-items:start; }
+    .student-info-row span { color:#68707c; font-size:12px; }
+    .student-info-row strong { min-width:0; color:#171b22; font-size:13px; font-weight:700; overflow-wrap:anywhere; }
+    .meet-link-box { margin-top:10px; padding:11px 12px; background:#f2f3f4; border-left:4px solid #ff6518; }
+    .meet-link-box a { display:block; color:#101217; font-size:12px; font-weight:700; line-height:1.5; overflow-wrap:anywhere; text-decoration:none; }
+    .action-stack { display:grid; grid-template-columns:1.2fr .9fr; gap:8px; margin-top:12px; }
+    .secondary-button { width:100%; min-height:44px; display:inline-flex; align-items:center; justify-content:center; gap:7px; padding:12px 16px; border:1px solid #d8dbe0; border-radius:4px; background:#f2f3f4; color:#171b22; font:inherit; font-weight:800; line-height:1.2; text-decoration:none; cursor:pointer; transition:160ms ease; }
+    .secondary-button:hover { border-color:#b9c0c9; transform:translateY(-1px); }
+    .secondary-button:active { transform:translateY(1px); }
+    .button-icon { font-weight:900; }
+    .reminder-text { color:#68707c; font-size:12px; line-height:1.65; }
+    .loading-panel,.error-panel { margin-bottom:14px; padding:16px; border:1px solid #d8dbe0; background:#f2f3f4; }
+    .loading-panel { display:flex; align-items:center; gap:12px; }
+    .loading-dot { width:10px; height:10px; flex:0 0 auto; border-radius:50%; background:#ff6518; animation:successPulse 1000ms ease-in-out infinite; }
+    @keyframes successPulse { 0%,100% { transform:scale(.75); opacity:.45; } 50% { transform:scale(1); opacity:1; } }
+    .error-panel { border-color:#f1c1bc; background:#fff6f4; }
+    .error-panel .success-card-label { color:#b42318; }
+    .booking-id { margin-top:16px; color:#68707c; font-family:monospace; font-size:10px; line-height:1.5; overflow-wrap:anywhere; }
+    .back-link { margin-top:14px; }
+    .hidden { display:none !important; }
+    @media(max-width:980px){ .success-card-main{grid-template-columns:1fr;transform:none}.success-hero{min-height:300px}.success-hero::after{left:auto;right:34px;bottom:48px} }
+    @media(max-width:640px){ .success-hero{min-height:300px;padding:24px}.success-title{font-size:clamp(48px,14vw,66px)}.success-hero::after{left:28px;right:auto;bottom:40px;font-size:27px}.success-body{padding:18px 16px}.success-grid{grid-template-columns:1fr}.success-info-card.wide{grid-column:auto}.action-stack{grid-template-columns:1fr}.student-info-row{grid-template-columns:72px minmax(0,1fr)} }
+    @media(prefers-reduced-motion:reduce){.loading-dot,.secondary-button{animation:none;transition:none}}
   </style>
 </head>
-
 <body>
   <div class="app success-shell">
     <div class="container">
-      <section class="section success-card-main">
-
+      <section class="success-card-main">
         <header class="success-hero">
           <div class="success-hero-inner">
             <div class="success-mark" aria-hidden="true"><span>✓</span></div>
             <p class="success-kicker">Student Consultation / 04 — CONFIRM</p>
             <h1 class="success-title">Booking <strong>thành công.</strong></h1>
-            <p class="success-subtitle">
-              Lịch meeting của bạn đã được xác nhận. Lưu lại thời gian và sử dụng link Google Meet khi đến giờ.
-            </p>
+            <p class="success-subtitle">Lịch meeting của bạn đã được xác nhận. Lưu lại thời gian và sử dụng link Google Meet khi đến giờ.</p>
           </div>
         </header>
-
         <div class="success-body">
           <div class="success-status-row">
             <div class="success-status-label">Booking Status</div>
             <div class="success-status-badge">Confirmed</div>
           </div>
-
           <div id="loadingState" class="loading-panel">
             <div class="loading-dot" aria-hidden="true"></div>
-            <div>
-              <div class="success-card-label">Booking</div>
-              <div class="success-card-value">Đang tải thông tin...</div>
-            </div>
+            <div><div class="success-card-label">Booking</div><div class="success-card-value">Đang tải thông tin...</div></div>
           </div>
-
           <div id="bookingContent" class="success-grid hidden">
             <div class="success-info-card wide">
               <div class="success-card-label">01 — Lịch meeting</div>
               <div id="bookingSlot" class="success-card-value">—</div>
             </div>
-
             <div class="success-info-card">
               <div class="success-card-label">02 — Thông tin sinh viên</div>
               <div class="student-info">
-                <div class="student-info-row">
-                  <span>Họ và tên</span>
-                  <strong id="studentName"></strong>
-                </div>
-                <div class="student-info-row">
-                  <span>MSSV</span>
-                  <strong id="studentMssv"></strong>
-                </div>
-                <div class="student-info-row">
-                  <span>Nội dung</span>
-                  <strong id="studentTopic"></strong>
-                </div>
+                <div class="student-info-row"><span>Họ và tên</span><strong id="studentName"></strong></div>
+                <div class="student-info-row"><span>MSSV</span><strong id="studentMssv"></strong></div>
+                <div class="student-info-row"><span>Nội dung</span><strong id="studentTopic"></strong></div>
               </div>
             </div>
-
             <div id="meetSummary" class="success-info-card">
               <div class="success-card-label">03 — Google Meet</div>
-              <div class="meet-link-box">
-                <a id="meetLink" href="#" target="_blank" rel="noopener noreferrer">Đang tải...</a>
-              </div>
+              <div class="meet-link-box"><a id="meetLink" href="#" target="_blank" rel="noopener noreferrer">Đang tải...</a></div>
               <div class="action-stack">
-                <a id="joinMeetButton" href="#" target="_blank" rel="noopener noreferrer" class="confirm-button" style="text-decoration:none;">
-                  <span class="button-icon">↗</span>
-                  Join Google Meet
-                </a>
-                <button id="copyMeetButton" type="button" class="secondary-button">
-                  <span class="button-icon">⧉</span>
-                  Copy Meet Link
-                </button>
+                <a id="joinMeetButton" href="#" target="_blank" rel="noopener noreferrer" class="confirm-button" style="text-decoration:none;"><span class="button-icon">↗</span>Join Google Meet</a>
+                <button id="copyMeetButton" type="button" class="secondary-button"><span class="button-icon">⧉</span>Copy Meet Link</button>
               </div>
             </div>
-
             <div id="calendarSummary" class="success-info-card wide">
               <div class="success-card-label">04 — Google Calendar</div>
-              <div class="reminder-text">
-                Thêm lịch vào Google Calendar để dễ kiểm tra lại thời gian meeting.
-              </div>
+              <div class="reminder-text">Thêm lịch vào Google Calendar để dễ kiểm tra lại thời gian meeting.</div>
               <div class="action-stack">
-                <a id="addCalendarButton" href="#" target="_blank" rel="noopener noreferrer" class="confirm-button" style="text-decoration:none;">
-                  <span class="button-icon">+</span>
-                  Add to Google Calendar
-                </a>
-                <a id="openCalendarButton" href="#" target="_blank" rel="noopener noreferrer" class="secondary-button">
-                  <span class="button-icon">↗</span>
-                  Open Calendar Event
-                </a>
+                <a id="addCalendarButton" href="#" target="_blank" rel="noopener noreferrer" class="confirm-button" style="text-decoration:none;"><span class="button-icon">+</span>Add to Google Calendar</a>
+                <a id="openCalendarButton" href="#" target="_blank" rel="noopener noreferrer" class="secondary-button"><span class="button-icon">↗</span>Open Calendar Event</a>
               </div>
             </div>
-
             <div id="reminderSummary" class="success-info-card wide">
               <div class="success-card-label">05 — Lưu ý</div>
-              <div class="reminder-text">
-                Bạn không cần tham gia Google Meet ngay lúc này. Hãy lưu lại link Meet và sử dụng link này khi đến giờ meeting.
-              </div>
+              <div class="reminder-text">Bạn không cần tham gia Google Meet ngay lúc này. Hãy lưu lại link Meet và sử dụng link này khi đến giờ meeting.</div>
             </div>
-
             <div id="bookingIdText" class="booking-id"></div>
           </div>
-
           <div id="errorSummary" class="error-panel hidden">
             <div class="success-card-label">Có lỗi xảy ra</div>
             <div id="errorMessage" class="reminder-text">Không thể tải thông tin booking.</div>
           </div>
-
-          <div class="back-link">
-            <a href="./" class="secondary-button">
-              <span class="button-icon">←</span>
-              Quay lại trang booking
-            </a>
-          </div>
+          <div class="back-link"><a href="./" class="secondary-button"><span class="button-icon">←</span>Quay lại trang booking</a></div>
         </div>
       </section>
     </div>
