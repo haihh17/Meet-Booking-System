@@ -2716,3 +2716,74 @@ body {
     height: 72px !important;
   }
 }
+
+/* =====================================================
+   FIX 5 — ACTIVE CHECKMARKS + TITLE SPACING
+   1) Index confirmation check must be black.
+   2) Month / weekday active states get a compact check in
+      the top-right corner, matching the date-card treatment.
+   3) Success title gets safer line spacing so THÀNH / CÔNG
+      never collide vertically.
+   ===================================================== */
+
+/* 1 — INDEX confirmation check */
+.summary-section .section-number {
+  color: #0d0f13 !important;
+  -webkit-text-fill-color: #0d0f13 !important;
+  text-shadow: none !important;
+}
+
+/* Keep the little corner triangle white. */
+.summary-section .section-number::after {
+  background: #ffffff !important;
+}
+
+/* 2 — Month / weekday active cards: small top-right check,
+   visually matching .date-card.active::after. */
+.option.active {
+  padding-right: 30px;
+}
+
+.option.active::after {
+  content: "✓" !important;
+  position: absolute !important;
+  top: 7px !important;
+  right: 8px !important;
+  left: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+  color: #ffffff !important;
+  font-size: 10px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  opacity: 1 !important;
+  z-index: 3 !important;
+}
+
+/* Remove the old full-height white active stripe; the compact check
+   is now the only active-state accent on month / weekday buttons. */
+.option.active::before {
+  width: 0 !important;
+  background: transparent !important;
+}
+
+/* 3 — SUCCESS title: stable vertical rhythm */
+.success-title {
+  line-height: 0.94 !important;
+}
+
+.success-title strong {
+  display: inline-block;
+  line-height: 0.94 !important;
+  padding-bottom: 0.04em;
+}
+
+@media (max-width: 640px) {
+  .success-title,
+  .success-title strong {
+    line-height: 0.96 !important;
+  }
+}
