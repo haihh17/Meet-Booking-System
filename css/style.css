@@ -2481,3 +2481,55 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* =====================================================
+   FIX — SUCCESS PAGE WIDTH / OVERFLOW
+   Keep the visual-realightment composition intact while
+   preventing the content panel from being clipped.
+   ===================================================== */
+.success-shell {
+  width: 100%;
+  min-height: 100vh;
+  padding: clamp(24px, 4vw, 56px) clamp(16px, 3vw, 40px);
+  overflow-x: hidden;
+}
+
+.success-shell .container {
+  width: 100% !important;
+  max-width: 1280px !important;
+  margin: 0 auto !important;
+}
+
+.success-card-main {
+  width: 100%;
+  max-width: 1280px;
+  grid-template-columns: minmax(360px, 0.88fr) minmax(0, 1.12fr) !important;
+  min-width: 0;
+}
+
+.success-hero,
+.success-body,
+.success-grid,
+.success-info-card {
+  min-width: 0;
+}
+
+.success-body {
+  overflow: hidden;
+}
+
+.success-grid {
+  width: 100%;
+}
+
+@media (max-width: 980px) {
+  .success-card-main {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .success-shell {
+    padding: 12px;
+  }
+}
