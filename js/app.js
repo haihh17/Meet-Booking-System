@@ -55,6 +55,14 @@ let weekdayOptions;
 let dateOptions;
 let timeOptions;
 
+/* [Yêu cầu 1] Khai báo các phần tử DOM cho tính năng Class Gate */
+let classGate;
+let classCodeForm;
+let classCodeInput;
+let classCodeError;
+let classCodeButton;
+let bookingFlow;
+
 let statusText;
 let errorText;
 
@@ -98,6 +106,25 @@ function initDOM() {
 
   timeOptions =
     document.getElementById('timeOptions');
+
+  /* [Yêu cầu 2] Lấy các phần tử Class Gate từ DOM */
+  classGate =
+    document.getElementById('classGate');
+
+  classCodeForm =
+    document.getElementById('classCodeForm');
+
+  classCodeInput =
+    document.getElementById('classCodeInput');
+
+  classCodeError =
+    document.getElementById('classCodeError');
+
+  classCodeButton =
+    document.getElementById('classCodeButton');
+
+  bookingFlow =
+    document.querySelector('.booking-flow');
 
   statusText =
     document.getElementById('status');
@@ -171,6 +198,14 @@ function checkRequiredElements() {
     weekdayOptions,
     dateOptions,
     timeOptions,
+
+    /* [Yêu cầu 3] Kiểm tra các phần tử Class Gate */
+    classGate,
+    classCodeForm,
+    classCodeInput,
+    classCodeError,
+    classCodeButton,
+    bookingFlow,
 
     statusText,
     errorText,
@@ -356,10 +391,115 @@ function updateActiveButtons(
 
 
 /* =========================================================
+   CLASS GATE
+   ========================================================= */
+
+/* [Yêu cầu 4] Xử lý xác thực mã lớp trước khi xem lịch */
+function setupClassGate() {
+
+  classCodeForm.addEventListener('submit', event => {
+
+    event.preventDefault();
+
+
+    const classCode =
+      classCodeInput.value.trim().toUpperCase();
+
+
+    classCodeError.textContent = '';
+
+
+    if (!classCode) {
+
+      classCodeError.textContent =
+        'Vui lòng nhập mã lớp.';
+
+      return;
+
+    }
+
+
+    classCodeButton.disabled = true;
+
+    classCodeButton.textContent =
+      'Đang kiểm tra...';
+
+
+    statusText.textContent =
+      'Đang xác thực mã lớp...';
+
+
+    validateClassCode(classCode)
+
+      .then(result => {
+
+        if (!result.valid) {
+
+          classCodeError.textContent =
+            result.error ||
+            'Mã lớp không hợp lệ.';
+
+
+          statusText.textContent =
+            'Mã lớp không hợp lệ.';
+
+
+          classCodeButton.disabled = false;
+
+          classCodeButton.innerHTML =
+            'Tiếp tục <span aria-hidden="true">→</span>';
+
+
+          return;
+
+        }
+
+
+        classGate.classList.add('hidden');
+
+        bookingFlow.classList.remove('hidden');
+
+
+        classCodeButton.disabled = false;
+
+
+        statusText.textContent =
+          'Đang tải lịch...';
+
+
+        initializeSchedule();
+
+      })
+
+      .catch(error => {
+
+        classCodeError.textContent =
+          error.message ||
+          'Không thể xác thực mã lớp.';
+
+
+        statusText.textContent =
+          'Không thể xác thực mã lớp.';
+
+
+        classCodeButton.disabled = false;
+
+        classCodeButton.innerHTML =
+          'Tiếp tục <span aria-hidden="true">→</span>';
+
+      });
+
+  });
+
+}
+
+
+/* =========================================================
    LOAD SLOTS
    ========================================================= */
 
-function initialize() {
+/* [Yêu cầu 5] Đổi tên initialize -> initializeSchedule */
+function initializeSchedule() {
 
   hideError();
 
@@ -1471,7 +1611,8 @@ function startApp() {
 
     setupFormEvents();
 
-    initialize();
+    /* [Yêu cầu 6] Khởi chạy cổng kiểm tra Class Gate thay vì tải lịch trực tiếp */
+    setupClassGate();
 
   } catch (error) {
 
