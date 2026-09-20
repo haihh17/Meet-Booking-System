@@ -242,7 +242,7 @@ function loadSlots() {
             );
 
           },
-          15000
+          20000
         );
 
 
