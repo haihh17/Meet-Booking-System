@@ -1,3 +1,36 @@
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap");
+
+:root {
+  --font-body: "Inter", Arial, Helvetica, sans-serif;
+  --font-display: "Anton", Impact, "Arial Narrow Bold", Arial, sans-serif;
+}
+
+body {
+  font-family: var(--font-body) !important;
+  font-synthesis: none;
+}
+
+.header .title,
+.header .subtitle::after,
+.section-number,
+.success-hero::after,
+.success-title {
+  font-family: var(--font-display) !important;
+  font-synthesis: none;
+}
+
+.header .title {
+  font-weight: 400 !important;
+  font-stretch: normal;
+}
+
+.header .subtitle::after,
+.success-hero::after,
+.success-title {
+  font-weight: 400 !important;
+  font-stretch: normal;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -562,11 +595,6 @@ a {
   }
 }
 
-
-/* =========================================================
-   STEP 2 — INDEX PAGE LAYOUT
-   ========================================================= */
-
 .header {
   position: relative;
   display: flex;
@@ -872,18 +900,11 @@ a {
 
 }
 
-/* =========================================================
-   STEP 3 — COMPONENT POLISH
-   Keep HTML + JS structure unchanged.
-   ========================================================= */
-
 :root {
   --shadow-card: 0 2px 0 rgba(17, 19, 24, 0.05), 0 10px 24px rgba(17, 19, 24, 0.04);
   --shadow-active: 4px 4px 0 rgba(17, 19, 24, 0.16);
   --shadow-button: 4px 4px 0 #111318;
 }
-
-/* ---------- STATUS ---------- */
 
 .status-bar {
   min-height: 32px;
@@ -925,8 +946,6 @@ a {
   font-size: 11px;
   font-weight: 750;
 }
-
-/* ---------- SECTION ---------- */
 
 .section {
   box-shadow: var(--shadow-card);
@@ -974,8 +993,6 @@ a {
 .section-helper {
   max-width: 560px;
 }
-
-/* ---------- MONTH / WEEKDAY OPTIONS ---------- */
 
 .options {
   gap: 9px;
@@ -1042,8 +1059,6 @@ a {
   background: var(--primary-dark);
   transform: translate(-1px, -1px);
 }
-
-/* ---------- DATE CARDS ---------- */
 
 .dates {
   grid-template-columns: repeat(auto-fit, minmax(104px, 1fr));
@@ -1117,8 +1132,6 @@ a {
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
-
-/* ---------- TIME CARDS ---------- */
 
 .time-card {
   position: relative;
@@ -1207,8 +1220,6 @@ a {
   opacity: 0.75;
 }
 
-/* ---------- SUMMARY ---------- */
-
 .summary-highlight {
   border-radius: 8px;
   box-shadow: inset 4px 0 0 var(--primary);
@@ -1218,8 +1229,6 @@ a {
   font-size: clamp(15px, 2vw, 17px);
   line-height: 1.45;
 }
-
-/* ---------- FORM ---------- */
 
 .form-group {
   margin-bottom: 19px;
@@ -1297,8 +1306,6 @@ a {
   line-height: 1;
 }
 
-/* ---------- CONFIRM BUTTON ---------- */
-
 .confirm-button {
   position: relative;
   overflow: hidden;
@@ -1368,13 +1375,9 @@ a {
   font-weight: 650;
 }
 
-/* ---------- FOOTER ---------- */
-
 .page-footer {
   padding-top: 18px;
 }
-
-/* ---------- TOUCH / SMALL SCREENS ---------- */
 
 @media (hover: none) {
   .section:hover {
@@ -1430,11 +1433,6 @@ a {
   }
 }
 
-/* =========================================================
-   STEP 4 — MICRO INTERACTION & UX
-   CSS-only enhancement. No JS / backend changes.
-   ========================================================= */
-
 :root {
   --motion-fast: 140ms;
   --motion-med: 220ms;
@@ -1442,8 +1440,6 @@ a {
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-snap: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-
-/* ---------- PAGE ENTRY ---------- */
 
 .header {
   animation: step4-header-in var(--motion-slow) var(--ease-out) both;
@@ -1463,7 +1459,6 @@ a {
 .booking-flow > .section:nth-child(5):not(.hidden) { animation-delay: 180ms; }
 .booking-flow > .section:nth-child(6):not(.hidden) { animation-delay: 225ms; }
 
-/* Newly revealed sections get a clearer state change without moving the page too much. */
 .section:not(.hidden) .section-number {
   animation: step4-number-in 360ms var(--ease-snap) both;
 }
@@ -1472,13 +1467,9 @@ a {
   animation: step4-summary-in 400ms var(--ease-out) 80ms both;
 }
 
-/* ---------- STATUS ---------- */
-
 #status:not(.hidden)::before {
   animation: step4-status-pulse 1.8s ease-in-out infinite;
 }
-
-/* ---------- OPTION MICRO STATES ---------- */
 
 .option,
 .date-card,
@@ -1504,12 +1495,9 @@ a {
   animation: step4-check-in 220ms var(--ease-snap) 35ms both;
 }
 
-/* Keep the active time arrow crisp while giving it one small entrance movement. */
 .time-card.active::after {
   animation: step4-arrow-in 220ms var(--ease-out) 40ms both;
 }
-
-/* ---------- INPUT MICRO STATES ---------- */
 
 .form-group input,
 .form-group textarea {
@@ -1526,8 +1514,6 @@ a {
   border-color: rgba(22, 128, 91, 0.42);
 }
 
-/* ---------- CONFIRM BUTTON ---------- */
-
 .confirm-button {
   will-change: transform, box-shadow;
 }
@@ -1540,8 +1526,6 @@ a {
   transition-duration: 70ms;
 }
 
-/* ---------- ERROR / FORM MESSAGE ---------- */
-
 .field-error:not(:empty) {
   animation: step4-error-in 220ms var(--ease-out) both;
 }
@@ -1549,8 +1533,6 @@ a {
 .form-message:not(:empty) {
   animation: step4-fade-up 220ms var(--ease-out) both;
 }
-
-/* ---------- KEYFRAMES ---------- */
 
 @keyframes step4-header-in {
   from {
@@ -1670,8 +1652,6 @@ a {
   }
 }
 
-/* ---------- MOBILE ---------- */
-
 @media (max-width: 600px) {
   .option:active:not(:disabled),
   .date-card:active,
@@ -1683,8 +1663,6 @@ a {
     animation-duration: 320ms;
   }
 }
-
-/* ---------- REDUCED MOTION ---------- */
 
 @media (prefers-reduced-motion: reduce) {
   .header,
@@ -1714,12 +1692,6 @@ a {
     will-change: auto;
   }
 }
-
-
-/* =========================================================
-   STEP 5.5 — VISUAL REALIGNMENT / DEMO-LED ART DIRECTION
-   Keep existing JS + DOM IDs. UI only.
-   ========================================================= */
 
 :root {
   --demo-black: #0d0f13;
@@ -1775,8 +1747,6 @@ body {
   width: min(1220px, 100%);
   margin: 0 auto;
 }
-
-/* ---------- INDEX: poster + paper composition ---------- */
 
 .container > .header {
   grid-area: poster;
@@ -2168,8 +2138,6 @@ body {
   text-transform: uppercase;
 }
 
-/* ---------- SUCCESS: confirmed poster + paper ---------- */
-
 .success-shell .container {
   width: min(1220px, 100%);
 }
@@ -2329,8 +2297,6 @@ body {
   border-radius: 4px;
 }
 
-/* ---------- Responsive re-composition ---------- */
-
 @media (max-width: 980px) {
   .container {
     width: min(760px, 100%);
@@ -2482,11 +2448,6 @@ body {
   }
 }
 
-/* =====================================================
-   FIX — SUCCESS PAGE WIDTH / OVERFLOW
-   Keep the visual-realightment composition intact while
-   preventing the content panel from being clipped.
-   ===================================================== */
 .success-shell {
   width: 100%;
   min-height: 100vh;
@@ -2534,14 +2495,6 @@ body {
   }
 }
 
-/* =====================================================
-   FIX 2 — TWO MAJOR VISUAL BUGS
-   1) Selected time slot: keep text readable on white card.
-   2) Success page: remove inherited index grid from .container
-      so the success panel can use the full available width.
-   ===================================================== */
-
-/* 1 — Selected time slot contrast */
 .time-card.active {
   color: var(--text-strong) !important;
   background: #fff7f2 !important;
@@ -2561,7 +2514,6 @@ body {
   color: var(--demo-orange) !important;
 }
 
-/* 2 — Success page must NOT inherit the index.html 2-column container grid */
 .success-shell .container {
   display: block !important;
   width: 100% !important;
@@ -2587,23 +2539,10 @@ body {
   }
 }
 
-/* =====================================================
-   FIX 3 — SMALL VISUAL CLEANUP
-   1) Remove leftover white pseudo icon from orange buttons.
-   2) Keep the orange graphic asset away from SUCCESS title text.
-   3) Remove the lower orange asset that collided with
-      "MEETING CONFIRMED!".
-   4) Use a black confirmation check on the orange mark.
-   ===================================================== */
-
-/* 1 — The white outlined square was an old pseudo-element.
-   The real icon/arrow already exists inside the button. */
 .confirm-button::before {
   display: none !important;
 }
 
-/* 2 + 3 — Reposition/remove the orange decorative asset so
-   it decorates the poster without sitting under orange copy. */
 .success-hero::before {
   left: -72px !important;
   top: 92px !important;
@@ -2613,22 +2552,11 @@ body {
   box-shadow: none !important;
 }
 
-/* 4 — Black check on the orange confirmation tile. */
 .success-mark,
 .success-mark span {
   color: var(--demo-black) !important;
 }
 
-/* =====================================================
-   FIX 4 — ASSET / CONTRAST CLEANUP
-   1) Keep orange decorative assets OUT of headline text.
-   2) Keep the success hero clean around the title.
-   3) Force the confirmation check to black.
-   4) Remove any leftover white pseudo-element from action buttons.
-   ===================================================== */
-
-/* INDEX — move decorative geometry to the lower edge so it
-   does not sit behind BOOK A / MEETING. */
 .header::before {
   left: -85px !important;
   top: auto !important;
@@ -2654,9 +2582,6 @@ body {
   z-index: 3 !important;
 }
 
-/* SUCCESS — remove the orange stripe crossing BOOKING / THÀNH CÔNG.
-   The black/orange texture and the confirmation copy are already
-   enough to carry the visual identity. */
 .success-hero::before {
   display: none !important;
   content: none !important;
@@ -2670,14 +2595,12 @@ body {
   z-index: 4 !important;
 }
 
-/* Confirmation check: explicitly black, including WebKit text fill. */
 .success-mark span {
   color: #0d0f13 !important;
   -webkit-text-fill-color: #0d0f13 !important;
   text-shadow: none !important;
 }
 
-/* No mystery white square / outline before orange action buttons. */
 .confirm-button::before,
 .confirm-button::after {
   content: none !important;
@@ -2717,29 +2640,16 @@ body {
   }
 }
 
-/* =====================================================
-   FIX 5 — ACTIVE CHECKMARKS + TITLE SPACING
-   1) Index confirmation check must be black.
-   2) Month / weekday active states get a compact check in
-      the top-right corner, matching the date-card treatment.
-   3) Success title gets safer line spacing so THÀNH / CÔNG
-      never collide vertically.
-   ===================================================== */
-
-/* 1 — INDEX confirmation check */
 .summary-section .section-number {
   color: #0d0f13 !important;
   -webkit-text-fill-color: #0d0f13 !important;
   text-shadow: none !important;
 }
 
-/* Keep the little corner triangle white. */
 .summary-section .section-number::after {
   background: #ffffff !important;
 }
 
-/* 2 — Month / weekday active cards: small top-right check,
-   visually matching .date-card.active::after. */
 .option.active {
   padding-right: 30px;
 }
@@ -2763,14 +2673,11 @@ body {
   z-index: 3 !important;
 }
 
-/* Remove the old full-height white active stripe; the compact check
-   is now the only active-state accent on month / weekday buttons. */
 .option.active::before {
   width: 0 !important;
   background: transparent !important;
 }
 
-/* 3 — SUCCESS title: stable vertical rhythm */
 .success-title {
   line-height: 0.94 !important;
 }
