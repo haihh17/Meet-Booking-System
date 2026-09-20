@@ -1868,7 +1868,7 @@ body {
 }
 
 .header .subtitle::after {
-  content: "GOOD IDEAS\A BETTER PEOPLE.";
+  content: "GOOD IDEAS?\A BETTER PEOPLE!";
   display: block;
   margin-top: 80px;
   white-space: pre;
