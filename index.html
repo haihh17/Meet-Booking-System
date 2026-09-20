@@ -21,7 +21,7 @@
           </h1>
 
           <p class="subtitle">
-            Đặt lịch trao đổi cùng giảng viên HaiHH17
+            Đặt lịch trao đổi cùng giảng viên HaiHH17.
             Chọn thời gian phù hợp để hỏi bài, trao đổi project hoặc nhận feedback ngoài giờ học.
             Dành riêng cho sinh viên BTEC FPT — vui lòng đặt lịch trước và sử dụng thời gian có trách nhiệm!
           </p>
@@ -36,13 +36,56 @@
 
       <div class="status-bar">
         <div id="status" class="status-message">
-          Đang tải lịch...
+          Nhập mã lớp để tiếp tục.
         </div>
 
         <div id="error" class="error hidden"></div>
       </div>
 
-      <main class="booking-flow">
+      <section id="classGate" class="section">
+        <div class="section-heading">
+          <div class="section-number">00</div>
+
+          <div>
+            <div class="section-label">Nhập mã lớp</div>
+            <div class="section-helper">
+              Nhập mã lớp được giảng viên cung cấp để tiếp tục.
+            </div>
+          </div>
+        </div>
+
+        <form id="classCodeForm">
+          <div class="form-group">
+            <label for="classCodeInput">Mã lớp</label>
+
+            <input
+              id="classCodeInput"
+              type="text"
+              placeholder="Nhập mã lớp"
+              autocomplete="off"
+              autocapitalize="characters"
+              spellcheck="false"
+              required
+            >
+
+            <div
+              id="classCodeError"
+              class="field-error"
+            ></div>
+          </div>
+
+          <button
+            id="classCodeButton"
+            class="confirm-button"
+            type="submit"
+          >
+            Tiếp tục
+            <span aria-hidden="true">→</span>
+          </button>
+        </form>
+      </section>
+
+      <main class="booking-flow hidden">
 
         <section class="section">
           <div class="section-heading">
@@ -104,7 +147,10 @@
           <div id="timeOptions" class="times"></div>
         </section>
 
-        <section id="summarySection" class="section summary-section hidden">
+        <section
+          id="summarySection"
+          class="section summary-section hidden"
+        >
           <div class="section-heading">
             <div class="section-number">✓</div>
 
@@ -117,8 +163,14 @@
           </div>
 
           <div class="summary summary-highlight">
-            <div class="summary-title">Lịch meeting đã chọn</div>
-            <div id="summaryValue" class="summary-value"></div>
+            <div class="summary-title">
+              Lịch meeting đã chọn
+            </div>
+
+            <div
+              id="summaryValue"
+              class="summary-value"
+            ></div>
           </div>
         </section>
 
@@ -148,7 +200,10 @@
                 required
               >
 
-              <div class="field-error" id="nameError"></div>
+              <div
+                id="nameError"
+                class="field-error"
+              ></div>
             </div>
 
             <div class="form-group">
@@ -163,7 +218,10 @@
                 required
               >
 
-              <div class="field-error" id="mssvError"></div>
+              <div
+                id="mssvError"
+                class="field-error"
+              ></div>
             </div>
 
             <div class="form-group">
@@ -178,11 +236,16 @@
                 required
               >
 
-              <div class="field-error" id="emailError"></div>
+              <div
+                id="emailError"
+                class="field-error"
+              ></div>
             </div>
 
             <div class="form-group">
-              <label for="studentTopic">Bạn muốn trao đổi gì?</label>
+              <label for="studentTopic">
+                Bạn muốn trao đổi gì?
+              </label>
 
               <textarea
                 id="studentTopic"
@@ -192,7 +255,10 @@
                 required
               ></textarea>
 
-              <div class="field-error" id="topicError"></div>
+              <div
+                id="topicError"
+                class="field-error"
+              ></div>
             </div>
 
             <button
@@ -205,15 +271,23 @@
               <span aria-hidden="true">→</span>
             </button>
 
-            <div id="formMessage" class="form-message"></div>
+            <div
+              id="formMessage"
+              class="form-message"
+            ></div>
           </form>
         </section>
 
       </main>
 
       <footer class="page-footer">
-        <span>Designed and developed entirely by Huỳnh Hoàng Hải</span>
-        <span>Contact: HaiHH17@fpt.edu.vn</span>
+        <span>
+          Designed and developed entirely by Huỳnh Hoàng Hải
+        </span>
+
+        <span>
+          Contact: HaiHH17@fpt.edu.vn
+        </span>
       </footer>
 
     </div>
