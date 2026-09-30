@@ -509,7 +509,9 @@ function loadSlotsWithRetry_(attempt = 1) {
       }
 
       statusText.textContent =
-         `Đang kết nối lại ... (${attempt}/${SLOT_LOAD_MAX_ATTEMPTS - 1})`;
+        "Đang kết nối lại ... " +
+        "(" + attempt + "/" +
+        (SLOT_LOAD_MAX_ATTEMPTS - 1) + ")";
 
       return new Promise(resolve => {
          setTimeout(
