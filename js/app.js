@@ -495,6 +495,36 @@ function setupClassGate() {
 
 
 /* =========================================================
+   LOAD SLOTS WITH RETRY
+   ========================================================= */
+
+const SLOT_LOAD_MAX_ATTEMPTS = 3;
+const SLOT_LOAD_RETRY_DELAY = 1000;
+
+function loadSlotsWithRetry_(attempt = 1) {
+   return loadSlots().catch(error => {
+
+      if (attempt >= SLOT_LOAD_MAX_ATTEMPTS) {
+         throw error;
+      }
+
+      statusText.textContent =
+         'Đang kết nối lại ... (${attempt}/${SLOT_LOAD_MAX_ATTEMPTS - 1})`;
+
+      return new Promise(resolve => {
+         setTimeout(
+            resolve,
+            SLOT_LOAD_RETRY_DELAY
+          );
+      }).then(() => {
+         return loadSlotsWithRetry_(attempt + 1);
+      });
+
+   });
+}
+
+
+/* =========================================================
    LOAD SLOTS
    ========================================================= */
 
@@ -526,8 +556,7 @@ function initializeSchedule() {
   }
 
 
-  loadSlots()
-
+  loadSlotsWithRetry_()
     .then(
       slots => {
 
