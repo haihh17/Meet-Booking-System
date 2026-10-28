@@ -323,18 +323,32 @@ function formatSelectedDate_() {
 
 
 function sortDates(a, b) {
-
-  return (
+  // Ưu tiên sắp xếp theo ngày
+  const dateDiff =
     parseDate(a.date).getTime() -
-    parseDate(b.date).getTime()
-  );
+    parseDate(b.date).getTime();
 
+  if (dateDiff !== 0) {
+    return dateDiff;
+  }
+
+  // Nếu cùng ngày, sắp xếp theo giờ bắt đầu
+  function getStartMinutes(slot) {
+    const startTime = String(slot.time || '')
+      .split(/[–—-]/)[0]
+      .trim();
+
+    const match = startTime.match(/^(\d{1,2}):(\d{2})$/);
+
+    if (!match) {
+      return Number.MAX_SAFE_INTEGER;
+    }
+
+    return Number(match[1]) * 60 + Number(match[2]);
+  }
+
+  return getStartMinutes(a) - getStartMinutes(b);
 }
-
-
-/* =========================================================
-   UI
-   ========================================================= */
 
 function showError(message) {
 
