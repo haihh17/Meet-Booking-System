@@ -13,11 +13,13 @@ function jsonpRequest(params, timeoutMs = 20000) {
     let timeoutId = null;
     let settled = false;
 
-    const cleanup = () => {
+    function cleanup() {
       if (timeoutId !== null) {
         clearTimeout(timeoutId);
+        timeoutId = null;
       }
 
+      script.onerror = null;
       script.remove();
 
       try {
@@ -25,15 +27,15 @@ function jsonpRequest(params, timeoutMs = 20000) {
       } catch (error) {
         window[callbackName] = undefined;
       }
-    };
+    }
 
-    const fail = error => {
+    function fail(error) {
       if (settled) return;
 
       settled = true;
       cleanup();
       reject(error);
-    };
+    }
 
     window[callbackName] = data => {
       if (settled) return;
@@ -49,7 +51,6 @@ function jsonpRequest(params, timeoutMs = 20000) {
               : 'Dữ liệu trả về không hợp lệ.'
           )
         );
-
         return;
       }
 
@@ -104,3 +105,9 @@ function validateClassCode(classCode) {
     action: 'validateClass',
     classCode: String(classCode || '').trim().toUpperCase()
   });
+}
+
+window.API_URL = API_URL;
+window.jsonpRequest = jsonpRequest;
+window.loadSlots = loadSlots;
+window.validateClassCode = validateClassCode;
