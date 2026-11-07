@@ -1,4 +1,4 @@
-const API_URL = 'https://script.google.com/a/macros/fpt.edu.vn/s/AKfycbwDbTkT5KzUkp9tglbKZV9uu0iyZzepXNM6LFQR53ieEiGIY-IdP8yYOUMmxkbWn6EF/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbwDbTkT5KzUkp9tglbKZV9uu0iyZzepXNM6LFQR53ieEiGIY-IdP8yYOUMmxkbWn6EF/exec';
 
 function jsonpRequest(params, timeoutMs = 20000) {
   return new Promise((resolve, reject) => {
