@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#171717">
+  <meta name="description" content="Đặt lịch trao đổi học thuật cùng giảng viên Huỳnh Hoàng Hải.">
   <title>Student Meeting Booking</title>
   <link rel="stylesheet" href="./css/style.css">
 </head>
@@ -22,8 +24,10 @@
 
           <p class="subtitle">
             Đặt lịch trao đổi cùng giảng viên HaiHH17.
-            Chọn thời gian phù hợp để hỏi bài, trao đổi project hoặc nhận feedback ngoài giờ học.
-            Dành riêng cho sinh viên BTEC FPT — vui lòng đặt lịch trước và sử dụng thời gian có trách nhiệm!
+            Chọn thời gian phù hợp để hỏi bài, trao đổi project
+            hoặc nhận feedback ngoài giờ học.
+            Dành riêng cho sinh viên BTEC FPT — vui lòng đặt lịch
+            trước và sử dụng thời gian có trách nhiệm!
           </p>
         </div>
 
@@ -68,10 +72,7 @@
               required
             >
 
-            <div
-              id="classCodeError"
-              class="field-error"
-            ></div>
+            <div id="classCodeError" class="field-error"></div>
           </div>
 
           <button
@@ -167,10 +168,7 @@
               Lịch meeting đã chọn
             </div>
 
-            <div
-              id="summaryValue"
-              class="summary-value"
-            ></div>
+            <div id="summaryValue" class="summary-value"></div>
           </div>
         </section>
 
@@ -200,10 +198,7 @@
                 required
               >
 
-              <div
-                id="nameError"
-                class="field-error"
-              ></div>
+              <div id="nameError" class="field-error"></div>
             </div>
 
             <div class="form-group">
@@ -218,10 +213,7 @@
                 required
               >
 
-              <div
-                id="mssvError"
-                class="field-error"
-              ></div>
+              <div id="mssvError" class="field-error"></div>
             </div>
 
             <div class="form-group">
@@ -236,10 +228,7 @@
                 required
               >
 
-              <div
-                id="emailError"
-                class="field-error"
-              ></div>
+              <div id="emailError" class="field-error"></div>
             </div>
 
             <div class="form-group">
@@ -255,100 +244,70 @@
                 required
               ></textarea>
 
-              <div
-                id="topicError"
-                class="field-error"
-              ></div>
+              <div id="topicError" class="field-error"></div>
             </div>
 
-<details id="privacyNotice" class="privacy-notice">
-  <summary>
-    Đọc Thông báo quyền riêng tư
-  </summary>
+            <div class="booking-consent">
+              <p class="privacy-intro">
+                Vui lòng đọc
+                <button
+                  type="button"
+                  id="openPrivacyNotice"
+                  class="privacy-link"
+                  aria-haspopup="dialog"
+                  aria-controls="privacyNoticeDialog"
+                >
+                  Thông báo quyền riêng tư ↗
+                </button>
+                trước khi đặt lịch.
+              </p>
 
-  <div class="privacy-notice-content">
-    <p>
-      <strong>Người chịu trách nhiệm:</strong>
-      Huỳnh Hoàng Hải
-    </p>
+              <label
+                class="consent-row"
+                for="processingConsent"
+              >
+                <input
+                  type="checkbox"
+                  id="processingConsent"
+                  name="processingConsent"
+                  required
+                >
 
-    <p>
-      <strong>Email:</strong>
-      HaiHH17@fe.edu.vn
-    </p>
+                <span>
+                  Em xác nhận đã đọc
+                  <strong>Thông báo quyền riêng tư</strong>
+                  và đồng ý để
+                  <strong>Huỳnh Hoàng Hải</strong>
+                  xử lý dữ liệu cá nhân cần thiết nhằm
+                  tiếp nhận, quản lý và thực hiện yêu cầu đặt lịch.
+                </span>
+              </label>
 
-    <p>
-      <strong>Mục đích:</strong>
-      Tiếp nhận, quản lý và thực hiện lịch trao đổi học thuật.
-    </p>
+              <div
+                id="processingConsentError"
+                class="field-error"
+              ></div>
 
-    <p>
-      <strong>Dữ liệu xử lý:</strong>
-      Họ tên, MSSV, email, nội dung trao đổi,
-      thông tin lịch hẹn và dữ liệu booking liên quan.
-    </p>
+              <label
+                class="consent-row"
+                for="calendarInviteConsent"
+              >
+                <input
+                  type="checkbox"
+                  id="calendarInviteConsent"
+                  name="calendarInviteConsent"
+                >
 
-    <p>
-      <strong>Nền tảng:</strong>
-      GitHub Pages, Google Apps Script,
-      Google Sheets, Google Calendar và Google Meet.
-    </p>
-
-    <p>
-      <strong>Thời hạn lưu trữ:</strong>
-      06 tháng kể từ thời điểm meeting kết thúc
-      hoặc booking bị hủy.
-    </p>
-
-    <p>
-      Sinh viên có quyền yêu cầu truy cập,
-      chỉnh sửa, xóa hoặc thực hiện các quyền
-      dữ liệu cá nhân theo quy định pháp luật.
-    </p>
-
-    <p>
-      Liên hệ:
-      <a href="mailto:HaiHH17@fe.edu.vn">
-        HaiHH17@fe.edu.vn
-      </a>
-    </p>
-  </div>
-</details>
-
-<div class="consent-group">
-
-  <label for="processingConsent">
-    <input
-      type="checkbox"
-      id="processingConsent"
-      name="processingConsent"
-      required
-    >
-
-    Em đã đọc Thông báo quyền riêng tư và
-    đồng ý để thầy Hải xử lý dữ liệu
-    cá nhân nhằm tiếp nhận, quản lý và thực hiện
-    yêu cầu đặt lịch.
-  </label>
-
-  <div
-    id="processingConsentError"
-    class="field-error"
-  ></div>
-
-  <label for="calendarInviteConsent">
-    <input
-      type="checkbox"
-      id="calendarInviteConsent"
-      name="calendarInviteConsent"
-    >
-
-    Em đồng ý nhận email lời mời lịch họp
-    qua Google Calendar.
-    (Không bắt buộc)
-  </label>
-
-</div>
+                <span>
+                  Em đồng ý để email của mình được thêm vào
+                  <strong>danh sách khách mời Google Calendar</strong>
+                  và nhận email lời mời lịch họp.
+                  <span class="consent-optional">
+                    (Không bắt buộc)
+                  </span>
+                </span>
+              </label>
+            </div>
 
             <button
               id="confirmButton"
@@ -360,10 +319,7 @@
               <span aria-hidden="true">→</span>
             </button>
 
-            <div
-              id="formMessage"
-              class="form-message"
-            ></div>
+            <div id="formMessage" class="form-message"></div>
           </form>
         </section>
 
@@ -375,14 +331,236 @@
         </span>
 
         <span>
-          Contact: HaiHH17@fpt.edu.vn
+          Contact:
+          <a href="mailto:HaiHH17@fe.edu.vn">
+            HaiHH17@fe.edu.vn
+          </a>
         </span>
       </footer>
 
     </div>
   </div>
 
+  <dialog
+    id="privacyNoticeDialog"
+    class="privacy-dialog"
+    aria-labelledby="privacyNoticeTitle"
+  >
+    <div class="privacy-dialog-header">
+      <div>
+        <span class="privacy-dialog-label">
+          STUDENT MEETING BOOKING
+        </span>
+
+        <h2 id="privacyNoticeTitle">
+          Thông báo quyền riêng tư
+        </h2>
+
+        <span class="privacy-version">
+          PRIVACY NOTICE · VERSION 1.2
+        </span>
+      </div>
+
+      <button
+        type="button"
+        id="closePrivacyNotice"
+        class="privacy-close"
+        aria-label="Đóng thông báo"
+      >
+        ×
+      </button>
+    </div>
+
+    <div class="privacy-dialog-body">
+
+      <section>
+        <h3>01. Người chịu trách nhiệm</h3>
+        <p>
+          Huỳnh Hoàng Hải là cá nhân xây dựng và vận hành
+          hệ thống Student Meeting Booking.
+        </p>
+        <p>
+          Email:
+          <a href="mailto:HaiHH17@fe.edu.vn">
+            HaiHH17@fe.edu.vn
+          </a>
+        </p>
+      </section>
+
+      <section>
+        <h3>02. Mục đích xử lý dữ liệu</h3>
+        <p>
+          Tiếp nhận, xác thực, quản lý lịch hẹn học thuật,
+          tạo sự kiện Google Calendar, Google Meet và
+          liên hệ với sinh viên về lịch hẹn.
+        </p>
+        <p>
+          Dữ liệu không được sử dụng cho mục đích
+          quảng cáo hoặc tiếp thị.
+        </p>
+      </section>
+
+      <section>
+        <h3>03. Dữ liệu được xử lý</h3>
+        <ul>
+          <li>Họ và tên sinh viên.</li>
+          <li>Mã số sinh viên (MSSV).</li>
+          <li>Địa chỉ email.</li>
+          <li>Nội dung trao đổi.</li>
+          <li>Ngày, giờ và trạng thái booking.</li>
+          <li>Thời điểm tạo booking.</li>
+          <li>Google Calendar Event ID và Google Meet Link.</li>
+        </ul>
+        <p>
+          Mã lớp được sử dụng để xác thực quyền truy cập
+          và không được lưu trong bản ghi booking.
+        </p>
+      </section>
+
+      <section>
+        <h3>04. Nền tảng công nghệ</h3>
+        <p>
+          GitHub Pages, Google Apps Script, Google Sheets,
+          Google Calendar và Google Meet.
+        </p>
+        <p>
+          Dữ liệu có thể được xử lý trên hạ tầng của
+          các nhà cung cấp dịch vụ theo phạm vi và
+          điều khoản dịch vụ tương ứng.
+        </p>
+      </section>
+
+      <section>
+        <h3>05. Thời hạn lưu trữ</h3>
+        <p>
+          Dữ liệu booking được lưu trữ tối đa
+          <strong>06 tháng</strong> kể từ thời điểm
+          kết thúc khung giờ meeting hoặc thời điểm
+          booking bị hủy được ghi nhận.
+        </p>
+        <p>
+          Sau thời hạn này, dữ liệu định danh sẽ được
+          xóa hoặc khử nhận dạng trong phạm vi hệ thống
+          do người phụ trách quản lý, trừ trường hợp
+          có căn cứ pháp lý cần tiếp tục lưu trữ.
+        </p>
+      </section>
+
+      <section>
+        <h3>06. Chính sách hủy lịch</h3>
+        <p>
+          Sinh viên gửi yêu cầu hủy lịch qua email:
+        </p>
+        <p>
+          <strong>[MEET BOOKING – CANCELLATION]</strong>
+        </p>
+        <p>
+          <a href="mailto:HaiHH17@fe.edu.vn">
+            HaiHH17@fe.edu.vn
+          </a>
+        </p>
+        <p>
+          Email cần có họ tên, MSSV, ngày và khung giờ
+          đã đặt để xác định booking.
+        </p>
+      </section>
+
+      <section>
+        <h3>07. Quyền của sinh viên</h3>
+        <p>
+          Sinh viên có quyền được biết, đồng ý,
+          rút lại sự đồng ý, truy cập, chỉnh sửa,
+          yêu cầu xóa hoặc hạn chế xử lý dữ liệu
+          và thực hiện các quyền khác theo quy định pháp luật.
+        </p>
+      </section>
+
+      <section>
+        <h3>08. Liên hệ về dữ liệu cá nhân</h3>
+        <p>
+          Tiêu đề email:
+          <strong>[PRIVACY – DATA REQUEST]</strong>
+        </p>
+        <p>
+          <a href="mailto:HaiHH17@fe.edu.vn">
+            HaiHH17@fe.edu.vn
+          </a>
+        </p>
+        <p>
+          Người tiếp nhận: Huỳnh Hoàng Hải.
+        </p>
+      </section>
+
+      <section>
+        <h3>09. Cơ chế đồng ý</h3>
+        <p>
+          Sự đồng ý phải được thể hiện tự nguyện,
+          rõ ràng, cụ thể và có thể kiểm chứng.
+        </p>
+        <p>
+          Việc không đồng ý với hoạt động xử lý dữ liệu
+          cần thiết cho booking đồng nghĩa với việc
+          hệ thống không thể thực hiện yêu cầu đặt lịch.
+        </p>
+      </section>
+
+      <section>
+        <h3>10. Cập nhật thông báo</h3>
+        <p>
+          Thông báo có thể được cập nhật khi mục đích,
+          loại dữ liệu, nền tảng hoặc quy trình xử lý
+          của hệ thống thay đổi.
+        </p>
+        <p>
+          Phiên bản hiện tại: 1.2
+        </p>
+      </section>
+
+    </div>
+
+    <div class="privacy-dialog-footer">
+      <button
+        type="button"
+        id="closePrivacyNoticeFooter"
+        class="confirm-button"
+      >
+        Đã hiểu
+      </button>
+    </div>
+  </dialog>
+
   <script src="./js/api.js"></script>
   <script src="./js/app.js"></script>
+
+  <script>
+    (() => {
+      const dialog = document.getElementById('privacyNoticeDialog');
+      const openButton = document.getElementById('openPrivacyNotice');
+      const closeButtons = [
+        document.getElementById('closePrivacyNotice'),
+        document.getElementById('closePrivacyNoticeFooter')
+      ];
+
+      if (!dialog || !openButton) return;
+
+      openButton.addEventListener('click', () => {
+        dialog.showModal();
+      });
+
+      closeButtons.forEach(button => {
+        if (!button) return;
+
+        button.addEventListener('click', () => {
+          dialog.close();
+        });
+      });
+
+      dialog.addEventListener('click', event => {
+        if (event.target === dialog) {
+          dialog.close();
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
