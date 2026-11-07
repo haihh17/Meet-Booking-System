@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#171717">
-  <meta name="description" content="Đặt lịch trao đổi học thuật cùng giảng viên Huỳnh Hoàng Hải.">
+  <meta name="description" content="Đặt lịch trao đổi học thuật cùng giảng viên Huỳnh Hoàng Hải (HaiHH17).">
   <title>Student Meeting Booking</title>
   <link rel="stylesheet" href="./css/style.css">
 </head>
@@ -23,7 +24,7 @@
           </h1>
 
           <p class="subtitle">
-            Đặt lịch trao đổi cùng giảng viên HaiHH17.
+            Đặt lịch trao đổi cùng giảng viên Huỳnh Hoàng Hải (HaiHH17).
             Chọn thời gian phù hợp để hỏi bài, trao đổi project
             hoặc nhận feedback ngoài giờ học.
             Dành riêng cho sinh viên BTEC FPT — vui lòng đặt lịch
@@ -31,11 +32,6 @@
           </p>
         </div>
 
-        <div class="header-meta">
-          <span>01 — SCHEDULE</span>
-          <span>02 — DETAILS</span>
-          <span>03 — CONFIRM</span>
-        </div>
       </header>
 
       <div class="status-bar">
@@ -240,74 +236,81 @@
                 id="studentTopic"
                 name="studentTopic"
                 rows="4"
-                placeholder="Ví dụ: Em muốn hỏi về concept, layout hoặc feedback Assignment 2."
+                placeholder="Ví dụ: Em muốn hỏi về concept, layout hoặc feedback Assignment, Final."
                 required
               ></textarea>
 
               <div id="topicError" class="field-error"></div>
             </div>
 
-            <div class="booking-consent">
-              <p class="privacy-intro">
-                Vui lòng đọc
-                <button
-                  type="button"
-                  id="openPrivacyNotice"
-                  class="privacy-link"
-                  aria-haspopup="dialog"
-                  aria-controls="privacyNoticeDialog"
-                >
-                  Thông báo quyền riêng tư ↗
-                </button>
-                trước khi đặt lịch.
-              </p>
+            <section class="booking-consent" aria-labelledby="consentHeading">
+              <div class="consent-zone-header">
+                <div class="consent-zone-title" id="consentHeading">
+                  WARNING ZONE
+                </div>
 
-              <label
-                class="consent-row"
-                for="processingConsent"
-              >
-                <input
-                  type="checkbox"
-                  id="processingConsent"
-                  name="processingConsent"
-                  required
-                >
+                <div class="consent-zone-subtitle">
+                  PRIVACY & AUTHORIZATION
+                </div>
+              </div>
 
-                <span>
-                  Em xác nhận đã đọc
-                  <strong>Thông báo quyền riêng tư</strong>
-                  và đồng ý để
-                  <strong>Huỳnh Hoàng Hải</strong>
-                  xử lý dữ liệu cá nhân cần thiết nhằm
-                  tiếp nhận, quản lý và thực hiện yêu cầu đặt lịch.
-                </span>
-              </label>
+              <div class="consent-zone-body">
+                <p class="privacy-intro">
+                  Vui lòng đọc
+                  <button
+                    type="button"
+                    id="openPrivacyNotice"
+                    class="privacy-link"
+                    aria-haspopup="dialog"
+                    aria-controls="privacyNoticeDialog"
+                  >
+                    Thông báo quyền riêng tư ↗
+                  </button>
+                  trước khi đặt lịch.
+                </p>
 
-              <div
-                id="processingConsentError"
-                class="field-error"
-              ></div>
+                <label class="consent-row" for="processingConsent">
+                  <input
+                    type="checkbox"
+                    id="processingConsent"
+                    name="processingConsent"
+                    required
+                  >
 
-              <label
-                class="consent-row"
-                for="calendarInviteConsent"
-              >
-                <input
-                  type="checkbox"
-                  id="calendarInviteConsent"
-                  name="calendarInviteConsent"
-                >
-
-                <span>
-                  Em đồng ý để email của mình được thêm vào
-                  <strong>danh sách khách mời Google Calendar</strong>
-                  và nhận email lời mời lịch họp.
-                  <span class="consent-optional">
-                    (Không bắt buộc)
+                  <span>
+                    Em xác nhận đã đọc
+                    <strong>Thông báo quyền riêng tư</strong>
+                    và đồng ý để
+                    <strong> thầy Huỳnh Hoàng Hải (HaiHH17)</strong>
+                    xử lý dữ liệu cá nhân cần thiết nhằm
+                    tiếp nhận, quản lý và thực hiện yêu cầu đặt lịch.
                   </span>
-                </span>
-              </label>
-            </div>
+                </label>
+
+                <div
+                  id="processingConsentError"
+                  class="field-error"
+                ></div>
+
+                <label class="consent-row" for="calendarInviteConsent">
+                  <input
+                    type="checkbox"
+                    id="calendarInviteConsent"
+                    name="calendarInviteConsent"
+                  >
+
+                  <span>
+                    Em đồng ý để email của mình được thêm vào
+                    <strong>danh sách khách mời Google Calendar</strong>
+                    và nhận email lời mời lịch họp.
+
+                    <span class="consent-optional">
+                      (Không bắt buộc)
+                    </span>
+                  </span>
+                </label>
+              </div>
+            </section>
 
             <button
               id="confirmButton"
@@ -327,7 +330,7 @@
 
       <footer class="page-footer">
         <span>
-          Designed and developed entirely by Huỳnh Hoàng Hải
+          Designed and developed entirely by Huỳnh Hoàng Hải (HaiHH17)
         </span>
 
         <span>
@@ -357,7 +360,7 @@
         </h2>
 
         <span class="privacy-version">
-          CĂN CỨ PHÁP LÝ · Luật 91/2025/QH15 · Nghị định 356/2025/NĐ-CP
+          CĂN CỨ PHÁP LÝ: LUẬT 91/2025/QH15 · NGHỊ ĐỊNH 356/2025/NĐ-CP
         </span>
       </div>
 
@@ -372,6 +375,7 @@
     </div>
 
     <div class="privacy-dialog-body">
+
       <section>
         <h3>00. Căn cứ pháp lý</h3>
 
@@ -398,12 +402,15 @@
           pháp luật có liên quan.
         </p>
       </section>
+
       <section>
         <h3>01. Người chịu trách nhiệm</h3>
+
         <p>
-          Huỳnh Hoàng Hải là cá nhân xây dựng và vận hành
+          Huỳnh Hoàng Hải (HaiHH17) là cá nhân xây dựng và vận hành
           hệ thống Student Meeting Booking.
         </p>
+
         <p>
           Email:
           <a href="mailto:HaiHH17@fe.edu.vn">
@@ -414,11 +421,13 @@
 
       <section>
         <h3>02. Mục đích xử lý dữ liệu</h3>
+
         <p>
           Tiếp nhận, xác thực, quản lý lịch hẹn học thuật,
           tạo sự kiện Google Calendar, Google Meet và
           liên hệ với sinh viên về lịch hẹn.
         </p>
+
         <p>
           Dữ liệu không được sử dụng cho mục đích
           quảng cáo hoặc tiếp thị.
@@ -427,6 +436,7 @@
 
       <section>
         <h3>03. Dữ liệu được xử lý</h3>
+
         <ul>
           <li>Họ và tên sinh viên.</li>
           <li>Mã số sinh viên (MSSV).</li>
@@ -436,6 +446,7 @@
           <li>Thời điểm tạo booking.</li>
           <li>Google Calendar Event ID và Google Meet Link.</li>
         </ul>
+
         <p>
           Mã lớp được sử dụng để xác thực quyền truy cập
           và không được lưu trong bản ghi booking.
@@ -444,10 +455,12 @@
 
       <section>
         <h3>04. Nền tảng công nghệ</h3>
+
         <p>
           GitHub Pages, Google Apps Script, Google Sheets,
           Google Calendar và Google Meet.
         </p>
+
         <p>
           Dữ liệu có thể được xử lý trên hạ tầng của
           các nhà cung cấp dịch vụ theo phạm vi và
@@ -457,12 +470,14 @@
 
       <section>
         <h3>05. Thời hạn lưu trữ</h3>
+
         <p>
           Dữ liệu booking được lưu trữ tối đa
           <strong>06 tháng</strong> kể từ thời điểm
           kết thúc khung giờ meeting hoặc thời điểm
           booking bị hủy được ghi nhận.
         </p>
+
         <p>
           Sau thời hạn này, dữ liệu định danh sẽ được
           xóa hoặc khử nhận dạng trong phạm vi hệ thống
@@ -473,17 +488,21 @@
 
       <section>
         <h3>06. Chính sách hủy lịch</h3>
+
         <p>
           Sinh viên gửi yêu cầu hủy lịch qua email:
         </p>
+
         <p>
           <strong>[MEET BOOKING – CANCELLATION]</strong>
         </p>
+
         <p>
           <a href="mailto:HaiHH17@fe.edu.vn">
             HaiHH17@fe.edu.vn
           </a>
         </p>
+
         <p>
           Email cần có họ tên, MSSV, ngày và khung giờ
           đã đặt để xác định booking.
@@ -492,6 +511,7 @@
 
       <section>
         <h3>07. Quyền của sinh viên</h3>
+
         <p>
           Sinh viên có quyền được biết, đồng ý,
           rút lại sự đồng ý, truy cập, chỉnh sửa,
@@ -502,26 +522,31 @@
 
       <section>
         <h3>08. Liên hệ về dữ liệu cá nhân</h3>
+
         <p>
           Tiêu đề email:
           <strong>[PRIVACY – DATA REQUEST]</strong>
         </p>
+
         <p>
           <a href="mailto:HaiHH17@fe.edu.vn">
             HaiHH17@fe.edu.vn
           </a>
         </p>
+
         <p>
-          Người tiếp nhận: Huỳnh Hoàng Hải.
+          Người tiếp nhận: Huỳnh Hoàng Hải (HaiHH17).
         </p>
       </section>
 
       <section>
         <h3>09. Cơ chế đồng ý</h3>
+
         <p>
           Sự đồng ý phải được thể hiện tự nguyện,
           rõ ràng, cụ thể và có thể kiểm chứng.
         </p>
+
         <p>
           Việc không đồng ý với hoạt động xử lý dữ liệu
           cần thiết cho booking đồng nghĩa với việc
@@ -531,13 +556,15 @@
 
       <section>
         <h3>10. Cập nhật thông báo</h3>
+
         <p>
           Thông báo có thể được cập nhật khi mục đích,
           loại dữ liệu, nền tảng hoặc quy trình xử lý
           của hệ thống thay đổi.
         </p>
+
         <p>
-          Phiên bản hiện tại: 1.2
+          Thanks for your reading, Huỳnh Hoàng Hải (HaiHH17).
         </p>
       </section>
 
@@ -561,6 +588,7 @@
     (() => {
       const dialog = document.getElementById('privacyNoticeDialog');
       const openButton = document.getElementById('openPrivacyNotice');
+
       const closeButtons = [
         document.getElementById('closePrivacyNotice'),
         document.getElementById('closePrivacyNoticeFooter')
